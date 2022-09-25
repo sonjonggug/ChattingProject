@@ -50,6 +50,9 @@ public class LoginUser  {
     @Column(length = 10, nullable = false)
     private String user_auth;
     
+    @Column(length = 1, nullable = false)
+    private String user_sex;
+    
    
     @Column(length = 50, nullable = false)
     private String login_date;

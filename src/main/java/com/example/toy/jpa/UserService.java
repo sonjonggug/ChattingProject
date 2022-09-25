@@ -22,11 +22,22 @@ public class UserService implements UserDetailsService{
     @Autowired
     PasswordEncoder passwordEncoder;
     
+    public int checkid(String userid) {
+        //여기서 받은 유저 패스워드와 비교하여 로그인 인증       
+        LoginUser LoginUser =LoginRepository.findByUserid(userid);
+        if (LoginUser.getUserid().equals(userid)){
+            return 0;
+        }else {
+        	 return 1; 	
+        }      
+    }	
+    
+    
     //회원가입
     public boolean insertUser(LoginUser User){
         LoginUser user = new LoginUser();
         if( User.getUserid()!=null && User.getUser_name()!=null &&
-        	User.getUser_pw()!=null ) {
+        	User.getUser_pw()!=null && User.getUser_sex()!=null) {
         	
         // 현재 시간
 //        LocalTime now = LocalTime.now();
@@ -44,6 +55,7 @@ public class UserService implements UserDetailsService{
         user.setJoin_date(sDate2.format(new Date()));
         user.setLogin_date(sDate2.format(new Date()));
         user.setUser_auth("USER");
+        user.setUser_sex(User.getUser_sex());
         //DB에 저장
         LoginRepository.save(user);
         

@@ -2,6 +2,8 @@ package com.example.toy.jpa;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,8 +16,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -57,6 +61,7 @@ public class LoginController {
 			User.setUserid(request.getParameter("userid"));
 			User.setUser_pw(request.getParameter("user_pw"));
 			User.setUser_name(request.getParameter("user_name"));
+			User.setUser_sex(request.getParameter("user_sex"));
 			logger.info("회원가입 진입 전");
 	        if(UserService.insertUser(User)==(true)) {
 	        	logger.info("회원가입 성공");
@@ -75,11 +80,25 @@ public class LoginController {
 	        model.addAttribute("info", LoginUser.getUsername() +"의 "+ LoginUser.getUsername()+ "님");      //유저 아이디
 	        logger.info(LoginUser.getUsername()+" 접속");
 	        System.out.println(LoginUser);
-	        return "home";
+	        return "redirect:mychatt";
 	    }
 	@RequestMapping(value = "/access_denied", method = RequestMethod.GET)
 	public String access_denied() {
 		logger.info("access_denied");		
 		return "access_denied";
+	}
+	
+	@RequestMapping(value = "/checkid", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<Object, Object> checkid(@RequestBody String userid) {
+		logger.info("아이디 체크");		
+		 int count ;
+	        Map<Object, Object> map = new HashMap<Object, Object>();
+	 
+	        count = UserService.checkid(userid);
+	        
+	        map.put("count", count);
+	 
+	        return map;
 	}
 }
