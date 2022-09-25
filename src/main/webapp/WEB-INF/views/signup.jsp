@@ -43,6 +43,29 @@ function checkk(){
 	      return false;
 	}
 }
+function checkid(){
+		var text= $("#userid").val();
+   $.ajax({
+        type : 'GET',
+        url :'/checkid',
+        data : text
+        dataType : "json",	        
+        success : function(data) {       
+        	if (data.count > 0) {        	
+        		 alert("사용가능한 아이디입니다.");
+        		 $("#user_pw").focus();
+        		}else {
+                    alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
+                    //아이디가 존제할 경우 빨깡으로 , 아니면 파랑으로 처리하는 디자인                  
+                    $("#userid").focus();                                                     
+                }      	                        	
+        },
+        error : function(error) {
+            alert("실패하였습니다.");    
+            alert(arror);
+        }
+    }); 
+	}
 </script>
 	</head>
 	<body class="hold-transition login-page">
@@ -54,22 +77,23 @@ function checkk(){
 				<div class="card-body">
 					 <form action="/signup" method="post" onsubmit="return checkk();">
 					     <div class="input-group mb-3">
-							<input type="text" class="form-control" name="user_name" id="user_name" placeholder="이름을 입력해주세요">
+							<input type="text" class="form-control" name="user_name" id="user_name" placeholder="이름을 입력해주세요">							
 						</div>
 						<div class="input-group mb-3">
 							<input type="text" class="form-control" name="userid" id="userid" placeholder="아이디를 입력해주세요" >
+							<button type="button" onclick="checkid();">아이디 중복 확인</button>
 						</div>
 						<div class="input-group mb-3">
 							<input type="password" class="form-control" name="user_pw" id="user_pw" placeholder="패스워드를 입력해주세요">
 						</div>
 						<div class="input-group mb-3">
 							<input type="password" class="form-control" name="user_pw2" id="user_pw2" placeholder="패스워드를 재입력해주세요">
-						</div>
-						<div class="custom-control custom-radio">
-						<input class="custom-control-input" type="radio" id="customRadio1" name="customRadiogroup1" checked>
-						<label for="customRadio1" class="custom-control-label">남자</label> 									
-						<input class="custom-control-input" type="radio" id="customRadio2" name="customRadiogroup1"  >
-						<label for="customRadio2" class="custom-control-label">여자</label> 
+						</div>						
+						<div class="text-center">
+						<input class="text-center" type="radio" id="customRadio1" name="user_sex" value="남" checked>
+						<label for="customRadio1" class="label">남자</label> 									
+						<input class="text-center" type="radio" id="customRadio2" name="user_sex" value="여"  >
+						<label for="customRadio2" class="label">여자</label> 
 						</div>               						
 	                   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 					<div class="social-auth-links text-center mt-2 mb-3">
