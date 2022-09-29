@@ -17,19 +17,36 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class UserService implements UserDetailsService{
-    private final LoginRepository LoginRepository;
+	private final LoginRepository LoginRepository;
     
     @Autowired
     PasswordEncoder passwordEncoder;
     
-    public int checkid(String userid) {
+    public int checkid(String userid) throws Exception{
+    	
         //여기서 받은 유저 패스워드와 비교하여 로그인 인증       
-        LoginUser LoginUser =LoginRepository.findByUserid(userid);
-        if (LoginUser.getUserid().equals(userid)){
-            return 0;
-        }else {
-        	 return 1; 	
-        }      
+    	System.out.println(userid);
+    	
+    	try {
+    		 LoginUser LoginUser =LoginRepository.findByUserid(userid);
+    		  if (LoginUser.getUserid()==null || !LoginUser.getUserid().equals(userid)){
+    		      
+    	        	 return 1; 
+    	        }else {
+    	        	return 0;
+    	        }   
+    	} catch (NullPointerException e) {
+    		return 1; 
+    	}
+    	  	
+//        LoginUser LoginUser =LoginRepository.findByUserid(userid);
+       
+//        if (LoginUser.getUserid().equals(userid)){
+//        	System.out.println(LoginUser);
+//            return 0;
+//        }else {
+//        	 return 1; 	
+//        }      
     }	
     
     

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +17,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
@@ -74,12 +75,12 @@ public class LoginController {
 	    }
 	 }
 	 @GetMapping("/user_access")
-	    public String userAccess(Model model, Authentication authentication) {
+	    public String userAccess(Model model, Authentication authentication ,  HttpSession Session) {
 	        //Authentication 객체를 통해 유저 정보를 가져올 수 있다.
 		 UserDetails LoginUser = (UserDetails) authentication.getPrincipal();  //userDetail 객체를 가져옴
 	        model.addAttribute("info", LoginUser.getUsername() +"의 "+ LoginUser.getUsername()+ "님");      //유저 아이디
 	        logger.info(LoginUser.getUsername()+" 접속");
-	        System.out.println(LoginUser);
+	        Session.setAttribute("id",LoginUser.getUsername());
 	        return "redirect:mychatt";
 	    }
 	@RequestMapping(value = "/access_denied", method = RequestMethod.GET)
@@ -90,7 +91,7 @@ public class LoginController {
 	
 	@RequestMapping(value = "/checkid", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<Object, Object> checkid(@RequestBody String userid) {
+	public Map<Object, Object> checkid(@RequestParam(value ="userid")String userid) throws Exception {
 		logger.info("아이디 체크");		
 		 int count ;
 	        Map<Object, Object> map = new HashMap<Object, Object>();
@@ -101,4 +102,5 @@ public class LoginController {
 	 
 	        return map;
 	}
+	
 }

@@ -1,6 +1,7 @@
 package com.example.toy.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,5 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LoginRepository extends JpaRepository <LoginUser, Long>{
 //	  Optional<LoginEntity> findByUserId(String USER_ID);
+	 	@Nullable
 		LoginUser findByUserid(String userid);
 }
