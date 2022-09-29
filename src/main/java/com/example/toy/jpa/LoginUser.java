@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.lang.Nullable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,33 +34,41 @@ public class LoginUser  {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Nullable
     private Long user_no;
     
     
     @Column(length = 15 , nullable = false)
+    @Nullable
     private String userid;
     
   
     @Column(length = 100, nullable = false)
+    @Nullable  
     private String user_pw;
     
    
     @Column(length = 5, nullable = false)
+    @Nullable  
     private String user_name;
     
     
     @Column(length = 10, nullable = false)
+    @Nullable  
     private String user_auth;
     
     @Column(length = 1, nullable = false)
+    @Nullable  
     private String user_sex;
     
    
     @Column(length = 50, nullable = false)
+    @Nullable  
     private String login_date;
     
    
     @Column(length = 50, nullable = false)
+    @Nullable  
     private String join_date;
 
 	
