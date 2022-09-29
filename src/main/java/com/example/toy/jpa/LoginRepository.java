@@ -1,6 +1,9 @@
 package com.example.toy.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +18,12 @@ public interface LoginRepository extends JpaRepository <LoginUser, Long>{
 //	  Optional<LoginEntity> findByUserId(String USER_ID);
 	 	@Nullable
 		LoginUser findByUserid(String userid);
+	 	
+//	 	 @Modifying // select 문이 아님을 나타낸다
+//	     @Query("UPDATE user_cnt c SET c.user_cnt = ?1 WHERE p.id = ?2")
+//	     int updateTitle(String title, Long id);
+	 	
+	 	@Modifying // select 문이 아님을 나타낸다
+	 	@Query(value = "UPDATE user_cnt cnt set cnt.user_cnt= :cnt" , nativeQuery = true)
+	 	void changecnt(@Param("cnt")int cnt) throws Exception;
 }
