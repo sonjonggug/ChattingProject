@@ -15,9 +15,8 @@ var btnSend = getId('btnSend');
 var talk = getId('talk');
 var msg = getId('msg');
 
-
-document.addEventListener("DOMContentLoaded", function(){
- ws = new WebSocket("ws://" + location.host + "/chatt");
+btnLogin.onclick = function(){
+	ws = new WebSocket("ws://" + location.host + "/chatt");
 	
 	ws.onmessage = function(msg){
 		var data = JSON.parse(msg.data);
@@ -36,12 +35,8 @@ document.addEventListener("DOMContentLoaded", function(){
 					
 		talk.innerHTML += item;
 		talk.scrollTop=talk.scrollHeight;//스크롤바 하단으로 이동
-		}
-});
-
-setTimeout(function() {
- sendo();
-}, 2000);
+	}
+}
 
 msg.onkeyup = function(ev){
 	if(ev.keyCode == 13){
@@ -52,6 +47,7 @@ msg.onkeyup = function(ev){
 btnSend.onclick = function(){
 	send();
 }
+
 function send(){
 	if(msg.value.trim() != ''){
 		data.mid = getId('mid').value;
@@ -62,11 +58,4 @@ function send(){
 	}
 	msg.value ='';
 	
-}
-function sendo(){		
-		data.mid = getId('alram1').value;
-		data.msg = "";		
-		data.date = new Date().toLocaleString();
-		var tom = JSON.stringify(data);
-		ws.send(tom);	    
 }

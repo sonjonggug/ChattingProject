@@ -13,6 +13,8 @@
 		<script src="/resources/js/jquery.min.js"></script>
 		<script src="/resources/js/adminlte.min.js"></script>
 		<script src="/resources/js/bootstrap.bundle.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- 		<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script> -->
 <script>
 function checkk(){
 	var idvalue = document.getElementById('userid').value;
@@ -43,29 +45,7 @@ function checkk(){
 	      return false;
 	}
 }
-function checkid(){
-		var text= $("#userid").val();
-   $.ajax({
-        type : 'GET',
-        url :'/checkid',
-        data : text
-        dataType : "json",	        
-        success : function(data) {       
-        	if (data.count > 0) {        	
-        		 alert("사용가능한 아이디입니다.");
-        		 $("#user_pw").focus();
-        		}else {
-                    alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
-                    //아이디가 존제할 경우 빨깡으로 , 아니면 파랑으로 처리하는 디자인                  
-                    $("#userid").focus();                                                     
-                }      	                        	
-        },
-        error : function(error) {
-            alert("실패하였습니다.");    
-            alert(arror);
-        }
-    }); 
-	}
+
 </script>
 	</head>
 	<body class="hold-transition login-page">
@@ -77,18 +57,18 @@ function checkid(){
 				<div class="card-body">
 					 <form action="/signup" method="post" onsubmit="return checkk();">
 					     <div class="input-group mb-3">
-							<input type="text" class="form-control" name="user_name" id="user_name" placeholder="이름을 입력해주세요">							
-						</div>
-						<div class="input-group mb-3">
 							<input type="text" class="form-control" name="userid" id="userid" placeholder="아이디를 입력해주세요" >
-							<button type="button" onclick="checkid();">아이디 중복 확인</button>
-						</div>
+							<button type="button" id="sbm-btn" name="sbm-btn">아이디 중복 확인</button>						
+						</div>						
 						<div class="input-group mb-3">
 							<input type="password" class="form-control" name="user_pw" id="user_pw" placeholder="패스워드를 입력해주세요">
 						</div>
 						<div class="input-group mb-3">
 							<input type="password" class="form-control" name="user_pw2" id="user_pw2" placeholder="패스워드를 재입력해주세요">
 						</div>						
+						<div class="input-group mb-3">							
+							<input type="text" class="form-control" name="user_name" id="user_name" placeholder="이름을 입력해주세요">							
+						</div>
 						<div class="text-center">
 						<input class="text-center" type="radio" id="customRadio1" name="user_sex" value="남" checked>
 						<label for="customRadio1" class="label">남자</label> 									
@@ -106,5 +86,33 @@ function checkid(){
 				</div>
 			</div>
 		</div>
+		<script>
+		$("#sbm-btn").on("click",function(){
+		 	var text = $("#userid").val();
+		 	$.ajax({
+		 		 type : 'GET',
+		 	    url :'/checkid',
+		 	   data :{
+		    		userid : text,	    		
+		    	},
+		 	    dataType : "json",
+// 		 	   	contentType : 'application/json',
+		 	    success : function(data) {       
+		 	    	if (data.count > 0) {        	
+		 	    		 alert("사용가능한 아이디입니다.");
+		 	    		 $("#user_pw").focus();
+		 	    		}else {
+		 	                alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
+		 	                //아이디가 존제할 경우 빨깡으로 , 아니면 파랑으로 처리하는 디자인                  
+		 	                $("#userid").focus();                                                     
+		 	            }      	                        	
+		 	    },
+		 	    error : function(error) {
+		 	        alert("실패하였습니다.");    
+		 	        alert(arror);
+		 	    }
+		 		}); 
+			});		 
+		</script>
 	</body>
 </html>
