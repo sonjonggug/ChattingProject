@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.servlet.http.HttpSession;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
@@ -12,9 +11,6 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.stereotype.Service;
-
-import com.example.toy.jpa.LoginRepository;
-import com.example.toy.jpa.LoginUser;
 /**
  WebSocketChatService는 클라이언트가 접속할 때마다 생성되어 클라이언트와 직접 통신하는 클래스입니다. 
  따라서 새로운 클라이언트가 접속할 때마다 클라이언트의 세션 관련 정보를 정적형으로 저장하여 1:N의 통신이 가능하도록 만들어야 합니다.
@@ -22,7 +18,7 @@ import com.example.toy.jpa.LoginUser;
 @Service
 @ServerEndpoint(value="/chatt")
 public class WebSocketChatService {
-	private static Set<Session> clients = 
+	public static Set<Session> clients = 
 			Collections.synchronizedSet(new HashSet<Session>());
 	
 	/**
@@ -36,10 +32,10 @@ public class WebSocketChatService {
 	public void onOpen(Session s ) throws Exception {
 		System.out.println("open session : " + s.toString());
 		if(!clients.contains(s)) {
-			clients.add(s);			
+			clients.add(s);
 			System.out.println("session open : " + s);
 			System.out.println("clients.size : " + clients.size());
-			
+					
 		}else {
 			System.out.println("이미 연결된 session 임!!!");
 		}

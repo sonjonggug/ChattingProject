@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.example.toy.service.WebSocketChatService;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -93,6 +97,7 @@ public class LoginController {
 	@ResponseBody
 	public Map<Object, Object> checkid(@RequestParam(value ="userid")String userid) throws Exception {
 		logger.info("아이디 체크");		
+		
 		 int count ;
 	        Map<Object, Object> map = new HashMap<Object, Object>();
 	 

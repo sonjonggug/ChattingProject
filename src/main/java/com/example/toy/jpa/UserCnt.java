@@ -36,6 +36,10 @@ public class UserCnt  {
     @Nullable
     private Long user_cnt;
     
+    @Column(length = 15 , nullable = false)
+    @Nullable
+    private String server_name;
+    
     
    
     
