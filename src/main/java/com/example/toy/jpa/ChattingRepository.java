@@ -14,11 +14,15 @@ import org.springframework.stereotype.Repository;
    Entity 클래스와 기본 Entity Repository는 함께 위치해야 한다.
  */
 @Repository
-public interface LoginRepository extends JpaRepository <LoginUser, Long>{
-	 
-	 	@Nullable
-		LoginUser findByUserid(String userid);
-	 	
+public interface ChattingRepository extends JpaRepository <UserCnt, Long>{
 
 	 	
+	 	
+	 	@Modifying // select 문이 아님을 나타낸다
+	 	@Query(value = "UPDATE user_cnt cnt set cnt.user_cnt= :cnt WHERE server_name=:channel" , nativeQuery = true)
+	 	void updateCnt(@Param("cnt")int cnt , @Param("channel")String channel) throws Exception;
+	 	
+	 	
+	 	@Query(value = "select user_cnt from user_cnt where server_name=:channel", nativeQuery = true)
+	 	UserCnt searchCnt(@Param("channel")String channel) throws Exception;
 }

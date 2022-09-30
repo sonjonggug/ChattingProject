@@ -5,7 +5,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.websocket.server.ServerEndpoint;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,17 +16,41 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.toy.jpa.ChattingService;
+import com.example.toy.jpa.LoginController;
+import com.example.toy.jpa.UserCnt;
 import com.example.toy.service.NaverApiService;
+import com.example.toy.service.WebSocketChatService;
 
 //@RestController
 @Controller
 public class ChattController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ChattController.class);
 	@Autowired
 	NaverApiService NaverApiService;
+	@Autowired
+	ChattingService ChattingService;
 	
 	
+	/**
+	 * 정적 변수로 저장된 client 값을 가져옴 
+	 * Controller가 @ServerEndpoint보다 빨리 받기에 처음 값은 +1을 한다.   
+	 * @param request
+	 * @param Session
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/mychatt")
-	public String chatt(HttpServletRequest request ,  HttpSession Session) {
+	public String chatt(HttpServletRequest request ,  HttpSession Session) throws Exception {
+		
+		WebSocketChatService WebSocketChatService = new WebSocketChatService();
+		 int clientCnt = WebSocketChatService.clients.size()+1;
+		 String channel = "channel_A";
+		 System.out.println("---------------"+clientCnt);
+		 
+		 ChattingService.updateCnt(clientCnt,channel);
+		 				
 		String ip = request.getHeader("X-Forwarded-For");
 		if(ip == null || ip.length()==0||"unknown".equalsIgnoreCase(ip)) {
 			ip=request.getHeader("Proxy-Client-IP");
@@ -42,9 +69,15 @@ public class ChattController {
 		}	
 		Session.setAttribute("IP", ip);
 		Session.setAttribute("Port", request.getRemotePort());
+		Session.setAttribute("channel", channel);
 		return "chatting";
 	}
-
+    
+	/**
+	 * 네이버 API 사용 
+	 * @param lang
+	 * @return
+	 */
 	@RequestMapping(value = "/SearchEng", method = RequestMethod.GET)
 	@ResponseBody
 	public String SearchEng(@RequestParam(value ="lang")String lang){		
@@ -53,6 +86,11 @@ public class ChattController {
 	 String en=NaverApiService.Start(lang);
 		return en;
 	}
+	/**
+	 * 네이버 API 사용 
+	 * @param lang
+	 * @return
+	 */
 	@RequestMapping(value = "/SearchChi", method = RequestMethod.GET)
 	@ResponseBody
 	public String SearchChi(@RequestParam(value ="lang")String lang){		
@@ -60,5 +98,20 @@ public class ChattController {
 	 
 	 String en=NaverApiService.ChinaStart(lang);
 		return en;
+	}
+	
+	@RequestMapping(value = "/SearchCnt", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<Object, Object> SearchCnt(@RequestParam(value ="channel")String channel) throws Exception {
+		 			 	
+		 	Long count = ChattingService.searchCnt(channel);
+		 	
+		 	logger.info("사용자수 체크: ",count);
+		 	
+	        Map<Object, Object> map = new HashMap<Object, Object>();	 	 
+	        
+	        map.put("count", count);
+	 
+	        return map;
 	}
 }
