@@ -58,11 +58,31 @@
 	        }
 	    }); 
  	}
+	function StartClock(){
+//    timerId = setInterval(PrintTime, 1000);
+	var text = $("#channel").val();
+		$.ajax({
+	 		 type : 'GET',
+	 	    url :'/SearchCnt',
+	 	   	data :{
+	 	   	channel : text,	    		
+	    	},
+	 	    dataType : "json",
+//	 	   	contentType : 'application/json',
+	 	    success : function(data) {       
+	 	      alert(data);	                        	
+	 	    },
+	 	    error : function(error) {
+	 	        alert("실패하였습니다.");    	 	        
+	 	    }
+	 		}); 
+			
+	}
 </script>
 
 	<div id='chatt'>	 	
 		<h1>단체 채팅창</h1>
-		<h3>IP : ${sessionScope.IP}  Port :  ${sessionScope.Port}</h3>
+		<h3>IP : ${sessionScope.IP}  Port :  ${sessionScope.Port}</h3> <h3 id="channel" name="channel" >${sessionScope.channel}</h3>
 		<input type='hidden' id='mid' value='${sessionScope.id}' readonly>
 		<input type='hidden' value='로그인' id='btnLogin' >
 		<buttion type="button" onclick="Session();">${sessionScope.Count}</buttion>
@@ -72,7 +92,7 @@
 			<textarea id='msg' value='hi...' ></textarea>
 			<button type="button" onclick="China();">중국어</button>
 			<button type="button" onclick="English();">영어</button>
-			<button type="button" onclick="Cha();">차트</button>
+			<button type="button" onclick="StartClock();">차트</button>
 			<input type='hidden' value='전송' id='btnSend'>						
 			<input type='hidden' value='${sessionScope.id} 님이 입장하셨습니다.' id='alram1'>
 		</div>
