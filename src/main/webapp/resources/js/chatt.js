@@ -18,7 +18,6 @@ var msg = getId('msg');
 
 document.addEventListener("DOMContentLoaded", function(){
  ws = new WebSocket("ws://" + location.host + "/chatt");
-	
 	ws.onmessage = function(msg){
 		var data = JSON.parse(msg.data);
 		var css;
@@ -37,8 +36,20 @@ document.addEventListener("DOMContentLoaded", function(){
 		talk.innerHTML += item;
 		talk.scrollTop=talk.scrollHeight;//스크롤바 하단으로 이동
 		}
+	
 });
-
+/**
+* window.onbeforeunload : 페이지 이동시 이벤트 
+* 페이지 이동시 다른 client에게 퇴장 알림 
+ */
+window.onbeforeunload = function () {		
+		data.mid = getId('exitAlram').value;
+		data.msg = "";		
+		data.date = new Date().toLocaleString();
+		var text = JSON.stringify(data);
+		ws.send(text);	
+	return true ;
+};
 setTimeout(function() {
  sendo();
 }, 2000);

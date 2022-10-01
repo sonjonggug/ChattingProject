@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,15 +13,13 @@ import org.springframework.stereotype.Repository;
    Entity 클래스와 기본 Entity Repository는 함께 위치해야 한다.
  */
 @Repository
-public interface ChattingRepository extends JpaRepository <UserCnt, Long>{
-
-	 	
-	 	
-	 	@Modifying // select 문이 아님을 나타낸다
-	 	@Query(value = "UPDATE user_cnt cnt set cnt.user_cnt= :cnt WHERE server_name=:channel" , nativeQuery = true)
+public interface ChattingRepository extends JpaRepository <channel_info, Long>{
+ 	
+	 	@Modifying // select 문이 아님을 나타낸다	 	
+	 	@Query(value = "UPDATE channel_info set user_cnt= :cnt WHERE channel_name=:channel" , nativeQuery = true)
 	 	void updateCnt(@Param("cnt")int cnt , @Param("channel")String channel) throws Exception;
 	 	
-	 	
-	 	@Query(value = "select user_cnt from user_cnt where server_name=:channel", nativeQuery = true)
-	 	UserCnt searchCnt(@Param("channel")String channel) throws Exception;
+
+	 	@Query(value = "SELECT * FROM channel_info c WHERE c.channel_name=:channel", nativeQuery = true)
+	 	channel_info searchCnt(@Param("channel")String channel) throws Exception;
 }

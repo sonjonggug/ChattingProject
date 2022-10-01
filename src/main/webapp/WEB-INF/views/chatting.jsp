@@ -22,6 +22,8 @@
 <body> 
 <script> 
    
+ setInterval(SearchCnt, 30000);
+   
  	function English(){
  		var text= $("#msg").val();
 	   $.ajax({
@@ -58,9 +60,9 @@
 	        }
 	    }); 
  	}
-	function StartClock(){
-//    timerId = setInterval(PrintTime, 1000);
-	var text = $("#channel").val();
+	function SearchCnt(){
+      
+	var text = $("#channel").val();	
 		$.ajax({
 	 		 type : 'GET',
 	 	    url :'/SearchCnt',
@@ -70,7 +72,7 @@
 	 	    dataType : "json",
 //	 	   	contentType : 'application/json',
 	 	    success : function(data) {       
-	 	      alert(data);	                        	
+	 	    	  $("#user_cnt").text("현재 "+data+"명 접속중입니다."); 	 	    	 
 	 	    },
 	 	    error : function(error) {
 	 	        alert("실패하였습니다.");    	 	        
@@ -80,9 +82,9 @@
 	}
 </script>
 
-	<div id='chatt'>	 	
-		<h1>단체 채팅창</h1>
-		<h3>IP : ${sessionScope.IP}  Port :  ${sessionScope.Port}</h3> <h3 id="channel" name="channel" >${sessionScope.channel}</h3>
+	<div id='chatt'>	 			
+		<h3>IP : ${sessionScope.IP}  Port :  ${sessionScope.Port}</h3> <h3 id="user_cnt">현재 1명 접속중입니다.</h3>
+		<input type='hidden' id="channel" name="channel" value='${sessionScope.channel}'>
 		<input type='hidden' id='mid' value='${sessionScope.id}' readonly>
 		<input type='hidden' value='로그인' id='btnLogin' >
 		<buttion type="button" onclick="Session();">${sessionScope.Count}</buttion>
@@ -92,14 +94,13 @@
 			<textarea id='msg' value='hi...' ></textarea>
 			<button type="button" onclick="China();">중국어</button>
 			<button type="button" onclick="English();">영어</button>
-			<button type="button" onclick="StartClock();">차트</button>
+<!-- 			<button type="button" onclick="SearchCnt();">차트</button> -->
 			<input type='hidden' value='전송' id='btnSend'>						
 			<input type='hidden' value='${sessionScope.id} 님이 입장하셨습니다.' id='alram1'>
+			<input type='hidden' value='${sessionScope.id} 님이 퇴장하셨습니다.' id='exitAlram'>
 		</div>
 	</div>
-	<div>
-	<!--차트가 그려질 부분-->
-	  <canvas id="myChart" width="100" height="100"></canvas>
+	<div>	
 	</div>
 	<script src='resources/js/chatt.js'></script>
 </body>
