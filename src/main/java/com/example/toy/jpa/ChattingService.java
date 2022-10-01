@@ -28,12 +28,16 @@ public class ChattingService {
 	 
     	ChattingRepository.updateCnt(cnt,channel);
 	   	   
-   }
-    
-    public Long searchCnt(String channel) throws Exception {
-    	UserCnt UserCnt= new UserCnt();
-    	UserCnt = ChattingRepository.searchCnt(channel);
-		return UserCnt.getUser_cnt();
-  	   	   
+   } 
+    /**
+     * 접속자수 체크 ( 30초 간격 )
+     * @param channel
+     * @return
+     * @throws Exception
+     */
+    public channel_info searchCnt(String channel) throws Exception {
+    	channel_info channel_info= new channel_info();   	
+    	channel_info = ChattingRepository.searchCnt(channel);
+		return channel_info; 	   	   
      }
     }

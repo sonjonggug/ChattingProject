@@ -107,5 +107,9 @@ public class LoginController {
 	 
 	        return map;
 	}
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	public String index() {
 	
+		return "user/index";
+	}
 }
