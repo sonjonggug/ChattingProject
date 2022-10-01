@@ -1,9 +1,11 @@
 package com.example.toy.service;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.websocket.MessageHandler;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
@@ -50,19 +52,22 @@ public class WebSocketChatService {
 		System.out.println("receive message : " + msg);
 		System.out.println("clients.OnMessage : " + clients.size());
 		for(Session s : clients) {
-			System.out.println("send data : " + msg);
+			System.out.println("send data : " + msg);			
 			s.getBasicRemote().sendText(msg);
 
 		}
 		
 	}	
 	/**
-	 @OnClose : 클라이언트가 브라우저를 끄거나 다른 경로로 이동할 때
-	 클라이언트가 url을 바꾸거나 브라우저를 종료하면 자동으로 onClose() 메서드가 실행되며 해당 클라이언트 정보를 clients에서 제거합니다.	 	
+	 * @OnClose : 클라이언트가 브라우저를 끄거나 다른 경로로 이동할 때
+	 클라이언트가 url을 바꾸거나 브라우저를 종료하면 자동으로 onClose() 메서드가 실행되며 해당 클라이언트 정보를 clients에서 제거합니다.
+	 * @throws IOException 	 	
 	 */
 	@OnClose
-	public void onClose(Session s) {
-		System.out.println("session close : " + s);
-		clients.remove(s);
+	public void onClose(Session s ) throws IOException {
+		System.out.println("session close : " + s);	
+		
+			clients.remove(s);
+		
 	}
 }

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.toy.jpa.ChattingService;
 import com.example.toy.jpa.LoginController;
-import com.example.toy.jpa.UserCnt;
+import com.example.toy.jpa.channel_info;
 import com.example.toy.service.NaverApiService;
 import com.example.toy.service.WebSocketChatService;
 
@@ -102,16 +102,14 @@ public class ChattController {
 	
 	@RequestMapping(value = "/SearchCnt", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<Object, Object> SearchCnt(@RequestParam(value ="channel")String channel) throws Exception {
-		 			 	
-		 	Long count = ChattingService.searchCnt(channel);
-		 	
-		 	logger.info("사용자수 체크: ",count);
-		 	
-	        Map<Object, Object> map = new HashMap<Object, Object>();	 	 
-	        
-	        map.put("count", count);
-	 
-	        return map;
+	public Long SearchCnt(@RequestParam(value ="channel")String channel) throws Exception {
+			channel_info channelInfo= new channel_info();
+			
+			channelInfo = ChattingService.searchCnt(channel);
+		 	System.out.println(channelInfo.getChannel_name());
+		 	System.out.println(channelInfo.getUser_cnt());
+		 	logger.info("30초 간격 사용자 체크");
+		 		 
+	        return channelInfo.getUser_cnt();
 	}
 }
