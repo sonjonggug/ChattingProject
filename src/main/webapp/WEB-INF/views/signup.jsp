@@ -70,9 +70,9 @@ function checkk(){
 							<input type="text" class="form-control" name="user_name" id="user_name" placeholder="이름을 입력해주세요">							
 						</div>
 						<div class="text-center">
-						<input class="text-center" type="radio" id="customRadio1" name="user_sex" value="남" checked>
+						<input class="text-center" type="radio" id="customRadio1" name="user_sex" value="M" checked>
 						<label for="customRadio1" class="label">남자</label> 									
-						<input class="text-center" type="radio" id="customRadio2" name="user_sex" value="여"  >
+						<input class="text-center" type="radio" id="customRadio2" name="user_sex" value="W"  >
 						<label for="customRadio2" class="label">여자</label> 
 						</div>               						
 	                   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

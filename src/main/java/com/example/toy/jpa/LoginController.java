@@ -3,8 +3,10 @@ package com.example.toy.jpa;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Spliterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.toy.service.UserManagementService;
 import com.example.toy.service.WebSocketChatService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +38,10 @@ public class LoginController {
 	
 	@Autowired
 	UserService UserService; 
+	@Autowired
+	ChattingService ChattingService; 
+	@Autowired
+	UserManagementService UserManagementService;
 	
 	private LoginRepository login;
   	
@@ -47,7 +54,7 @@ public class LoginController {
 				
 		return "Login";
 	}
-	@RequestMapping(value = "/Login", method = RequestMethod.POST)
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String Login() {
 		logger.info("로그인 시도");
 		return "Login";
@@ -79,13 +86,22 @@ public class LoginController {
 	    }
 	 }
 	 @GetMapping("/user_access")
-	    public String userAccess(Model model, Authentication authentication ,  HttpSession Session) {
+	    public String userAccess(Model model, Authentication authentication ,  HttpSession Session) throws Exception {
 	        //Authentication 객체를 통해 유저 정보를 가져올 수 있다.
 		 UserDetails LoginUser = (UserDetails) authentication.getPrincipal();  //userDetail 객체를 가져옴
+		 UserService.updateDate(LoginUser.getUsername());
+		   if(LoginUser.getUsername().equals("Admin")) {
+			 model.addAttribute("info", LoginUser.getUsername() +"의 "+ LoginUser.getUsername()+ "님");      //유저 아이디
+		      logger.info("Admin 접속");
+		      Session.setAttribute("Admin",LoginUser.getUsername()); 
+		      	return "user/index";
+		   	} else {
 	        model.addAttribute("info", LoginUser.getUsername() +"의 "+ LoginUser.getUsername()+ "님");      //유저 아이디
 	        logger.info(LoginUser.getUsername()+" 접속");
 	        Session.setAttribute("id",LoginUser.getUsername());
 	        return "redirect:mychatt";
+		   }
+
 	    }
 	@RequestMapping(value = "/access_denied", method = RequestMethod.GET)
 	public String access_denied() {
@@ -95,21 +111,36 @@ public class LoginController {
 	
 	@RequestMapping(value = "/checkid", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<Object, Object> checkid(@RequestParam(value ="userid")String userid) throws Exception {
-		logger.info("아이디 체크");		
-		
-		 int count ;
+	public Map<Object, Object> checkid(@RequestParam(value ="userid")String userid) throws Exception {			
+			int count ;
 	        Map<Object, Object> map = new HashMap<Object, Object>();
 	 
-	        count = UserService.checkid(userid);
-	        
+	        count = UserService.checkid(userid);	        
 	        map.put("count", count);
-	 
+	        logger.info("아이디 중복 체크");	
 	        return map;
 	}
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public String index() {
-	
-		return "user/index";
+	public String index(HttpSession Session) {
+		if(Session.getAttribute("Admin").equals("Admin")) {
+			
+			return "user/index";
+		}else {
+		
+			return  "redirect:mychatt";
+		}		
+	}
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	public String admin(Model model) throws Exception {
+		HashMap<String, String> HashMap = new HashMap<String, String>();		
+		HashMap = UserManagementService.UserSum();
+        logger.info("Mapper 값 " + HashMap);
+		    
+		 model.addAttribute("sumCnt",HashMap.get("user_cnt"));
+		 model.addAttribute("user",HashMap.get("user"));
+		 model.addAttribute("channel_name",HashMap.get("channel_name"));
+		 model.addAttribute("sex_man",HashMap.get("sex_man"));
+		 model.addAttribute("sex_woman",HashMap.get("sex_woman"));
+		return "user/index";			
 	}
 }

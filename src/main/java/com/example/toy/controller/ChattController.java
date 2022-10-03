@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.server.ServerEndpoint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.toy.jpa.ChattingService;
-import com.example.toy.jpa.LoginController;
 import com.example.toy.jpa.channel_info;
 import com.example.toy.service.NaverApiService;
+import com.example.toy.service.UserManagementService;
 import com.example.toy.service.WebSocketChatService;
 
 //@RestController
@@ -47,10 +46,9 @@ public class ChattController {
 		WebSocketChatService WebSocketChatService = new WebSocketChatService();
 		 int clientCnt = WebSocketChatService.clients.size()+1;
 		 String channel = "channel_A";
-		 System.out.println("---------------"+clientCnt);
-		 
+		 	 
 		 ChattingService.updateCnt(clientCnt,channel);
-		 				
+		 logger.info("채팅창 진입 시 접속자 수 업데이트");			
 		String ip = request.getHeader("X-Forwarded-For");
 		if(ip == null || ip.length()==0||"unknown".equalsIgnoreCase(ip)) {
 			ip=request.getHeader("Proxy-Client-IP");
@@ -74,41 +72,41 @@ public class ChattController {
 	}
     
 	/**
-	 * 네이버 API 사용 
+	 * 네이버 API 영어 번역
 	 * @param lang
 	 * @return
 	 */
 	@RequestMapping(value = "/SearchEng", method = RequestMethod.GET)
 	@ResponseBody
-	public String SearchEng(@RequestParam(value ="lang")String lang){		
-	 Map<String,Object> map = new HashMap<String,Object>();
-
+	public String SearchEng(@RequestParam(value ="lang")String lang){	
+		
 	 String en=NaverApiService.Start(lang);
+	 logger.info("Naver API 영어 번역");
 		return en;
 	}
 	/**
-	 * 네이버 API 사용 
+	 * 네이버 API 중국어 번역 
 	 * @param lang
 	 * @return
 	 */
 	@RequestMapping(value = "/SearchChi", method = RequestMethod.GET)
 	@ResponseBody
 	public String SearchChi(@RequestParam(value ="lang")String lang){		
-	 Map<String,Object> map = new HashMap<String,Object>();
-	 
+		 
 	 String en=NaverApiService.ChinaStart(lang);
+	 logger.info("Naver API 중국어 번역");
 		return en;
 	}
 	
 	@RequestMapping(value = "/SearchCnt", method = RequestMethod.GET)
 	@ResponseBody
-	public Long SearchCnt(@RequestParam(value ="channel")String channel) throws Exception {
+	public int SearchCnt(@RequestParam(value ="channel")String channel) throws Exception {
 			channel_info channelInfo= new channel_info();
 			
 			channelInfo = ChattingService.searchCnt(channel);
 		 	System.out.println(channelInfo.getChannel_name());
 		 	System.out.println(channelInfo.getUser_cnt());
-		 	logger.info("30초 간격 사용자 체크");
+		 	logger.info("접속자 수 체크");
 		 		 
 	        return channelInfo.getUser_cnt();
 	}

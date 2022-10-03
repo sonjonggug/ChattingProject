@@ -32,14 +32,18 @@ public class channel_info  {
      * @GeneratedValue PK 생성 규칙 , GenerationType.IDENTITY 옵션을 추가해야만 auto_increment
      * @Column 테이블의 컬럼을 나타내며 굳이 선언하지 않더라고 해당 클래스의 필드는 모두 컬럼이 된다.
      */
-    @Id
-    @Nullable
-    private Long user_cnt;
+	 @Id
+	 @GeneratedValue(strategy = GenerationType.IDENTITY)
+	 @Nullable
+	 private Long channel_no;
     
-    @Column(length = 15 , nullable = false)
+	@Column(length = 15 , unique = true)   
     @Nullable
     private String channel_name;
     
+    @Column(length = 15 , nullable = false)
+    @Nullable
+    private int user_cnt;
     
    
     
