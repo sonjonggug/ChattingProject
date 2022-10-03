@@ -1,5 +1,7 @@
 package com.example.toy.jpa;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,5 +41,15 @@ public class ChattingService {
     	channel_info channel_info= new channel_info();   	
     	channel_info = ChattingRepository.searchCnt(channel);
 		return channel_info; 	   	   
+     }
+    /**
+     * 전체 접속자 수   
+     * @return
+     * @throws Exception
+     */
+    public int sumCnt() throws Exception { 
+    	channel_info channel_info= new channel_info();
+    	channel_info  = ChattingRepository.sumCnt();
+		return channel_info.getUser_cnt(); 	   	   
      }
     }
