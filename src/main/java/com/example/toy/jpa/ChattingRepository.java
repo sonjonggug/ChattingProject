@@ -1,5 +1,7 @@
 package com.example.toy.jpa;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +24,14 @@ public interface ChattingRepository extends JpaRepository <channel_info, Long>{
 
 	 	@Query(value = "SELECT * FROM channel_info c WHERE c.channel_name=:channel", nativeQuery = true)
 	 	channel_info searchCnt(@Param("channel")String channel) throws Exception;
+	 	
+	 	/**
+	 	 * 조회하려는 컬럼보다 엔티티 컬럼이 많을때 No Such Column 에러가 발생한다. 그럴땐 당황하지 말고 
+	 	 * 리턴 타입을 List<String> 으로 바꾸면 된다.	 	
+	 	 */
+//	 	@Query(value = "SELECT SUM(user_cnt) user_cnt FROM channel_info c", nativeQuery = true)
+//	 	List<String> sumCnt() throws Exception;
+	 	
+	 	@Query(value = "SELECT SUM(user_cnt) user_cnt , channel_name FROM channel_info c", nativeQuery = true)
+	 	channel_info sumCnt() throws Exception;
 }

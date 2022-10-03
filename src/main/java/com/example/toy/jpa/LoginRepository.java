@@ -19,6 +19,8 @@ public interface LoginRepository extends JpaRepository <LoginUser, Long>{
 	 	@Nullable
 		LoginUser findByUserid(String userid);
 	 	
-
-	 	
+	 	@Modifying // select 문이 아님을 나타낸다	 	
+	 	@Query(value = "UPDATE login_user set LOGIN_DATE = :date WHERE USERID =:userid" , nativeQuery = true)
+	 	void updateDate(@Param("date")String date , @Param("userid")String userid) throws Exception;
+	
 }

@@ -3,15 +3,20 @@ Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,Bli
 Chart.defaults.global.defaultFontColor = '#858796';
 
 // Pie Chart Example
+	const sumCnt = new Array();
+	const sex_man = document.getElementById('sex_man').value;
+	const sex_woman = document.getElementById('sex_woman').value;
+	sumCnt.push(sex_man);
+	sumCnt.push(sex_woman);		
 var ctx = document.getElementById("myPieChart");
 var myPieChart = new Chart(ctx, {
   type: 'doughnut',
   data: {
-    labels: ["Direct", "Referral", "Social"],
+    labels: ["남","녀"],
     datasets: [{
-      data: [55, 30, 15],
-      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+      data: [sumCnt[0],sumCnt[1]],
+      backgroundColor: ['#1cc88a', '#4e73df'],
+      hoverBackgroundColor: ['#17a673', '#2e59d9'],
       hoverBorderColor: "rgba(234, 236, 244, 1)",
     }],
   },

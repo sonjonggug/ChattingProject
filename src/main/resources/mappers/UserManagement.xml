@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.toy.mapper.UserManagementMapper">
+    <!-- 로그인 -->
+    <select id="UserSum" parameterType="HashMap" resultType="HashMap">
+     SELECT SUM(user_cnt) user_cnt <!-- 실시간 접속자 수 -->
+		, (select channel_name from channel_info order by user_cnt desc limit 1) channel_name  <!-- 가장 사람이 많은 채팅방 -->
+		, (SELECT COUNT(*) FROM login_user ) user <!-- 전체 가입자 수 -->
+		, (SELECT COUNT(*) FROM login_user WHERE USER_SEX = 'M') sex_man
+		, (SELECT COUNT(*) FROM login_user WHERE USER_SEX = 'W') sex_woman
+		FROM channel_info ;
+     </select>
+</mapper>

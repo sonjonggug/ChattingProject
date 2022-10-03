@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
@@ -51,6 +52,17 @@ public class UserService implements UserDetailsService{
     	  	
     }	
     
+    /**
+     * 접속자 로그인 시간 업데이트 
+     * @param userid
+     * @throws Exception
+     */
+    @Transactional
+    public void updateDate(String userid) throws Exception{  	
+    	 SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+    	 today.format(new Date());
+    	 LoginRepository.updateDate(today.format(new Date()),userid);
+    }	
     
     /**
      * 회원가입 , 비밀번호를 인코딩하여 DB에 저장
@@ -93,6 +105,7 @@ public class UserService implements UserDetailsService{
      */
     @Override
     public UserDetails loadUserByUsername(String userid) throws UsernameNotFoundException {
+    
         //여기서 받은 유저 패스워드와 비교하여 로그인 인증       
         LoginUser LoginUser =LoginRepository.findByUserid(userid);
         if (LoginUser == null){
