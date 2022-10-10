@@ -28,6 +28,20 @@
 <body id="page-top">
     <input type="hidden" id='sex_man' value='<c:out value="${sex_man}"/>'>
     <input type="hidden" id='sex_woman' value='<c:out value="${sex_woman}"/>'>
+    
+    <input type="hidden" id='Jan' value='<c:out value="${Userincrease.Jan}"/>'>
+    <input type="hidden" id='Feb' value='<c:out value="${Userincrease.Feb}"/>'>
+    <input type="hidden" id='Mar' value='<c:out value="${Userincrease.Mar}"/>'>
+    <input type="hidden" id='Apr' value='<c:out value="${Userincrease.Apr}"/>'>
+    <input type="hidden" id='May' value='<c:out value="${Userincrease.May}"/>'>
+    <input type="hidden" id='Jun' value='<c:out value="${Userincrease.Jun}"/>'>
+    <input type="hidden" id='Jul' value='<c:out value="${Userincrease.Jul}"/>'>
+    <input type="hidden" id='Aug' value='<c:out value="${Userincrease.Aug}"/>'>
+    <input type="hidden" id='Sep' value='<c:out value="${Userincrease.Sep}"/>'>
+    <input type="hidden" id='Oct' value='<c:out value="${Userincrease.Oct}"/>'>
+    <input type="hidden" id='nov' value='<c:out value="${Userincrease.nov}"/>'>
+    <input type="hidden" id='Dece' value='<c:out value="${Userincrease.Dece}"/>'>
+    
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -170,19 +184,18 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+<!--                     Topbar Search -->
+<!--                     <form  action="searchUser" method="get" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"> -->
+<!--                         <div class="input-group"> -->
+<!--                             <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." -->
+<!--                                 aria-label="Search" aria-describedby="basic-addon2"> -->
+<!--                             <div class="input-group-append"> -->
+<!--                                 <button class="btn btn-primary" type="submit"> -->
+<!--                                     <i class="fas fa-search fa-sm"></i> -->
+<!--                                 </button> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                     </form> -->
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -543,153 +556,145 @@
                     <div class="row">
 
                         <!-- Content Column -->
-                        <div class="col-lg-6 mb-4">
-
+                        <div class="col-xl-12 col-lg-9">
+                           <!-- DataTales Example -->
+                    <div class="card shadow mb-10">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">사용자 목록</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>사용자 이름</th>
+                                            <th>사용자 아이디</th>
+                                            <th>성별</th>
+                                            <th>권한</th>
+                                            <th>로그인 날짜</th>
+                                            <th>가입 날짜</th>
+                                            <th>정보 수정</th>
+                                        </tr>
+                                    </thead>                                 
+                                   
+                                    
+                                    <c:if test="${showUser.size() == 0 }">
+										<tfoot>
+											<tr>
+										     <td colspan="3">현재 데이터가 없습니다.</td>
+											</tr>
+										</tfoot>
+									</c:if>
+									 
+									<tbody>
+										<c:forEach var="showUser" items="${showUser}" varStatus="status">
+											<tr>
+												<td><c:out value="${showUser.user_name }"/></td>
+												<td><c:out value="${showUser.userid }"/></td>
+												<td><c:out value="${showUser.user_sex }"/></td>
+												<td><c:out value="${showUser.user_auth }"/></td>
+												<td><c:out value="${showUser.login_date }"/></td>
+												<td><c:out value="${showUser.join_date }"/></td>
+												<td><button onclick="updateUser"><a href="#ex1" rel="modal:open">수정</a></button></td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								                                                                                                     
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                             <!-- Project Card Example -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="small font-weight-bold">Server Migration <span
-                                            class="float-right">20%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
-                                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Sales Tracking <span
-                                            class="float-right">40%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
-                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Customer Database <span
-                                            class="float-right">60%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar" role="progressbar" style="width: 60%"
-                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Payout Details <span
-                                            class="float-right">80%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
-                                            aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Account Setup <span
-                                            class="float-right">Complete!</span></h4>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
-                                            aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
+<!--                             <div class="card shadow mb-6"> -->
+<!--                                 <div class="card-header py-3"> -->
+<!--                                     <h6 class="m-0 font-weight-bold text-primary">Projects</h6> -->
+<!--                                 </div> -->
+<!--                                 <div class="card-body"> -->
+<!--                                     <h4 class="small font-weight-bold">Server Migration <span -->
+<!--                                             class="float-right">20%</span></h4> -->
+<!--                                     <div class="progress mb-4"> -->
+<!--                                         <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" -->
+<!--                                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div> -->
+<!--                                     </div> -->
+<!--                                     <h4 class="small font-weight-bold">Sales Tracking <span -->
+<!--                                             class="float-right">40%</span></h4> -->
+<!--                                     <div class="progress mb-4"> -->
+<!--                                         <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" -->
+<!--                                             aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div> -->
+<!--                                     </div> -->
+<!--                                     <h4 class="small font-weight-bold">Customer Database <span -->
+<!--                                             class="float-right">60%</span></h4> -->
+<!--                                     <div class="progress mb-4"> -->
+<!--                                         <div class="progress-bar" role="progressbar" style="width: 60%" -->
+<!--                                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div> -->
+<!--                                     </div> -->
+<!--                                     <h4 class="small font-weight-bold">Payout Details <span -->
+<!--                                             class="float-right">80%</span></h4> -->
+<!--                                     <div class="progress mb-4"> -->
+<!--                                         <div class="progress-bar bg-info" role="progressbar" style="width: 80%" -->
+<!--                                             aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div> -->
+<!--                                     </div> -->
+<!--                                     <h4 class="small font-weight-bold">Account Setup <span -->
+<!--                                             class="float-right">Complete!</span></h4> -->
+<!--                                     <div class="progress"> -->
+<!--                                         <div class="progress-bar bg-success" role="progressbar" style="width: 100%" -->
+<!--                                             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div> -->
+<!--                                     </div> -->
+<!--                                     <h4 class="small font-weight-bold">Account Setup <span -->
+<!--                                             class="float-right">Complete!</span></h4> -->
+<!--                                     <div class="progress"> -->
+<!--                                         <div class="progress-bar bg-success" role="progressbar" style="width: 100%" -->
+<!--                                             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div> -->
+<!--                                     </div> -->
+<!--                                     <h4 class="small font-weight-bold">Account Setup <span -->
+<!--                                             class="float-right">Complete!</span></h4> -->
+<!--                                     <div class="progress"> -->
+<!--                                         <div class="progress-bar bg-success" role="progressbar" style="width: 100%" -->
+<!--                                             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                             </div> -->
 
-                            <!-- Color System -->
-                            <div class="row">
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-primary text-white shadow">
-                                        <div class="card-body">
-                                            Primary
-                                            <div class="text-white-50 small">#4e73df</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-success text-white shadow">
-                                        <div class="card-body">
-                                            Success
-                                            <div class="text-white-50 small">#1cc88a</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-info text-white shadow">
-                                        <div class="card-body">
-                                            Info
-                                            <div class="text-white-50 small">#36b9cc</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-warning text-white shadow">
-                                        <div class="card-body">
-                                            Warning
-                                            <div class="text-white-50 small">#f6c23e</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-danger text-white shadow">
-                                        <div class="card-body">
-                                            Danger
-                                            <div class="text-white-50 small">#e74a3b</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-secondary text-white shadow">
-                                        <div class="card-body">
-                                            Secondary
-                                            <div class="text-white-50 small">#858796</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-light text-black shadow">
-                                        <div class="card-body">
-                                            Light
-                                            <div class="text-black-50 small">#f8f9fc</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-dark text-white shadow">
-                                        <div class="card-body">
-                                            Dark
-                                            <div class="text-white-50 small">#5a5c69</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                       
 
                         </div>
 
-                        <div class="col-lg-6 mb-4">
+<!--                         <div class="col-lg-6 mb-4"> -->
 
-                            <!-- Illustrations -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="text-center">
-                                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                            src="img/undraw_posting_photo.svg" alt="...">
-                                    </div>
-                                    <p>Add some quality, svg illustrations to your project courtesy of <a
-                                            target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
-                                        constantly updated collection of beautiful svg images that you can use
-                                        completely free and without attribution!</p>
-                                    <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on
-                                        unDraw &rarr;</a>
-                                </div>
-                            </div>
+<!--                             Illustrations -->
+<!--                             <div class="card shadow mb-4"> -->
+<!--                                 <div class="card-header py-3"> -->
+<!--                                     <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6> -->
+<!--                                 </div> -->
+<!--                                 <div class="card-body"> -->
+<!--                                     <div class="text-center"> -->
+<!--                                         <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" -->
+<!--                                             src="img/undraw_posting_photo.svg" alt="..."> -->
+<!--                                     </div> -->
+<!--                                     <p>Add some quality, svg illustrations to your project courtesy of <a -->
+<!--                                             target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a -->
+<!--                                         constantly updated collection of beautiful svg images that you can use -->
+<!--                                         completely free and without attribution!</p> -->
+<!--                                     <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on -->
+<!--                                         unDraw &rarr;</a> -->
+<!--                                 </div> -->
+<!--                             </div> -->
 
-                            <!-- Approach -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
-                                </div>
-                                <div class="card-body">
-                                    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-                                        CSS bloat and poor page performance. Custom CSS classes are used to create
-                                        custom components and custom utility classes.</p>
-                                    <p class="mb-0">Before working with this theme, you should become familiar with the
-                                        Bootstrap framework, especially the utility classes.</p>
-                                </div>
-                            </div>
+<!--                             Approach -->
+<!--                             <div class="card shadow mb-4"> -->
+<!--                                 <div class="card-header py-3"> -->
+<!--                                     <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6> -->
+<!--                                 </div> -->
+<!--                                 <div class="card-body"> -->
+<!--                                     <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce -->
+<!--                                         CSS bloat and poor page performance. Custom CSS classes are used to create -->
+<!--                                         custom components and custom utility classes.</p> -->
+<!--                                     <p class="mb-0">Before working with this theme, you should become familiar with the -->
+<!--                                         Bootstrap framework, especially the utility classes.</p> -->
+<!--                                 </div> -->
+<!--                             </div> -->
 
-                        </div>
+<!--                         </div> -->
                     </div>
 
                 </div>
@@ -755,6 +760,13 @@
     <!-- Page level custom scripts -->
     <script src="resources/bootstrap/js/demo/chart-area-demo.js"></script>
     <script src="resources/bootstrap/js/demo/chart-pie-demo.js"></script>
+    
+     <!-- datatables -->
+<!--     <script src="resources/bootstrap/vendor/datatables/jquery.dataTables.min.js"></script> -->
+<!--     <script src="resources/bootstrap/vendor/datatables/dataTables.bootstrap4.min.js"></script> -->
+<!--      <script src="resources/bootstrap/js/demo/datatables-demo.js"></script> -->
+    
+   
 
 </body>
 
