@@ -15,9 +15,8 @@ var myPieChart = new Chart(ctx, {
     labels: ["남","녀"],
     datasets: [{
       data: [sumCnt[0],sumCnt[1]],
-      backgroundColor: ['#1cc88a', '#4e73df'],
-      hoverBackgroundColor: ['#17a673', '#2e59d9'],
-      hoverBorderColor: "rgba(234, 236, 244, 1)",
+      backgroundColor: ['#4e73df', '#1cc88a']
+ 
     }],
   },
   options: {

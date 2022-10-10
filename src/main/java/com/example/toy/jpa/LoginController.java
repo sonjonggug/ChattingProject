@@ -130,17 +130,5 @@ public class LoginController {
 			return  "redirect:mychatt";
 		}		
 	}
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-	public String admin(Model model) throws Exception {
-		HashMap<String, String> HashMap = new HashMap<String, String>();		
-		HashMap = UserManagementService.UserSum();
-        logger.info("Mapper 값 " + HashMap);
-		    
-		 model.addAttribute("sumCnt",HashMap.get("user_cnt"));
-		 model.addAttribute("user",HashMap.get("user"));
-		 model.addAttribute("channel_name",HashMap.get("channel_name"));
-		 model.addAttribute("sex_man",HashMap.get("sex_man"));
-		 model.addAttribute("sex_woman",HashMap.get("sex_woman"));
-		return "user/index";			
-	}
+	
 }

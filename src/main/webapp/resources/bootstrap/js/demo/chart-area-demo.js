@@ -27,14 +27,42 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
-// Area Chart Example
+// 사용자 수 추이 Area Chart
+
+
+const userincrease = new Array();
+const Jan = document.getElementById('Jan').value;
+const Feb = document.getElementById('Feb').value;
+const Mar = document.getElementById('Mar').value;
+const Apr = document.getElementById('Apr').value;
+const May = document.getElementById('May').value;
+const Jun = document.getElementById('Jun').value;
+const Jul = document.getElementById('Jul').value;
+const Aug = document.getElementById('Aug').value;
+const Sep = document.getElementById('Sep').value;
+const Oct = document.getElementById('Oct').value;
+const nov = document.getElementById('nov').value;
+const Dece = document.getElementById('Dece').value;
+userincrease.push(Jan);
+userincrease.push(Feb);
+userincrease.push(Mar);
+userincrease.push(Apr);
+userincrease.push(May);
+userincrease.push(Jun);
+userincrease.push(Jul);
+userincrease.push(Aug);
+userincrease.push(Sep);
+userincrease.push(Oct);
+userincrease.push(nov);
+userincrease.push(Dece);
+
 var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
     datasets: [{
-      label: "Earnings",
+      label: "사용자 수 ",
       lineTension: 0.3,
       backgroundColor: "rgba(78, 115, 223, 0.05)",
       borderColor: "rgba(78, 115, 223, 1)",
@@ -46,7 +74,8 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
+      data: [userincrease[0], userincrease[1], userincrease[2],userincrease[3],userincrease[4],userincrease[5],userincrease[6],userincrease[7],userincrease[8],
+      userincrease[9],userincrease[10],userincrease[11],userincrease[12]],
     }],
   },
   options: {
@@ -68,18 +97,13 @@ var myLineChart = new Chart(ctx, {
           display: false,
           drawBorder: false
         },
-        ticks: {
-          maxTicksLimit: 7
-        }
       }],
       yAxes: [{
         ticks: {
-          maxTicksLimit: 5,
-          padding: 10,
-          // Include a dollar sign in the ticks
-          callback: function(value, index, values) {
-            return '$' + number_format(value);
-          }
+                min: 0,
+				stepSize : 1
+				
+        
         },
         gridLines: {
           color: "rgb(234, 236, 244)",
@@ -93,26 +117,5 @@ var myLineChart = new Chart(ctx, {
     legend: {
       display: false
     },
-    tooltips: {
-      backgroundColor: "rgb(255,255,255)",
-      bodyFontColor: "#858796",
-      titleMarginBottom: 10,
-      titleFontColor: '#6e707e',
-      titleFontSize: 14,
-      borderColor: '#dddfeb',
-      borderWidth: 1,
-      xPadding: 15,
-      yPadding: 15,
-      displayColors: false,
-      intersect: false,
-      mode: 'index',
-      caretPadding: 10,
-      callbacks: {
-        label: function(tooltipItem, chart) {
-          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
-        }
-      }
-    }
   }
 });
