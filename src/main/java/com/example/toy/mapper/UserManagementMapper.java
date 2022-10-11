@@ -13,4 +13,6 @@ public interface UserManagementMapper {
 	HashMap<String,String> Userincrease();
 	
 	ArrayList<HashMap> showUser();
+	
+	HashMap<String,String> selectUser(String userid);
 }

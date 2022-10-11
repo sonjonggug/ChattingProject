@@ -3,6 +3,8 @@ package com.example.toy.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +61,17 @@ private static final Logger logger = LoggerFactory.getLogger(LoginController.cla
 		logger.info("사용자 검색" + showUser);
 		
 		model.addAttribute("showUser",showUser);
+		return "user/tables";			
+	}
+	@RequestMapping(value = "/selectUser", method = RequestMethod.GET)
+	public String selectUser(HttpServletRequest request,Model model) throws Exception {
+		HashMap<String, String> selectUser = new HashMap<String, String>();
+		String userid = request.getParameter("userid");
+		
+		selectUser = UserManagementService.selectUser(userid);		
+		logger.info("사용자 업데이트 검색" + selectUser);
+		
+		model.addAttribute("selectUser",selectUser);
 		return "user/tables";			
 	}
 }

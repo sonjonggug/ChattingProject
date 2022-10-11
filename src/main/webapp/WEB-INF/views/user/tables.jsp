@@ -284,17 +284,17 @@
 									</c:if>
 									 
 									<tbody>
-										<c:forEach var="showUser" items="${showUser}" varStatus="status">
+									 
 											<tr>
-												<td><c:out value="${showUser.user_name }"/></td>
-												<td><c:out value="${showUser.userid }"/></td>
-												<td><c:out value="${showUser.user_sex }"/></td>
-												<td><c:out value="${showUser.user_auth }"/></td>
-												<td><c:out value="${showUser.login_date }"/></td>
-												<td><c:out value="${showUser.join_date }"/></td>
+												<td><c:out value="${selectUser.user_name }"/></td>
+												<td><c:out value="${selectUser.userid }"/></td>
+												<td><c:out value="${selectUser.user_sex }"/></td>
+												<td><c:out value="${selectUser.user_auth }"/></td>
+												<td><c:out value="${selectUser.login_date }"/></td>
+												<td><c:out value="${selectUser.join_date }"/></td>
 												<td><button onclick="updateUser"><a href="#ex1" rel="modal:open">수정</a></button></td>
 											</tr>
-										</c:forEach>
+									
 									</tbody>
 								                                                                                                     
                                 </table>
