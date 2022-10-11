@@ -36,4 +36,8 @@
   		 select user_name , userid , user_sex , join_date ,login_date , user_auth  from  login_user ;
      </select>
      
+     
+      <select id="selectUser" parameterType="String" resultType="HashMap">
+  		 select user_name , userid , user_sex , join_date ,login_date , user_auth  from  login_user where userid = "${userid}";
+     </select>
 </mapper>
