@@ -590,12 +590,12 @@
 										<c:forEach var="showUser" items="${showUser}" varStatus="status">
 											<tr>
 												<td><c:out value="${showUser.user_name }"/></td>
-												<td><c:out value="${showUser.userid }"/></td>
+												<td ><c:out value="${showUser.userid }"/></td>
 												<td><c:out value="${showUser.user_sex }"/></td>
 												<td><c:out value="${showUser.user_auth }"/></td>
 												<td><c:out value="${showUser.login_date }"/></td>
 												<td><c:out value="${showUser.join_date }"/></td>
-												<td><button onclick="updateUser"><a href="#ex1" rel="modal:open">수정</a></button></td>
+												<td><button onclick="selectUser('<c:out value="${showUser.userid }"/>');">수정</button></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -743,7 +743,22 @@
             </div>
         </div>
     </div>
+   <script> 
+   function selectUser(id){
 
+     var popup = window.open('selectUser?userid='+id, '네이버팝업', 'width=700px,height=800px,scrollbars=yes');
+//       	var frmPop= document.frmPopup;
+//         var url    ="testpop.asp";
+//         var title  = "updateUser";
+//         var status = "toolbar=no,directories=no,scrollbars=no,resizable=no,status=no,menubar=no,width=240, height=200, top=0,left=20";
+//         window.open("", title,status); //window.open(url,title,status); window.open 함수에 url을 앞에와 같이
+//                                                   //인수로  넣어도 동작에는 지장이 없으나 form.action에서 적용하므로 생략 가능합니다.                                                  
+//         frm.target = title;                    //form.target 이 부분이 빠지면 form값 전송이 되지 않습니다.
+//         frm.action = url;                    //form.action 이 부분이 빠지면 action값을 찾지 못해서 제대로 된 팝업이 뜨질 않습니다.
+//         frm.method = "post";
+//         frm.submit();    
+   }
+   </script>
     <!-- Bootstrap core JavaScript-->
     <script src="resources/bootstrap/vendor/jquery/jquery.min.js"></script>
     <script src="resources/bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

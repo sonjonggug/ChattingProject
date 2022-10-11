@@ -31,11 +31,19 @@ public class UserManagementService {
   public   ArrayList<HashMap> showUser () throws Exception {
 //	  HashMap<String, String> HashMap = new HashMap<String, String>();
 	  ArrayList<HashMap> HashMap = new ArrayList<HashMap>();
-	  System.out.println("-------------------------------------");	  
+	  	  
 	  HashMap = UserManagementMapper.showUser();
 	  
 	return HashMap;
   
 }
+  public HashMap<String, String> selectUser (String userid) throws Exception {
+	  HashMap<String, String> HashMap = new HashMap<String, String>();
+	  
+	  HashMap = UserManagementMapper.selectUser(userid);
+	  
+	return HashMap;
+  
   
  }
+}
