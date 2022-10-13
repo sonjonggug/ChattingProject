@@ -63,11 +63,11 @@ private static final Logger logger = LoggerFactory.getLogger(LoginController.cla
 		model.addAttribute("showUser",showUser);
 		return "user/tables";			
 	}
-	@RequestMapping(value = "/selectUser", method = RequestMethod.GET)
+	@RequestMapping(value = "/selectUser", method = RequestMethod.POST)
 	public String selectUser(HttpServletRequest request,Model model) throws Exception {
 		HashMap<String, String> selectUser = new HashMap<String, String>();
 		String userid = request.getParameter("userid");
-		
+		System.out.println("--------------------------"+userid);
 		selectUser = UserManagementService.selectUser(userid);		
 		logger.info("사용자 업데이트 검색" + selectUser);
 		

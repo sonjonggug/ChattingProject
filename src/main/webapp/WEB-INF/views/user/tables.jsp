@@ -286,18 +286,29 @@
 									<tbody>
 									 
 											<tr>
-												<td><c:out value="${selectUser.user_name }"/></td>
-												<td><c:out value="${selectUser.userid }"/></td>
-												<td><c:out value="${selectUser.user_sex }"/></td>
-												<td><c:out value="${selectUser.user_auth }"/></td>
-												<td><c:out value="${selectUser.login_date }"/></td>
-												<td><c:out value="${selectUser.join_date }"/></td>
-												<td><button onclick="updateUser"><a href="#ex1" rel="modal:open">수정</a></button></td>
+										
+											<td><input type="text" id="user_namew" value="${selectUser.user_name }"></td>
+											<td><input type="text" id="useridw" value="${selectUser.userid }"></td>
+											<td><input type="text" id="user_sexw" value="${selectUser.user_sex }"></td>
+											<td><input type="text" id="user_authw" value="${selectUser.user_auth }"></td>
+											<td><input type="text" id="login_datew" value="${selectUser.login_date }"></td>
+											<td><input type="text" id="join_datew" value="${selectUser.join_date }"></td>
+											<td><button onclick="updateUser();">수정</button></td>
+										
 											</tr>
-									
+									     
 									</tbody>
 								                                                                                                     
                                 </table>
+                                 <form action="updateUser" method="post" target="blank" id="frm">
+      											<input type="hidden" id="user_name" name="userid" value="">
+      											<input type="hidden" id="userid" name="userid" value="">
+      											<input type="hidden" id="user_sex" name="userid" value="">
+      											<input type="hidden" id="user_auth" name="userid" value="">
+      											<input type="hidden" id="login_date" name="userid" value="">
+      											<input type="hidden" id="join_date" name="userid" value="">
+      											  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>     											
+										</form>  
                             </div>
                         </div>
                     </div>
@@ -347,7 +358,28 @@
             </div>
         </div>
     </div>
+    
+     <script> 
+   function updateUser(){
+	var user_name = document.getElementById('user_namew').value;
+	var userid = document.getElementById('useridow').value;
+	var user_sex = document.getElementById('user_sexw').value;
+	var user_auth = document.getElementById('user_authw').value;
+	var login_date = document.getElementById('login_datew').value;
+	var join_date = document.getElementById('join_datew').value;
+	   
+	   $('input[name=user_name]').attr('value',user_name);
+        $('input[name=userid]').attr('value',userid);
+        $('input[name=user_sex]').attr('value',user_sex);
+        $('input[name=user_auth]').attr('value',user_auth);
+        $('input[name=login_date]').attr('value',login_date);
+        $('input[name=join_date]').attr('value',join_date);        
+        document.getElementById('frm').submit();
 
+   }
+   </script>
+    
+    
     <!-- Bootstrap core JavaScript-->
     <script src="resources/bootstrap/vendor/jquery/jquery.min.js"></script>
     <script src="resources/bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
