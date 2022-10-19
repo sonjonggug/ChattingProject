@@ -16,13 +16,14 @@
 		<link rel="stylesheet" href="/resources/css/all.css">
  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
  
-<script>
-</script>
+ <!--	cross origin	-->
+<!-- <script type="text/javascript" src="/js/jquery.ajax-cross-origin.min.js"></script> -->
+ 
 </head>
 <body> 
 <script> 
    
- setInterval(SearchCnt, 30000);
+//  setInterval(SearchCnt, 30000);
    
  	function English(){
  		var text= $("#msg").val();
@@ -80,6 +81,36 @@
 	 		}); 
 			
 	}
+	function talkBot(){
+	      
+		var text = $("#msg").val();
+		var msg = text;
+			
+			$.ajax({
+		 		 type : 'GET',
+		 	    url :'/talkBot',
+		 	   	data :{
+		 	   	talk : msg ,	    		
+		    	},
+		 	    dataType : "json",
+//		 	   	contentType : 'application/json',
+		 	    success : function(data) {
+		 	    	var str = data.generations[0].text;
+		 	    	var words = str.split('.');		 	    	
+		 	    	alert(words[0]); 
+		 	    	let arr = str.split(/["A",:]/);
+		 	    	alert(arr);
+		 	    	$('input[name=alram1]').attr('value',data.generations[0].text);
+		 	    	sendo();
+// 		 	       alert(data.generations[0].text);
+		 	      
+		 	    },
+		 	    error : function(error) {
+		 	        alert(error);    	 	        
+		 	    }
+		 		}); 
+				
+		}
 </script>
 
 	<div id='chatt'>	 			
@@ -91,17 +122,18 @@
 		<br/>
 		<div id='talk'></div>
 		<div id='sendZone'>
-			<textarea id='msg' value='hi...' ></textarea>
+			<textarea id='msg' name='msg'></textarea>
 			<button type="button" onclick="China();">중국어</button>
 			<button type="button" onclick="English();">영어</button>
-<!-- 			<button type="button" onclick="SearchCnt();">차트</button> -->
+			<button type="button" onclick="talkBot();">테스트</button>
 			<input type='hidden' value='전송' id='btnSend'>						
-			<input type='hidden' value='${sessionScope.id} 님이 입장하셨습니다.' id='alram1'>
+			<input type='hidden' value='${sessionScope.id} 님이 입장하셨습니다.' id='alram1' name='alram1'>
 			<input type='hidden' value='${sessionScope.id} 님이 퇴장하셨습니다.' id='exitAlram'>
 		</div>
 	</div>
 	<div>	
 	</div>
 	<script src='resources/js/chatt.js'></script>
+
 </body>
 </html>
