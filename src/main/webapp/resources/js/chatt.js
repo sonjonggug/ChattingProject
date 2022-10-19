@@ -65,6 +65,7 @@ btnSend.onclick = function(){
 }
 function send(){
 	if(msg.value.trim() != ''){
+		talkBot();
 		data.mid = getId('mid').value;
 		data.msg = msg.value;
 		data.date = new Date().toLocaleString();
