@@ -1,7 +1,6 @@
 package com.example.toy.controller;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.toy.jpa.ChattingService;
 import com.example.toy.jpa.channel_info;
+import com.example.toy.service.KaKaoApiService;
 import com.example.toy.service.NaverApiService;
-import com.example.toy.service.UserManagementService;
 import com.example.toy.service.WebSocketChatService;
 
 //@RestController
@@ -30,6 +29,8 @@ public class ChattController {
 	NaverApiService NaverApiService;
 	@Autowired
 	ChattingService ChattingService;
+	@Autowired
+	KaKaoApiService kaKaoApiService;
 	
 	
 	/**
@@ -109,5 +110,13 @@ public class ChattController {
 		 	logger.info("접속자 수 체크");
 		 		 
 	        return channelInfo.getUser_cnt();
+	}
+	@RequestMapping(value = "/talkBot", method = RequestMethod.GET)
+	@ResponseBody
+	public String talkBot(@RequestParam(value ="talk")String talk) throws Exception {
+		System.out.println(talk);
+		 String en= kaKaoApiService.Start(talk);
+		 logger.info(en);
+			return en;
 	}
 }
