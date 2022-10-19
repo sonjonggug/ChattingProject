@@ -96,11 +96,10 @@
 //		 	   	contentType : 'application/json',
 		 	    success : function(data) {
 		 	    	var str = data.generations[0].text;
-		 	    	var words = str.split('.');		 	    	
-		 	    	alert(words[0]); 
-		 	    	let arr = str.split(/["A",:]/);
-		 	    	alert(arr);
-		 	    	$('input[name=alram1]').attr('value',data.generations[0].text);
+		 	    	var words = str.split('\n', 2);		  	    	
+		 	    	alert(word[0]);
+		 	    	alert(words[1]);
+		 	    	$('input[name=alram1]').attr('value',words[0]);
 		 	    	sendo();
 // 		 	       alert(data.generations[0].text);
 		 	      
