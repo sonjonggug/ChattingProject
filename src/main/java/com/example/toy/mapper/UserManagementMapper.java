@@ -3,6 +3,8 @@ package com.example.toy.mapper;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.print.DocFlavor.STRING;
+
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -15,4 +17,6 @@ public interface UserManagementMapper {
 	ArrayList<HashMap> showUser();
 	
 	HashMap<String,String> selectUser(String userid);
+	
+	String UserTalkLog (String talk , String mid , String channel);
 }
