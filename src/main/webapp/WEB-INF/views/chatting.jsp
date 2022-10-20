@@ -83,26 +83,30 @@
 	}
 	function talkBot(){
 	      
-		var text = $("#msg").val();
-		var msg = text;
-			
+		var text = $("#msg").val(); // 메시지 정보
+		var userid = $("#mid").val(); // 메시지 정보
+		var channel_name = $("#channel").val(); // 메시지 정보
+		
+		var msg = "Q : "+text+ "A :";
+		
 			$.ajax({
 		 		 type : 'GET',
 		 	    url :'/talkBot',
 		 	   	data :{
-		 	   	talk : msg ,	    		
+		 	   	talk : msg ,
+		 	   	userid : userid ,
+		 	   	channel_name : channel_name 
 		    	},
 		 	    dataType : "json",
-//		 	   	contentType : 'application/json',
+
 		 	    success : function(data) {
 		 	    	var str = data.generations[0].text;
-		 	    	var words = str.split('\n', 2);		  	    	
-		 	    	alert(word[0]);
-		 	    	alert(words[1]);
-		 	    	$('input[name=alram1]').attr('value',words[0]);
+		 	    	var words = str.indexOf(':'); // 첫번째로 Q가 있는 위치 index 리턴 		  	    	
+		 	    	var result = str.slice(0, words-2); //0부터 첫번째 Q가 있는위치까지 짜름
+		 	    	$('input[name=alram1]').attr('value',result);
 		 	    	sendo();
-// 		 	       alert(data.generations[0].text);
-		 	      
+
+		 	    
 		 	    },
 		 	    error : function(error) {
 		 	        alert(error);    	 	        
@@ -115,7 +119,7 @@
 	<div id='chatt'>	 			
 		<h3>IP : ${sessionScope.IP}  Port :  ${sessionScope.Port}</h3> <h3 id="user_cnt">현재 1명 접속중입니다.</h3>
 		<input type='hidden' id="channel" name="channel" value='${sessionScope.channel}'>
-		<input type='hidden' id='mid' value='${sessionScope.id}' readonly>
+		<input type='hidden' id='mid' name="mid" value='${sessionScope.id}' readonly>
 		<input type='hidden' value='로그인' id='btnLogin' >
 		<buttion type="button" onclick="Session();">${sessionScope.Count}</buttion>
 		<br/>
