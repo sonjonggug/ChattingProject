@@ -31,10 +31,10 @@ public class KaKaoApiService {
           
           JSONObject jsonData = new JSONObject(); // JSON 형식으로 전달
           jsonData.put("prompt", talk); // 전달할 제시어
-          jsonData.put("max_tokens", 120); // 생성할 결과의 최대 글자 수 
+          jsonData.put("max_tokens", 200); // 생성할 결과의 최대 글자 수 
           jsonData.put("n", 1); // 생성할 결과 수
           jsonData.put("temperature", 0.1); // 0 초과 1 이하의 실수 값 사용 가능 , temperature 수치가 높을수록 더 창의적인 결과가 생성됨
-          jsonData.put("top_p", 0.1); //0 이상 1 이하의 실수 값 사용 가능 ,  top_p 수치가 높을수록 더 창의적인 결과가 생성됨
+          jsonData.put("top_p", 0.1); // 0 이상 1 이하의 실수 값 사용 가능 ,  top_p 수치가 높을수록 더 창의적인 결과가 생성됨
          
           
           

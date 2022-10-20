@@ -44,6 +44,11 @@ public class UserManagementService {
 	  
 	return HashMap;
   
-  
  }
+  
+//  public String UserTalkLog (String talk , String mid , String channel) throws Exception {
+//
+//		return UserManagementMapper.UserTalkLog(talk,mid,channel);
+//		  
+//	  }
 }

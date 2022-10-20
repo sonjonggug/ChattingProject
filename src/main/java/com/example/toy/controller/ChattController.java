@@ -1,6 +1,7 @@
 package com.example.toy.controller;
 
-import java.util.HashMap;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,15 +10,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.toy.jpa.ChattingService;
+import com.example.toy.jpa.UserTalk;
 import com.example.toy.jpa.channel_info;
 import com.example.toy.service.KaKaoApiService;
 import com.example.toy.service.NaverApiService;
+import com.example.toy.service.UserManagementService;
 import com.example.toy.service.WebSocketChatService;
 
 //@RestController
@@ -31,7 +35,8 @@ public class ChattController {
 	ChattingService ChattingService;
 	@Autowired
 	KaKaoApiService kaKaoApiService;
-	
+	@Autowired
+	UserManagementService userManagementService;
 	
 	/**
 	 * 정적 변수로 저장된 client 값을 가져옴 
@@ -111,12 +116,26 @@ public class ChattController {
 		 		 
 	        return channelInfo.getUser_cnt();
 	}
+	
+	
 	@RequestMapping(value = "/talkBot", method = RequestMethod.GET)
 	@ResponseBody
-	public String talkBot(@RequestParam(value ="talk")String talk) throws Exception {
-		System.out.println(talk);
+	public String talkBot(@RequestParam(value ="talk")String talk ,  @ModelAttribute UserTalk userTalk) throws Exception {	
+		SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+   	 	today.format(new Date());
+   	     System.out.println("-----------"+userTalk.getChannel_name()+userTalk.getUserid());
 		 String en= kaKaoApiService.Start(talk);
+		 
+		 
 		 logger.info(en);
+		  
+		  int prompt_tokens=en.lastIndexOf("prompt_tokens");		  
+		  int generated_tokens=en.indexOf("generated_tokens");
+		 
+	  		  
+		  String result = en.substring(prompt_tokens+15, generated_tokens-2);
+
+		  
 			return en;
 	}
 }
