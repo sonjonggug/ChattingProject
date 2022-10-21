@@ -6,42 +6,56 @@
     <!-- 로그인 -->
     <select id="UserSum" parameterType="HashMap" resultType="HashMap">
      SELECT SUM(user_cnt) user_cnt <!-- 실시간 접속자 수 -->
-		, (select channel_name from channel_info order by user_cnt desc limit 1) channel_name  <!-- 가장 사람이 많은 채팅방 -->
-		, (SELECT COUNT(*) FROM login_user ) user <!-- 전체 가입자 수 -->
-		, (SELECT COUNT(*) FROM login_user WHERE USER_SEX = 'M') sex_man
-		, (SELECT COUNT(*) FROM login_user WHERE USER_SEX = 'W') sex_woman
-		FROM channel_info ;
+		, (select channel_name from CHANNEL_INFO order by user_cnt desc limit 1) channel_name  <!-- 가장 사람이 많은 채팅방 -->
+		, (SELECT COUNT(*) FROM LOGIN_USER ) user <!-- 전체 가입자 수 -->
+		, (SELECT COUNT(*) FROM LOGIN_USER WHERE USER_SEX = 'M') sex_man
+		, (SELECT COUNT(*) FROM LOGIN_USER WHERE USER_SEX = 'W') sex_woman
+		FROM CHANNEL_INFO ;
      </select>
      
    <!-- 사용자수 추이 -->
     <select id="Userincrease" parameterType="HashMap" resultType="HashMap">
     select 
-	(select  count(*) from login_user where TO_CHAR(join_date,'YYYYMMDD') between 20220101 and 20220131) as Jan,
-	(select  count(*) from login_user where TO_CHAR(join_date,'YYYYMMDD') between 20220201 and 20220231) as Feb,
-	(select  count(*) from login_user where TO_CHAR(join_date,'YYYYMMDD') between 20220301 and 20220331) as Mar,
-	(select  count(*) from login_user where TO_CHAR(join_date,'YYYYMMDD') between 20220401 and 20220431) as Apr,
-	(select  count(*) from login_user where TO_CHAR(join_date,'YYYYMMDD') between 20220501 and 20220531) as May,
-	(select  count(*) from login_user where TO_CHAR(join_date,'YYYYMMDD') between 20220601 and 20220631) as Jun, 
-	(select  count(*) from login_user where TO_CHAR(join_date,'YYYYMMDD') between 20220701 and 20220731) as Jul, 
-	(select  count(*) from login_user where TO_CHAR(join_date,'YYYYMMDD') between 20220801 and 20220831) as Aug, 
-	(select  count(*) from login_user where TO_CHAR(join_date,'YYYYMMDD') between 20220901 and 20220931) as Sep, 
-	(select  count(*) from login_user where TO_CHAR(join_date,'YYYYMMDD') between 20221001 and 20221031) as Oct, 
-	(select  count(*) from login_user where TO_CHAR(join_date,'YYYYMMDD') between 20221101 and 20221131) as nov,
-	(select  count(*) from login_user where TO_CHAR(join_date,'YYYYMMDD') between 20221201 and 20221231) as Dece
+	(select  count(*) from LOGIN_USER where TO_CHAR(join_date,'YYYYMMDD') between 20220101 and 20220131) as Jan,
+	(select  count(*) from LOGIN_USER where TO_CHAR(join_date,'YYYYMMDD') between 20220201 and 20220231) as Feb,
+	(select  count(*) from LOGIN_USER where TO_CHAR(join_date,'YYYYMMDD') between 20220301 and 20220331) as Mar,
+	(select  count(*) from LOGIN_USER where TO_CHAR(join_date,'YYYYMMDD') between 20220401 and 20220431) as Apr,
+	(select  count(*) from LOGIN_USER where TO_CHAR(join_date,'YYYYMMDD') between 20220501 and 20220531) as May,
+	(select  count(*) from LOGIN_USER where TO_CHAR(join_date,'YYYYMMDD') between 20220601 and 20220631) as Jun, 
+	(select  count(*) from LOGIN_USER where TO_CHAR(join_date,'YYYYMMDD') between 20220701 and 20220731) as Jul, 
+	(select  count(*) from LOGIN_USER where TO_CHAR(join_date,'YYYYMMDD') between 20220801 and 20220831) as Aug, 
+	(select  count(*) from LOGIN_USER where TO_CHAR(join_date,'YYYYMMDD') between 20220901 and 20220931) as Sep, 
+	(select  count(*) from LOGIN_USER where TO_CHAR(join_date,'YYYYMMDD') between 20221001 and 20221031) as Oct, 
+	(select  count(*) from LOGIN_USER where TO_CHAR(join_date,'YYYYMMDD') between 20221101 and 20221131) as nov,
+	(select  count(*) from LOGIN_USER where TO_CHAR(join_date,'YYYYMMDD') between 20221201 and 20221231) as Dece
  from dual;
      </select>
      
       <!-- 사용자 검색 -->
     <select id="showUser" parameterType="HashMap" resultType="HashMap">
-  		 select user_name , userid , user_sex , join_date ,login_date , user_auth  from  login_user ;
+  		 select user_name , userid , user_sex , join_date ,login_date , user_auth  from  LOGIN_USER ;
      </select>
      
      
       <select id="selectUser" parameterType="String" resultType="HashMap">
-  		 select user_name , userid , user_sex , join_date ,login_date , user_auth  from  login_user where userid = "${userid}";
+  		 select user_name , userid , user_sex , join_date ,login_date , user_auth  from  LOGIN_USER where userid = "${userid}";
      </select>
      
-      <insert id="UserTalkLog" parameterType="String" >
-  		insert into user_talk select user_name , userid , user_sex , join_date ,login_date , user_auth  from  login_user where userid = "${userid}";
+      <insert id="UserTalkLog" parameterType="com.example.toy.jpa.entity.User_Talk_Log">
+  		INSERT INTO USER_TALK_LOG (user_name, user_sex, userid, send_date, talk) 
+		  	SELECT 
+    		 	  a.USER_NAME 
+     			, a.USER_SEX 
+     			, a.USERID 
+     			, "${send_date}" 
+     			, "${talk}" 
+  			FROM LOGIN_USER a
+ 				WHERE userid ="${userid}";
+
+     </insert>
+      <insert id="talkBotSave" parameterType="com.example.toy.jpa.entity.Talk_Bot_Log">
+  		INSERT INTO TALK_BOT_LOG (userid, result, prompt_tokens, generated_tokens, send_date) 
+		  	VALUES('${userid}', '${result}', ${prompt_tokens}, ${generated_tokens}, '${send_date}');
+
      </insert>
 </mapper>

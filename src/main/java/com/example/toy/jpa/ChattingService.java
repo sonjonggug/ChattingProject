@@ -7,6 +7,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.toy.jpa.entity.Channel_Info;
+
 import lombok.RequiredArgsConstructor;
 
 //@RequiredArgsConstructor : final이 붙거나 @NotNull 이 붙은 필드의 생성자를 자동 생성해주는 롬복 어노테이션
@@ -37,10 +39,10 @@ public class ChattingService {
      * @return
      * @throws Exception
      */
-    public channel_info searchCnt(String channel) throws Exception {
-    	channel_info channel_info= new channel_info();   	
-    	channel_info = ChattingRepository.searchCnt(channel);
-		return channel_info; 	   	   
+    public Channel_Info searchCnt(String channel) throws Exception {
+    	Channel_Info Channel_Info= new Channel_Info();   	
+    	Channel_Info = ChattingRepository.searchCnt(channel);
+		return Channel_Info; 	   	   
      }
     /**
      * 전체 접속자 수   
@@ -48,8 +50,8 @@ public class ChattingService {
      * @throws Exception
      */
     public int sumCnt() throws Exception { 
-    	channel_info channel_info= new channel_info();
-    	channel_info  = ChattingRepository.sumCnt();
-		return channel_info.getUser_cnt(); 	   	   
+    	Channel_Info Channel_Info= new Channel_Info();
+    	Channel_Info  = ChattingRepository.sumCnt();
+		return Channel_Info.getUser_cnt(); 	   	   
      }
     }

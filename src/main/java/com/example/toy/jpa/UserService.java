@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.toy.jpa.entity.Login_User;
+
 import lombok.RequiredArgsConstructor;
 
 
@@ -39,7 +41,7 @@ public class UserService implements UserDetailsService{
     	System.out.println(userid);
     	
     	try {
-    		 LoginUser LoginUser =LoginRepository.findByUserid(userid);
+    		 Login_User LoginUser =LoginRepository.findByUserid(userid);
     		  if (LoginUser.getUserid()==null || !LoginUser.getUserid().equals(userid)){
     		      
     	        	 return 1; 
@@ -70,8 +72,8 @@ public class UserService implements UserDetailsService{
      * @return
      * @throws Exception
      */
-    public boolean insertUser(LoginUser User){
-        LoginUser user = new LoginUser();
+    public boolean insertUser(Login_User User){
+        Login_User user = new Login_User();
         if( User.getUserid()!=null && User.getUser_name()!=null &&
         	User.getUser_pw()!=null && User.getUser_sex()!=null) {
         	
@@ -107,7 +109,7 @@ public class UserService implements UserDetailsService{
     public UserDetails loadUserByUsername(String userid) throws UsernameNotFoundException {
     
         //여기서 받은 유저 패스워드와 비교하여 로그인 인증       
-        LoginUser LoginUser =LoginRepository.findByUserid(userid);
+        Login_User LoginUser =LoginRepository.findByUserid(userid);
         if (LoginUser == null){
             throw new UsernameNotFoundException("User not authorized.");
         }
