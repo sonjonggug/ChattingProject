@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.toy.jpa.entity.Login_User;
 import com.example.toy.service.UserManagementService;
 import com.example.toy.service.WebSocketChatService;
 
@@ -69,7 +70,7 @@ public class LoginController {
 		 response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			
-			LoginUser User = new LoginUser();
+			Login_User User = new Login_User();
 			User.setUserid(request.getParameter("userid"));
 			User.setUser_pw(request.getParameter("user_pw"));
 			User.setUser_name(request.getParameter("user_name"));
