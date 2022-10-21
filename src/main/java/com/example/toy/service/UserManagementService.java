@@ -6,6 +6,8 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.toy.jpa.entity.Talk_Bot_Log;
+import com.example.toy.jpa.entity.User_Talk_Log;
 import com.example.toy.mapper.UserManagementMapper;
 @Service
 public class UserManagementService {
@@ -46,9 +48,13 @@ public class UserManagementService {
   
  }
   
-//  public String UserTalkLog (String talk , String mid , String channel) throws Exception {
-//
-//		return UserManagementMapper.UserTalkLog(talk,mid,channel);
-//		  
-//	  }
+  public void UserTalkLog (User_Talk_Log userTalk) throws Exception {
+        UserManagementMapper.UserTalkLog(userTalk);
+				  
+	  }
+  
+  public void talkBotSave (Talk_Bot_Log botTalk) throws Exception {
+      UserManagementMapper.talkBotSave(botTalk);
+				  
+	  }
 }

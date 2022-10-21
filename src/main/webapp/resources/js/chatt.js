@@ -71,6 +71,8 @@ function send(){
 		data.date = new Date().toLocaleString();
 		var temp = JSON.stringify(data);
 		ws.send(temp);
+		$("#msg").attr("readonly",true);
+//		$("#msg").attr('placeholder', "");
 	}
 	msg.value ='';
 	

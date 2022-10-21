@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.toy.jpa.ChattingService;
-import com.example.toy.jpa.UserTalk;
-import com.example.toy.jpa.channel_info;
+import com.example.toy.jpa.entity.Channel_Info;
+import com.example.toy.jpa.entity.Talk_Bot_Log;
+import com.example.toy.jpa.entity.User_Talk_Log;
 import com.example.toy.service.KaKaoApiService;
 import com.example.toy.service.NaverApiService;
 import com.example.toy.service.UserManagementService;
@@ -107,7 +108,7 @@ public class ChattController {
 	@RequestMapping(value = "/SearchCnt", method = RequestMethod.GET)
 	@ResponseBody
 	public int SearchCnt(@RequestParam(value ="channel")String channel) throws Exception {
-			channel_info channelInfo= new channel_info();
+			Channel_Info channelInfo= new Channel_Info();
 			
 			channelInfo = ChattingService.searchCnt(channel);
 		 	System.out.println(channelInfo.getChannel_name());
@@ -120,22 +121,26 @@ public class ChattController {
 	
 	@RequestMapping(value = "/talkBot", method = RequestMethod.GET)
 	@ResponseBody
-	public String talkBot(@RequestParam(value ="talk")String talk ,  @ModelAttribute UserTalk userTalk) throws Exception {	
-		SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-   	 	today.format(new Date());
-   	     System.out.println("-----------"+userTalk.getChannel_name()+userTalk.getUserid());
-		 String en= kaKaoApiService.Start(talk);
-		 
-		 
-		 logger.info(en);
-		  
-		  int prompt_tokens=en.lastIndexOf("prompt_tokens");		  
-		  int generated_tokens=en.indexOf("generated_tokens");
-		 
-	  		  
-		  String result = en.substring(prompt_tokens+15, generated_tokens-2);
+	public String talkBot(@RequestParam(value ="QA")String QA ,  @ModelAttribute User_Talk_Log userTalk) throws Exception {	
+		SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");   	 	
+   	 	userTalk.setSend_date(today.format(new Date())); 	 	
+   	 	 userManagementService.UserTalkLog(userTalk);
+		 String en= kaKaoApiService.Start(QA);
+		 		 
+		 logger.info(en);	  
+
 
 		  
 			return en;
+	}
+	@RequestMapping(value = "/talkBotSave", method = RequestMethod.GET)
+	@ResponseBody
+	public void talkBotSave(@ModelAttribute Talk_Bot_Log botTalk) throws Exception {	
+		SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");   	 	
+		botTalk.setSend_date(today.format(new Date()));
+   	 	
+   	 	  userManagementService.talkBotSave(botTalk);
+		 	  
+//			return "Success";
 	}
 }
