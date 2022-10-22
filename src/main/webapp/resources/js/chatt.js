@@ -72,7 +72,7 @@ function send(){
 		var temp = JSON.stringify(data);
 		ws.send(temp);
 		$("#msg").attr("readonly",true);
-//		$("#msg").attr('placeholder', "");
+		$("#msg").attr('placeholder', "답변을 생성중입니다..");
 	}
 	msg.value ='';
 	
@@ -80,6 +80,13 @@ function send(){
 function sendo(){		
 		data.mid = getId('alram1').value;
 		data.msg = "";		
+		data.date = new Date().toLocaleString();
+		var tom = JSON.stringify(data);
+		ws.send(tom);	    
+}
+function botsend(){		
+		data.mid = "AI"
+		data.msg = getId('alram1').value;		
 		data.date = new Date().toLocaleString();
 		var tom = JSON.stringify(data);
 		ws.send(tom);	    
