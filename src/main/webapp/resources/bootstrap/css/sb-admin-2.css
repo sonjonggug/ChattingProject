@@ -4528,6 +4528,19 @@ input[type="button"].btn-block {
   padding: 1.25rem;
 }
 
+.card-chatt {
+	height: 500px;
+	overflow: scroll;
+	border : 1px solid #aaa;
+	background-color: #e5d9c4;
+}
+.card-send {
+	height: 150px;
+	overflow: scroll;
+	border : 1px solid #aaa;
+	background-color: #fff;
+}
+
 .card-title {
   margin-bottom: 0.75rem;
 }
