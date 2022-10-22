@@ -1,7 +1,9 @@
 package com.example.toy.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -75,7 +78,7 @@ public class ChattController {
 		Session.setAttribute("IP", ip);
 		Session.setAttribute("Port", request.getRemotePort());
 		Session.setAttribute("channel", channel);
-		return "chatting";
+		return "user/chatting";
 	}
     
 	/**
@@ -141,6 +144,11 @@ public class ChattController {
    	 	
    	 	  userManagementService.talkBotSave(botTalk);
 		 	  
-//			return "Success";
+
+	}
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	public String user(Model model) throws Exception {
+		
+		return "user/user";			
 	}
 }
