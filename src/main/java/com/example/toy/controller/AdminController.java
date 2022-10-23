@@ -1,5 +1,8 @@
 package com.example.toy.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,12 +13,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.toy.jpa.ChattingService;
 import com.example.toy.jpa.LoginController;
 import com.example.toy.jpa.UserService;
+import com.example.toy.jpa.entity.Login_User;
+import com.example.toy.service.AdminService;
 import com.example.toy.service.UserManagementService;
 @Controller
 public class AdminController {
@@ -28,6 +34,8 @@ private static final Logger logger = LoggerFactory.getLogger(LoginController.cla
 	ChattingService ChattingService; 
 	@Autowired
 	UserManagementService UserManagementService;
+	@Autowired
+	AdminService AdminService;
 	
 	
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
@@ -74,4 +82,12 @@ private static final Logger logger = LoggerFactory.getLogger(LoginController.cla
 		model.addAttribute("selectUser",selectUser);
 		return "user/tables";			
 	}
+	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+	public String updateUser(@ModelAttribute Login_User login_User) throws Exception {
+		HashMap<String, String> selectUser = new HashMap<String, String>();
+		AdminService.updateUser(login_User);
+		
+		return "user/tables";			
+	}
+
 }

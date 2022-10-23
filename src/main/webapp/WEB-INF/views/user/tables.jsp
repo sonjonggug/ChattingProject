@@ -287,12 +287,12 @@
 									 
 											<tr>
 										
-											<td><input type="text" id="user_namew" value="${selectUser.user_name }"></td>
-											<td><input type="text" id="useridw" value="${selectUser.userid }"></td>
-											<td><input type="text" id="user_sexw" value="${selectUser.user_sex }"></td>
-											<td><input type="text" id="user_authw" value="${selectUser.user_auth }"></td>
-											<td><input type="text" id="login_datew" value="${selectUser.login_date }"></td>
-											<td><input type="text" id="join_datew" value="${selectUser.join_date }"></td>
+											<td><input type="text" id="user_namew" value="${selectUser.user_name }" readonly></td>
+											<td><input type="text" id="useridw" value="${selectUser.userid }" readonly></td>
+											<td><input type="text" id="user_sexw" value="${selectUser.user_sex }" readonly></td>
+											<td><input type="text" id="user_authw" value="${selectUser.user_auth }" readonly></td>
+											<td><input type="text" id="login_datew" value="${selectUser.login_date }" readonly></td>
+											<td><input type="text" id="join_datew" value="${selectUser.join_date }" readonly></td>
 											<td><button onclick="updateUser();">수정</button></td>
 										
 											</tr>
@@ -301,12 +301,12 @@
 								                                                                                                     
                                 </table>
                                  <form action="updateUser" method="post" target="blank" id="frm">
-      											<input type="hidden" id="user_name" name="userid" value="">
+      											<input type="hidden" id="user_name" name="user_name" value="">
       											<input type="hidden" id="userid" name="userid" value="">
-      											<input type="hidden" id="user_sex" name="userid" value="">
-      											<input type="hidden" id="user_auth" name="userid" value="">
-      											<input type="hidden" id="login_date" name="userid" value="">
-      											<input type="hidden" id="join_date" name="userid" value="">
+      											<input type="hidden" id="user_sex" name="user_sex" value="">
+      											<input type="hidden" id="user_auth" name="user_auth" value="">
+      											<input type="hidden" id="login_date" name="login_date" value="">
+      											<input type="hidden" id="join_date" name="join_date" value="">
       											  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>     											
 										</form>  
                             </div>

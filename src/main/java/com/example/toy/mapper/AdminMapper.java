@@ -1,0 +1,12 @@
+package com.example.toy.mapper;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.example.toy.jpa.entity.Login_User;
+
+@Mapper
+public interface AdminMapper {
+		
+	public void updateUser(Login_User login_User);
+	
+}
