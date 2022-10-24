@@ -17,11 +17,11 @@ public interface UserManagementMapper {
 	
 	ArrayList<HashMap> showUser();
 	
-	HashMap<String,String> selectUser(String userid);
+	HashMap<String,String> selectUser(String user_no);
 	
 	String UserTalkLog (String talk , String mid , String channel);
 
-	public void UserTalkLog(User_Talk_Log userTalk);
+	public int UserTalkLog(User_Talk_Log userTalk);
 	
 	public void talkBotSave(Talk_Bot_Log botTalk);
 	

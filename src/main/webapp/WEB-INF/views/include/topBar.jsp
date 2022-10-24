@@ -197,9 +197,8 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.id} 님</span>
+                               
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -239,11 +238,6 @@
     <!-- Custom scripts for all pages-->
     <script src="resources/bootstrap/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="resources/bootstrap/vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="resources/bootstrap/js/demo/chart-area-demo.js"></script>
-    <script src="resources/bootstrap/js/demo/chart-pie-demo.js"></script>
+   
 </body>
 </html>
