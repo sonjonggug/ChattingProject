@@ -36,7 +36,11 @@ public class Talk_Bot_Log  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Nullable
     private Long bot_no;
-      
+    
+    @Column(length = 20, nullable = true)
+    @Nullable  
+    private int user_no; 
+    
     @Column(length = 20, nullable = false)
     @Nullable  
     private String userid; 

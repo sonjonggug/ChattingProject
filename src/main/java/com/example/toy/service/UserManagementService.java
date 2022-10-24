@@ -39,17 +39,17 @@ public class UserManagementService {
 	return HashMap;
   
 }
-  public HashMap<String, String> selectUser (String userid) throws Exception {
+  public HashMap<String, String> selectUser (String user_no) throws Exception {
 	  HashMap<String, String> HashMap = new HashMap<String, String>();
 	  
-	  HashMap = UserManagementMapper.selectUser(userid);
+	  HashMap = UserManagementMapper.selectUser(user_no);
 	  
 	return HashMap;
   
  }
   
-  public void UserTalkLog (User_Talk_Log userTalk) throws Exception {
-        UserManagementMapper.UserTalkLog(userTalk);
+  public int UserTalkLog (User_Talk_Log userTalk) throws Exception {
+        return UserManagementMapper.UserTalkLog(userTalk);
 				  
 	  }
   

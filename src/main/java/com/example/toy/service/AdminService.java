@@ -13,8 +13,10 @@ public class AdminService {
  
  
   
-  public void updateUser(Login_User login_User) throws Exception {
-	  AdminMapper.updateUser(login_User);
+  public boolean updateUser(Login_User login_User) throws Exception {
+	
+	 
+	return AdminMapper.updateUser(login_User);
 				  
 	  }
 }
