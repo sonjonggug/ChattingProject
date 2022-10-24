@@ -41,7 +41,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="admin">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -56,10 +56,10 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" >
+                <a class="nav-link collapsed" href="mychatt" >
                   
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span>Chatting</span>
                 </a>
                 
             </li>
@@ -125,11 +125,5 @@
     <!-- Custom scripts for all pages-->
     <script src="resources/bootstrap/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="resources/bootstrap/vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="resources/bootstrap/js/demo/chart-area-demo.js"></script>
-    <script src="resources/bootstrap/js/demo/chart-pie-demo.js"></script>
 </body>
 </html>

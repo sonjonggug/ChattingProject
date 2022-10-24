@@ -127,9 +127,9 @@ public class ChattController {
 	public String talkBot(@RequestParam(value ="QA")String QA ,  @ModelAttribute User_Talk_Log userTalk) throws Exception {	
 		SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");   	 	
    	 	userTalk.setSend_date(today.format(new Date())); 	 	
-   	 	 userManagementService.UserTalkLog(userTalk);
+   	 	 int user_no = userManagementService.UserTalkLog(userTalk);
 		 String en= kaKaoApiService.Start(QA);
-		 		 
+		 System.out.println("user_no ---------------------------" + user_no);
 		 logger.info(en);	  
 
 
