@@ -121,21 +121,33 @@ public class ChattController {
 	        return channelInfo.getUser_cnt();
 	}
 	
-	
+	/**
+	 * 사용자 채팅 입력 값 DB 저장 & AI 답변 전달  
+	 * @param QA
+	 * @param userTalk
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/talkBot", method = RequestMethod.GET)
 	@ResponseBody
-	public String talkBot(@RequestParam(value ="QA")String QA ,  @ModelAttribute User_Talk_Log userTalk) throws Exception {	
+	public ArrayList talkBot(@RequestParam(value ="QA")String QA ,  @ModelAttribute User_Talk_Log userTalk) throws Exception {	
+		ArrayList list = new ArrayList();
 		SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");   	 	
    	 	userTalk.setSend_date(today.format(new Date())); 	 	
-   	 	 int user_no = userManagementService.UserTalkLog(userTalk);
-		 String en= kaKaoApiService.Start(QA);
-		 System.out.println("user_no ---------------------------" + user_no);
+   	 	 int user_no = userManagementService.UserTalkLog(userTalk); // 사용자 질문과 AI 답변 매칭을 위한 고유 값 받아오기
+		 String en= kaKaoApiService.Start(QA); // 사용자 질문에 맞는 답변
+		 
 		 logger.info(en);	  
-
-
+		 list.add(en);
+		 list.add(user_no);
 		  
-			return en;
+			return list; 
 	}
+	/**
+	 * AI 답변 저장 & 질문 답변 매칭을 위한 사용자 채팅 고유값 저장 
+	 * @param botTalk
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/talkBotSave", method = RequestMethod.GET)
 	@ResponseBody
 	public void talkBotSave(@ModelAttribute Talk_Bot_Log botTalk) throws Exception {	
