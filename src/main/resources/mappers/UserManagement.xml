@@ -58,8 +58,8 @@
      </select>
      
       <insert id="talkBotSave" parameterType="com.example.toy.jpa.entity.Talk_Bot_Log">
-  		INSERT INTO TALK_BOT_LOG (userid, result, prompt_tokens, generated_tokens, send_date) 
-		  	VALUES('${userid}', '${result}', ${prompt_tokens}, ${generated_tokens}, '${send_date}');
+  		INSERT INTO TALK_BOT_LOG (userid, result, prompt_tokens, generated_tokens, send_date ,user_no) 
+		  	VALUES('${userid}', '${result}', ${prompt_tokens}, ${generated_tokens}, '${send_date}' , ${user_no});
 
      </insert>
 </mapper>

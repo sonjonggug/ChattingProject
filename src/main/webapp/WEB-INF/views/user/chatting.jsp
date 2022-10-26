@@ -70,7 +70,8 @@
 						<input type='hidden' id="channel" name="channel" value='${sessionScope.channel}'>
 						    <input type='hidden' id='mid' name="mid" value='${sessionScope.id}' readonly>
 							<input type='hidden' value='로그인' id='btnLogin' >
-							<buttion type="button" onclick="Session();">${sessionScope.Count}</buttion>	
+							<button type="button" onclick="Session();">${sessionScope.Count}</buttion>
+								
                         
                     </div>
                     </div>
