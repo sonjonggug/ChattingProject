@@ -9,4 +9,6 @@ public interface AdminMapper {
 		
 	public boolean updateUser(Login_User login_User);
 	
+	public boolean deleteUser(Login_User login_User);
+	
 }

@@ -19,4 +19,11 @@ public class AdminService {
 	return AdminMapper.updateUser(login_User);
 				  
 	  }
+  
+  public boolean deleteUser(Login_User login_User) throws Exception {
+		
+		 
+		return AdminMapper.deleteUser(login_User);
+					  
+		  }
 }
