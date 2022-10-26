@@ -340,6 +340,7 @@
    <script> 
    function selectUser(id){
         $('input[name=user_no]').attr('value',id);
+        document.frm.action = "selectUser";
         document.getElementById('frm').submit();
 
    }
