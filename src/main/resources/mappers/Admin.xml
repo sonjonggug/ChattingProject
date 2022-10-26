@@ -15,4 +15,9 @@
 			user_no  = ${user_no} ; 
 
      </update>
+     
+     <delete id="deleteUser" parameterType="com.example.toy.jpa.entity.Login_User">
+  		delete from login_user where user_no =  ${user_no} ; 
+		
+     </delete>
 </mapper>

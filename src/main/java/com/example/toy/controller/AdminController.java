@@ -106,4 +106,28 @@ private static final Logger logger = LoggerFactory.getLogger(LoginController.cla
 		return "user/updateUser";			
 	}
 	}
+ 
+	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
+	public String deleteUser(@RequestParam(value ="user_no")String user_no , @ModelAttribute Login_User login_User , Model model , HttpServletResponse response) throws Exception {
+		HashMap<String, String> selectUser = new HashMap<String, String>();
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter w = response.getWriter();
+		boolean bool = AdminService.deleteUser(login_User);
+		
+		if (bool==true) {
+			
+			logger.info("사용자 삭제 성공 ");
+						
+			w.write("<script>alert('삭제가 완료되었습니다.');location.href='admin';</script>");
+			w.flush();
+			
+			return "redirect:admin";
+			
+		}else {
+			w.write("<script>alert('삭제에 실패하였습니다.');location.href='admin';</script>");
+			w.flush();
+			
+		return  "redirect:admin";			
+	}
+	}
 }
