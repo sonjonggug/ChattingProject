@@ -272,7 +272,7 @@
 												<td style="text-align: center;"><c:out value="${showUser.user_auth }"/></td>
 												<td style="text-align: center;"><c:out value="${showUser.login_date }"/></td>
 												<td style="text-align: center;"><c:out value="${showUser.join_date }"/></td>
-											<td style="text-align: center;"><button class="btn btn-dark btn-sm"onclick="infoUser('<c:out value="${showUser.user_no }"/>');">정보</button>
+											<td style="text-align: center;"><button class="btn btn-dark btn-sm"onclick="infoUser('<c:out value="${showUser.user_no }"/>','<c:out value="${showUser.userid }"/>');">정보</button>
 											<button class="btn btn-dark btn-sm"onclick="selectUser('<c:out value="${showUser.user_no }"/>');">수정</button></td>
 																							
 											</tr>
@@ -283,6 +283,7 @@
                                 </table>    
                                 <form action="selectUser" method="post" target="blank" id="frm" name="frm">
       											<input type="hidden" id="user_no" name="user_no" value="">
+      											<input type="hidden" id="userid" name="userid" value="">
       											  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>     											
 										</form>                         
                             </div>
@@ -345,9 +346,10 @@
 
    }
    
-   function infoUser(id){
+   function infoUser(user_no,userid){
 	   
-       $('input[name=user_no]').attr('value',id);
+       $('input[name=user_no]').attr('value',user_no);
+       $('input[name=userid]').attr('value',userid);
               
        document.frm.action = "infoUser";
        document.getElementById('frm').submit();

@@ -1,5 +1,8 @@
 package com.example.toy.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,12 @@ public class AdminService {
 	return AdminMapper.updateUser(login_User);
 				  
 	  }
+  
+  public ArrayList<HashMap> chattLog (String userid) throws Exception {
+	  	  
+	return  AdminMapper.chattLog(userid);
+  
+ }
   
   public boolean deleteUser(Login_User login_User) throws Exception {
 		
