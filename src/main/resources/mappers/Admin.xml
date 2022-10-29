@@ -16,6 +16,19 @@
 
      </update>
      
+      <select id="chattLog" parameterType="String" resultType="HashMap"> 
+  		 select 	a.talk as user_talk
+			      , a.send_date as user_send_date
+			      , a.userid 
+			      , b.result as bot_answer
+			      , b.send_date as bot_send_date
+			  	FROM user_talk_log a
+			 	INNER JOIN talk_bot_log b
+			    ON a.user_no  = b.user_no  
+			    where a.userid = '${userid}'
+			    order by a.send_date asc;
+     </select>
+     
      <delete id="deleteUser" parameterType="com.example.toy.jpa.entity.Login_User">
   		delete from login_user where user_no =  ${user_no} ; 
 		

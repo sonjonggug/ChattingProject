@@ -54,7 +54,7 @@
 
                         <!-- Grow In Utility -->
                         <!-- Fade In Utility -->
-                        <div class="col-lg-6">
+                        <div class="col-lg-5">
 
                             <div class="card position-relative">
                                 <div class="card-header py-3">
@@ -106,81 +106,88 @@
 								     </div>
                                     
                                     
-                                    <div class="small mb-1">Dropdown Button Example:</div>
-                                    <div class="dropdown mb-4">
-                                        <button class="btn btn-primary dropdown-toggle" type="button"
-                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            Dropdown
-                                        </button>
-                                        <div class="dropdown-menu animated--fade-in"
-                                            aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                    <p class="mb-0 small">Note: This utility animates the CSS opacity property, meaning
-                                        it will override any existing opacity on an element being animated!</p>
+<!--                                     <div class="small mb-1">Dropdown Button Example:</div> -->
+<!--                                     <div class="dropdown mb-4"> -->
+<!--                                         <button class="btn btn-primary dropdown-toggle" type="button" -->
+<!--                                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" -->
+<!--                                             aria-expanded="false"> -->
+<!--                                             Dropdown -->
+<!--                                         </button> -->
+<!--                                         <div class="dropdown-menu animated--fade-in" -->
+<!--                                             aria-labelledby="dropdownMenuButton"> -->
+<!--                                             <a class="dropdown-item" href="#">Action</a> -->
+<!--                                             <a class="dropdown-item" href="#">Another action</a> -->
+<!--                                             <a class="dropdown-item" href="#">Something else here</a> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                     <p class="mb-0 small">Note: This utility animates the CSS opacity property, meaning -->
+<!--                                         it will override any existing opacity on an element being animated!</p> -->
                                 </div>
                             </div>
 
                         </div>
 
                         <!-- Fade In Utility -->
-                        <div class="col-lg-6">
+                        <div class="col-lg-7">
 
                             <div class="card position-relative">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">채팅 정보</h6>
                                 </div>
                                 <div class="card-body">                                                                    
-                                    <div class="form-inline form-group" >
-								      <label for="phone_num" class="col-sm-2 control-label">아이디 :</label>
-								      <div class="col-sm-10">
-								       <input type="text" class="form-control" id="phone_num" name="phone_num" value="${selectUser.userid }" readonly>
-								      </div>
-								     </div>
-								     <div class="form-inline form-group" >
-								      <label for="phone_num" class="col-sm-2 control-label">이름 :</label>
-								      <div class="col-sm-10">
-								       <input type="text" class="form-control" id="phone_num" name="phone_num" value="${selectUser.user_name }" readonly>
-								      </div>
-								     </div>
-								     <div class="form-inline form-group" >
-								      <label for="phone_num" class="col-sm-2 control-label">성별 :</label>
-								      <div class="col-sm-10">
-								       <input type="text" class="form-control" id="phone_num" name="phone_num" value="${selectUser.user_sex }" readonly>
-								      </div>
-								     </div>
-								     <div class="form-inline form-group" >
-								      <label for="phone_num" class="col-sm-3 control-label">가입 날짜 :</label>
-								      <div class="col-sm-9">
-								       <input type="text" class="form-control" id="phone_num" name="phone_num" value="${selectUser.join_date }" readonly>
-								      </div>
-								     </div>
-								     <div class="form-inline form-group" >
-								      <label for="phone_num" class="col-sm-4 control-label">마지막 로그인 날짜 :</label>
-								      <div class="col-sm-8">
-								       <input type="text" class="form-control" id="phone_num" name="phone_num" value="${selectUser.login_date }" readonly>
-								      </div>
-								     </div>
-								      <div class="small mb-1">Dropdown Button Example:</div>
-                                    <div class="dropdown mb-4">
-                                        <button class="btn btn-primary dropdown-toggle" type="button"
-                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            Dropdown
-                                        </button>
-                                        <div class="dropdown-menu animated--fade-in"
-                                            aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                    <p class="mb-0 small">Note: This utility animates the CSS opacity property, meaning
-                                        it will override any existing opacity on an element being animated!</p>
+                                   <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>                                        	                                            
+                                            <th style="text-align: center;">아이디</th>
+                                            <th style="text-align: center;">메시지</th>
+                                            <th style="text-align: center;">보낸 시간</th>
+                                            <th style="text-align: center;">답변</th>
+                                            <th style="text-align: center;">답변 시간</th>                                            
+                                        </tr>
+                                    </thead>                                 
+                                   
+                                    
+                                    <c:if test="${chattLog.size() == 0 }">
+										<tfoot>
+											<tr>
+										     <td colspan="3">채팅내역이 없습니다.</td>
+											</tr>
+										</tfoot>
+									</c:if>
+									 
+									<tbody>
+									
+										<c:forEach var="chattLog" items="${chattLog}" varStatus="status">
+											<tr>											    												
+												<td style="text-align: center;"><c:out value="${chattLog.userid }"/></td>
+												<td style="text-align: center;"><c:out value="${chattLog.user_talk }"/></td>
+												<td style="text-align: center;"><c:out value="${chattLog.user_send_date }"/></td>
+												<td style="text-align: center;"><c:out value="${chattLog.bot_answer }"/></td>
+												<td style="text-align: center;"><c:out value="${chattLog.bot_send_date }"/></td>																																	
+											</tr>
+										</c:forEach>
+										
+									</tbody>
+								                                                                                                     
+                                </table>                                                          
+                            </div>
+<!-- 								      <div class="small mb-1">Dropdown Button Example:</div> -->
+<!--                                     <div class="dropdown mb-4"> -->
+<!--                                         <button class="btn btn-primary dropdown-toggle" type="button" -->
+<!--                                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" -->
+<!--                                             aria-expanded="false"> -->
+<!--                                             Dropdown -->
+<!--                                         </button> -->
+<!--                                         <div class="dropdown-menu animated--fade-in" -->
+<!--                                             aria-labelledby="dropdownMenuButton"> -->
+<!--                                             <a class="dropdown-item" href="#">Action</a> -->
+<!--                                             <a class="dropdown-item" href="#">Another action</a> -->
+<!--                                             <a class="dropdown-item" href="#">Something else here</a> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                     <p class="mb-0 small">Note: This utility animates the CSS opacity property, meaning -->
+<!--                                         it will override any existing opacity on an element being animated!</p> -->
 
                     </div>
 
@@ -190,14 +197,7 @@
             </div>
             <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
+            
             <!-- End of Footer -->
 
         </div>
@@ -247,7 +247,10 @@
 <!--     <script src="resources/bootstrap/vendor/datatables/dataTables.bootstrap4.min.js"></script> -->
 
     <!-- Page level custom scripts -->
-    
+     <!-- datatables -->
+    <script src="resources/bootstrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="resources/bootstrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+     <script src="resources/bootstrap/js/demo/datatables-demo.js"></script>
 </body>
 
 </html>

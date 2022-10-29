@@ -50,8 +50,14 @@ public class LoginController {
 		this.login = login;
 	}
 	
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String root() {
+				
+		return "Login";
+	}
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login() {
 				
 		return "Login";
 	}
