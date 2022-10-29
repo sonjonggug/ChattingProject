@@ -73,13 +73,16 @@ private static final Logger logger = LoggerFactory.getLogger(LoginController.cla
 	}
 	
 	@RequestMapping(value = "/infoUser", method = RequestMethod.POST)
-	public String infoUser(@RequestParam(value ="user_no")String user_no , Model model) throws Exception {
+	public String infoUser(@RequestParam(value ="user_no")String user_no , @RequestParam(value ="userid")String userid , Model model) throws Exception {
 		HashMap<String, String> selectUser = new HashMap<String, String>();
+		ArrayList<HashMap> chattLog = new ArrayList<HashMap>();
+		selectUser = UserManagementService.selectUser(user_no);	
 		
-		selectUser = UserManagementService.selectUser(user_no);		
+		chattLog = AdminService.chattLog(userid);	
 		logger.info("사용자 상세정보" + selectUser);
-		
+		logger.info("채팅내역" + chattLog);
 		model.addAttribute("selectUser",selectUser);
+		model.addAttribute("chattLog",chattLog);
 		return "user/infoUser";			
 	}
 	

@@ -30,7 +30,7 @@ public class UserManagementService {
 	return HashMap;
 	  
   }
-  public   ArrayList<HashMap> showUser () throws Exception {
+  public ArrayList<HashMap> showUser () throws Exception {
 //	  HashMap<String, String> HashMap = new HashMap<String, String>();
 	  ArrayList<HashMap> HashMap = new ArrayList<HashMap>();
 	  	  
