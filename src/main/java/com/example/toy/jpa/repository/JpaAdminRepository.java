@@ -17,10 +17,10 @@ import java.util.Optional;
  */
 @Repository
 public interface JpaAdminRepository extends JpaRepository <Login_User, Long>{
-
+// select user_no , user_name , userid , user_sex , join_date ,login_date , user_auth  from  LOGIN_USER where user_no = ${user_no};
 	 List<Login_User>findAll();
 
-//     Optional<Login_User> CaseBuild;
+     Login_User findByUser_no();
 
 
 
