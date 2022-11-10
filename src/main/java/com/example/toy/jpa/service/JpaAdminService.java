@@ -18,9 +18,9 @@ public class JpaAdminService {
      return jpaAdminRepository.findAll();
 
     }
-    public List<Login_User> uerIncreament(){
+    public Login_User selectUser(String user_no){
 
-        return jpaAdminRepository.findAll();
+        return jpaAdminRepository.findByUser_no();
 
     }
 
