@@ -70,9 +70,13 @@ private static final Logger logger = LoggerFactory.getLogger(LoginController.cla
 
 	@RequestMapping(value = "/selectUser", method = RequestMethod.POST)
 	public String selectUser(@RequestParam(value ="user_no")String user_no , Model model) throws Exception {
-		HashMap<String, String> selectUser = new HashMap<String, String>();
-		
-		selectUser = UserManagementService.selectUser(user_no);		
+		/*HashMap<String, String> selectUser = new HashMap<String, String>();
+		selectUser = UserManagementService.selectUser(user_no);*/
+
+		Login_User selectUser = new Login_User();
+
+		selectUser = jpaAdminService.selectUser(user_no);
+
 		logger.info("사용자 업데이트 정보" + selectUser);
 		
 		model.addAttribute("selectUser",selectUser);
@@ -81,9 +85,12 @@ private static final Logger logger = LoggerFactory.getLogger(LoginController.cla
 	
 	@RequestMapping(value = "/infoUser", method = RequestMethod.POST)
 	public String infoUser(@RequestParam(value ="user_no")String user_no , @RequestParam(value ="userid")String userid , Model model) throws Exception {
-		HashMap<String, String> selectUser = new HashMap<String, String>();
+		/*HashMap<String, String> selectUser = new HashMap<String, String>();
+		selectUser = UserManagementService.selectUser(user_no);*/
 		ArrayList<HashMap> chattLog = new ArrayList<HashMap>();
-		selectUser = UserManagementService.selectUser(user_no);	
+
+		Login_User selectUser = new Login_User();
+		selectUser = jpaAdminService.selectUser(user_no);
 		
 		chattLog = AdminService.chattLog(userid);	
 		logger.info("사용자 상세정보" + selectUser);
@@ -95,13 +102,14 @@ private static final Logger logger = LoggerFactory.getLogger(LoginController.cla
 	
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
 	public String updateUser(@RequestParam(value ="user_no")String user_no , @ModelAttribute Login_User login_User , Model model , HttpServletResponse response) throws Exception {
-		HashMap<String, String> selectUser = new HashMap<String, String>();
+		/*HashMap<String, String> selectUser = new HashMap<String, String>();*/
+		Login_User selectUser = new Login_User();
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter w = response.getWriter();
 		boolean bool = AdminService.updateUser(login_User);
 		
 		if (bool==true) {
-			selectUser = UserManagementService.selectUser(user_no);
+			selectUser = jpaAdminService.selectUser(user_no);
 			logger.info("사용자 업데이트 후 정보 " + selectUser);
 			model.addAttribute("selectUser",selectUser);			
 			w.write("<script>alert('업데이트가 완료되었습니다.');</script>");
@@ -119,7 +127,8 @@ private static final Logger logger = LoggerFactory.getLogger(LoginController.cla
  
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
 	public String deleteUser(@RequestParam(value ="user_no")String user_no , @ModelAttribute Login_User login_User , Model model , HttpServletResponse response) throws Exception {
-		HashMap<String, String> selectUser = new HashMap<String, String>();
+		/*HashMap<String, String> selectUser = new HashMap<String, String>();*/
+		Login_User selectUser = new Login_User();
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter w = response.getWriter();
 		boolean bool = AdminService.deleteUser(login_User);
@@ -130,14 +139,14 @@ private static final Logger logger = LoggerFactory.getLogger(LoginController.cla
 						
 			w.write("<script>alert('삭제가 완료되었습니다.');location.href='admin';</script>");
 			w.flush();
-			
+
 			return "redirect:admin";
-			
+
 		}else {
 			w.write("<script>alert('삭제에 실패하였습니다.');location.href='admin';</script>");
 			w.flush();
-			
-		return  "redirect:admin";			
+
+		return  "redirect:admin";
 	}
 	}
 }
