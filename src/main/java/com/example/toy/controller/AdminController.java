@@ -3,9 +3,12 @@ package com.example.toy.controller;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.toy.jpa.service.JpaAdminService;
+import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,20 +38,24 @@ private static final Logger logger = LoggerFactory.getLogger(LoginController.cla
 	UserManagementService UserManagementService;
 	@Autowired
 	AdminService AdminService;
-	
+
+	@Autowired
+	JpaAdminService jpaAdminService;
 	
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String admin(Model model) throws Exception {
 		HashMap<String, String> integrated = new HashMap<String, String>();
 		HashMap<String, String> Userincrease = new HashMap<String, String>();
-		ArrayList<HashMap> showUser = new ArrayList<HashMap>();
+//		ArrayList<HashMap> showUser = new ArrayList<HashMap>();
+		List<Login_User> showUser = new ArrayList<Login_User>();
+
 		integrated = UserManagementService.UserSum();
         logger.info("통합 정보 " + integrated);
         
         Userincrease = UserManagementService.Userincrease();
         logger.info("사용자수 추이 " + Userincrease);
         
-        showUser = UserManagementService.showUser();
+        showUser = jpaAdminService.ShowUser();
         logger.info("사용자 검색" + showUser);
 		 model.addAttribute("sumCnt",integrated.get("user_cnt"));
 		 model.addAttribute("user",integrated.get("user"));
