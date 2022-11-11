@@ -1,9 +1,10 @@
 package com.example.toy.jpa;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.toy.jpa.entity.Login_User;
+import com.example.toy.jpa.repository.LoginRepository;
+import com.example.toy.vo.LoginUserDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,18 +13,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.toy.jpa.entity.Login_User;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 
-import lombok.RequiredArgsConstructor;
 
-
+@Slf4j // 로깅에 대한 추상 레이어를 제공하는 인터페이스의 모음.
 @RequiredArgsConstructor
 @Service
 public class UserService implements UserDetailsService{
-	private final LoginRepository LoginRepository;
-    
-    @Autowired
-    PasswordEncoder passwordEncoder;
+
+
+    private final LoginRepository loginRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
     
     
     
@@ -38,14 +42,16 @@ public class UserService implements UserDetailsService{
     public int checkid(String userid) throws Exception{
     	
         //여기서 받은 유저 패스워드와 비교하여 로그인 인증       
-    	System.out.println(userid);
     	
+
     	try {
-    		 Login_User LoginUser =LoginRepository.findByUserid(userid);
-    		  if (LoginUser.getUserid()==null || !LoginUser.getUserid().equals(userid)){
-    		      
+    		 Boolean id =loginRepository.findByUserid(userid).isPresent();
+
+    		  if (id == false){
+                  log.info("존재 하지않는 아이디");
     	        	 return 1; 
     	        }else {
+                  log.info("존재하는 아이디");
     	        	return 0;
     	        }   
     	} catch (NullPointerException e) {
@@ -63,8 +69,32 @@ public class UserService implements UserDetailsService{
     public void updateDate(String userid) throws Exception{  	
     	 SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");
     	 today.format(new Date());
-    	 LoginRepository.updateDate(today.format(new Date()),userid);
-    }	
+    	 loginRepository.updateDate(today.format(new Date()),userid);
+    }
+
+    public boolean updateUser(LoginUserDto loginUserDto) throws Exception {
+        Login_User login_User = new Login_User();
+        String userid = loginUserDto.getUserid();
+
+        boolean id = loginRepository.findByUserid(userid).isPresent();
+
+        if(id == false) {
+            System.out.println("아이디 없음");
+            return false;
+        } else {
+            login_User.builder()
+                    .userNum(loginUserDto.getUserNum())
+                    .userName(loginUserDto.getUserName())
+                    .userAuth(loginUserDto.getUserAuth())
+                    .userSex(loginUserDto.getUserSex())
+                    .build();
+
+
+           loginRepository.save(login_User);
+            System.out.println("변경 완료");
+            return true;
+        }
+    }
     
     /**
      * 회원가입 , 비밀번호를 인코딩하여 DB에 저장
@@ -72,33 +102,31 @@ public class UserService implements UserDetailsService{
      * @return
      * @throws Exception
      */
-    public boolean insertUser(Login_User User){
-        Login_User user = new Login_User();
-        if( User.getUserid()!=null && User.getUser_name()!=null &&
-        	User.getUser_pw()!=null && User.getUser_sex()!=null) {
-        	
-        SimpleDateFormat sDate2 = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+    public boolean insertUser(HashMap map){
 
-        System.out.println(sDate2.format(new Date()));
-        
-        String password=passwordEncoder.encode(User.getUser_pw());
+            Login_User user = new Login_User();
+            if( map.get("userId")!=null && map.get("userPw")!=null && map.get("userSex")!=null &&
+                map.get("userName")!=null && map.get("userAuth")!=null && map.get("joinDate")!=null && map.get("loginDate")!=null) {
 
-        user.setUserid(User.getUserid());
-        user.setUser_name(User.getUser_name());
-        user.setUser_pw(password); 
-        user.setJoin_date(sDate2.format(new Date()));
-        user.setLogin_date(sDate2.format(new Date()));
-        user.setUser_auth("USER");
-        user.setUser_sex(User.getUser_sex());
+                String userid = (String) map.get("userId");
+                user.joinUser(map);
+
+                boolean findById = loginRepository.findByUserid(userid).isPresent(); // Optional 의 value 가 null 이면 false
         //DB에 저장
-        LoginRepository.save(user); // 기본으로 제공하는 메서드
-        
-        return true ;
-   	 } else {
-   		 
-   	 }
-		return false;
-    } 
+                if(findById == false){
+                    user.joinUser(map);
+                    loginRepository.save(user);
+                    log.info("회원가입 성공");
+                    return true;
+                    } else  {
+                    log.info("회원가입 실패");
+                    return false;
+                    }
+             } else {
+                log.info("파라미터 null");
+                return false;
+                }
+            }
     
     /**
      * 시큐리티 로그인 인증
@@ -109,14 +137,14 @@ public class UserService implements UserDetailsService{
     public UserDetails loadUserByUsername(String userid) throws UsernameNotFoundException {
     
         //여기서 받은 유저 패스워드와 비교하여 로그인 인증       
-        Login_User LoginUser =LoginRepository.findByUserid(userid);
+        Login_User LoginUser =loginRepository.findByUserid(userid).get();
         if (LoginUser == null){
             throw new UsernameNotFoundException("User not authorized.");
         }
         return User.builder()        		
         		.username(LoginUser.getUserid())
-        		.password(LoginUser.getUser_pw())
-        		.roles(LoginUser.getUser_auth())        		
+        		.password(LoginUser.getUserPw())
+        		.roles(LoginUser.getUserAuth())
         		.build();
     }	
     }

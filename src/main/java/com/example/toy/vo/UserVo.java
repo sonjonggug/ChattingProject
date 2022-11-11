@@ -11,22 +11,22 @@
 //
 //@Data
 //public class UserVo implements UserDetails { // //UserDetails는 시큐리티가 관리하는 객체이다.
-//    private int USER_NO;
+//    private int userNum;
 //    private String USER_ID; 
-//    private String USER_PW;
-//    private String USER_NAME;
-//    private String USER_AUTH;
-//    private String LOGIN_DATE;
-//    private String JOIN_DATE;
+//    private String userPw;
+//    private String userName;
+//    private String userAuth;
+//    private String loginDate;
+//    private String joinDate;
 //
 //    @Override
 //    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return Collections.singletonList(new SimpleGrantedAuthority(this.USER_AUTH));
+//        return Collections.singletonList(new SimpleGrantedAuthority(this.userAuth));
 //    }
 //
 //    @Override
 //    public String getPassword() {
-//        return this.USER_PW;
+//        return this.userPw;
 //    }
 //
 //    // 시큐리티의 userName
@@ -38,7 +38,7 @@
 //
 //    // Vo의 userName !
 //    public String getUserName(){
-//        return this.USER_NAME;
+//        return this.userName;
 //    }
 //
 //    @Override

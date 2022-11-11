@@ -39,10 +39,10 @@ public class UserManagementService {
 	return HashMap;
   
 }
-  public HashMap<String, String> selectUser (String user_no) throws Exception {
+  public HashMap<String, String> selectUser (String userNum) throws Exception {
 	  HashMap<String, String> HashMap = new HashMap<String, String>();
 	  
-	  HashMap = UserManagementMapper.selectUser(user_no);
+	  HashMap = UserManagementMapper.selectUser(userNum);
 	  
 	return HashMap;
   

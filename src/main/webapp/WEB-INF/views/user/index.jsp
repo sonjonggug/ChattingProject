@@ -273,26 +273,26 @@
                                         <c:forEach var="showUser" items="${showUser}" varStatus="status">
                                             <tr>
                                                 <td style="text-align: center;"><c:out
-                                                        value="${showUser.user_no }"/></td>
+                                                        value="${showUser.userNum }"/></td>
                                                 <td style="text-align: center;"><c:out
-                                                        value="${showUser.user_name }"/></td>
+                                                        value="${showUser.userName }"/></td>
                                                 <td style="text-align: center;"><c:out
                                                         value="${showUser.userid }"/></td>
                                                 <td style="text-align: center;"><c:out
-                                                        value="${showUser.user_sex }"/></td>
+                                                        value="${showUser.userSex }"/></td>
                                                 <td style="text-align: center;"><c:out
-                                                        value="${showUser.user_auth }"/></td>
+                                                        value="${showUser.userAuth }"/></td>
                                                 <td style="text-align: center;"><c:out
-                                                        value="${showUser.login_date }"/></td>
+                                                        value="${showUser.loginDate }"/></td>
                                                 <td style="text-align: center;"><c:out
-                                                        value="${showUser.join_date }"/></td>
+                                                        value="${showUser.joinDate }"/></td>
                                                 <td style="text-align: center;">
                                                     <button class="btn btn-dark btn-sm"
-                                                            onclick="infoUser('<c:out value="${showUser.user_no }"/>','
+                                                            onclick="infoUser('<c:out value="${showUser.userNum }"/>','
                                                                 <c:out value="${showUser.userid }"/>');">정보
                                                     </button>
                                                     <button class="btn btn-dark btn-sm" onclick="selectUser('<c:out
-                                                            value="${showUser.user_no }"/>');">수정
+                                                            value="${showUser.userNum }"/>');">수정
                                                     </button>
                                                 </td>
 
@@ -303,7 +303,7 @@
 
                                     </table>
                                     <form action="selectUser" method="post" target="blank" id="frm" name="frm">
-                                        <input type="hidden" id="user_no" name="user_no" value="">
+                                        <input type="hidden" id="userNum" name="userNum" value="">
                                         <input type="hidden" id="userid" name="userid" value="">
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                     </form>
@@ -361,15 +361,15 @@
     </div>
     <script>
         function selectUser(id) {
-            $('input[name=user_no]').attr('value', id);
+            $('input[name=userNum]').attr('value', id);
             document.frm.action = "selectUser";
             document.getElementById('frm').submit();
 
         }
 
-        function infoUser(user_no, userid) {
+        function infoUser(userNum, userid) {
 
-            $('input[name=user_no]').attr('value', user_no);
+            $('input[name=userNum]').attr('value', userNum);
             $('input[name=userid]').attr('value', userid);
 
             document.frm.action = "infoUser";

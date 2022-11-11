@@ -1,13 +1,8 @@
 package com.example.toy.jpa.repository;
 
-import com.example.toy.jpa.entity.Login_User;
+import com.example.toy.jpa.entity.User_Talk_Log;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Optional;
 
 /**
  * 보통 ibatis나 MyBatis 등에서 Dao라고 불리는 DB Layer 접근자입니다.
@@ -16,11 +11,11 @@ import java.util.Optional;
    Entity 클래스와 기본 Entity Repository는 함께 위치해야 한다.
  */
 @Repository
-public interface JpaAdminRepository extends JpaRepository <Login_User, Long>{
-// select user_no , user_name , userid , user_sex , join_date ,login_date , user_auth  from  LOGIN_USER where user_no = ${user_no};
-	 List<Login_User>findAll();
+public interface UserLogRepository extends JpaRepository <User_Talk_Log, Long>{
 
-     Login_User findByUser_no();
+
+
+     
 
 
 

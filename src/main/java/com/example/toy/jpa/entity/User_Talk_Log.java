@@ -1,20 +1,9 @@
 package com.example.toy.jpa.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
+import lombok.*;
 import org.springframework.lang.Nullable;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
+import javax.persistence.*;
 @Builder
 @Getter
 @Setter
@@ -35,7 +24,7 @@ public class User_Talk_Log  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Nullable
-    private Long user_no;
+    private Long userNum;
       
     @Column(length = 15 , nullable = false)
     @Nullable
@@ -43,12 +32,12 @@ public class User_Talk_Log  {
              
     @Column(length = 5, nullable = false)
     @Nullable  
-    private String user_name;
+    private String userName;
     
      
     @Column(length = 1, nullable = false)
     @Nullable  
-    private String user_sex;
+    private String userSex;
     
    
     @Column(length = 50, nullable = false)
