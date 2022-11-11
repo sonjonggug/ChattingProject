@@ -17,7 +17,7 @@ public interface UserManagementMapper {
 	
 	ArrayList<HashMap> showUser();
 	
-	HashMap<String,String> selectUser(String user_no);
+	HashMap<String,String> selectUser(String userNum);
 	
 	String UserTalkLog (String talk , String mid , String channel);
 

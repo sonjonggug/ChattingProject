@@ -1,24 +1,5 @@
 package com.example.toy.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.example.toy.jpa.ChattingService;
 import com.example.toy.jpa.entity.Channel_Info;
 import com.example.toy.jpa.entity.Talk_Bot_Log;
@@ -27,6 +8,18 @@ import com.example.toy.service.KaKaoApiService;
 import com.example.toy.service.NaverApiService;
 import com.example.toy.service.UserManagementService;
 import com.example.toy.service.WebSocketChatService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 //@RestController
 @Controller
@@ -134,12 +127,12 @@ public class ChattController {
 		ArrayList list = new ArrayList();
 		SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");   	 	
    	 	userTalk.setSend_date(today.format(new Date())); 	 	
-   	 	 int user_no = userManagementService.UserTalkLog(userTalk); // 사용자 질문과 AI 답변 매칭을 위한 고유 값 받아오기
+   	 	 int userNum = userManagementService.UserTalkLog(userTalk); // 사용자 질문과 AI 답변 매칭을 위한 고유 값 받아오기
 		 String en= kaKaoApiService.Start(QA); // 사용자 질문에 맞는 답변
 		 
 		 logger.info(en);	  
 		 list.add(en);
-		 list.add(user_no);
+		 list.add(userNum);
 		  
 			return list; 
 	}

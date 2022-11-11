@@ -21,11 +21,11 @@
 					alert("아이디를 입력하여 주십시요.");
 					return;
 			}
-			if($("input[name=USER_PW]").val() == '') {
+			if($("input[name=userPw]").val() == '') {
 				alert("패스워드를 입력하여 주십시요.");
 				return;
 			}
-			if($("input[name=USER_NAME]").val() == '') {
+			if($("input[name=userName]").val() == '') {
 				alert("이름을 입력하여 주십시요.");
 				return;
 			}

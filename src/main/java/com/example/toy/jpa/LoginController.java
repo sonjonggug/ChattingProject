@@ -1,36 +1,27 @@
 package com.example.toy.jpa;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Spliterator;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
-
+import com.example.toy.jpa.repository.LoginRepository;
+import com.example.toy.service.UserManagementService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.toy.jpa.entity.Login_User;
-import com.example.toy.service.UserManagementService;
-import com.example.toy.service.WebSocketChatService;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 @Slf4j
 @Controller
 public class LoginController {
@@ -43,6 +34,8 @@ public class LoginController {
 	ChattingService ChattingService; 
 	@Autowired
 	UserManagementService UserManagementService;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
 	private LoginRepository login;
   	
@@ -72,17 +65,23 @@ public class LoginController {
 		return "signup";
 	}
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	    public String signupo(HttpServletRequest request , HttpServletResponse response) throws IOException {
+	    public String signup(HttpServletRequest request , HttpServletResponse response) throws IOException {
 		 response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			
-			Login_User User = new Login_User();
-			User.setUserid(request.getParameter("userid"));
-			User.setUser_pw(request.getParameter("user_pw"));
-			User.setUser_name(request.getParameter("user_name"));
-			User.setUser_sex(request.getParameter("user_sex"));
+			HashMap map = new HashMap();
+		SimpleDateFormat sDate2 = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		String password=passwordEncoder.encode(request.getParameter("userPw"));
+
+			map.put("userId",request.getParameter("userid"));
+			map.put("userPw",password);
+			map.put("userName",request.getParameter("userName"));
+			map.put("userSex",request.getParameter("userSex"));
+			map.put("userAuth","USER");
+			map.put("joinDate",sDate2.format(new Date()));
+			map.put("loginDate",sDate2.format(new Date()));
+
 			logger.info("회원가입 진입 전");
-	        if(UserService.insertUser(User)==(true)) {
+	        if(UserService.insertUser(map)==(true)) {
 	        	logger.info("회원가입 성공");
 	            return "Login";
 	        } else {
