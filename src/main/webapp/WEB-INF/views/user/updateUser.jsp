@@ -81,11 +81,11 @@
 									<tbody>
 									 
 											<tr>
-											<td width="10%" ><input class="form-control" type="text" id="user_now" value="${selectUser.user_no }" readonly ></td>
-											<td width="20%" ><input class="form-control"  type="text" id="user_namew" value="${selectUser.user_name }" readonly onclick='$(this).removeAttr("readonly");'></td>
+											<td width="10%" ><input class="form-control" type="text" id="userNumw" value="${selectUser.userNum }" readonly ></td>
+											<td width="20%" ><input class="form-control"  type="text" id="userNamew" value="${selectUser.userName }" readonly onclick='$(this).removeAttr("readonly");'></td>
 											<td width="30%"><input class="form-control" type="text" id="useridw" value="${selectUser.userid }" readonly onclick='$(this).removeAttr("readonly");'></td>
-											<td width="10%"><input class="form-control" type="text" id="user_sexw" value="${selectUser.user_sex }" readonly onclick='$(this).removeAttr("readonly");'></td>
-											<td width="20%"><input class="form-control" type="text" id="user_authw" value="${selectUser.user_auth }" readonly onclick='$(this).removeAttr("readonly");'></td>											
+											<td width="10%"><input class="form-control" type="text" id="userSexw" value="${selectUser.userSex }" readonly onclick='$(this).removeAttr("readonly");'></td>
+											<td width="20%"><input class="form-control" type="text" id="userAuthw" value="${selectUser.userAuth }" readonly onclick='$(this).removeAttr("readonly");'></td>
 <!-- 											<td width="10%" style="text-align: center;"><button class="btn btn-dark btn-sm" onclick="updateUser();">수정</button></td> -->
 											<td width="10%" style="text-align: center;"><button class="btn btn-dark btn-sm" onclick="updateUser();" data-target="#update-confirm" data-toggle="modal">수정</button>
 											<button class="btn btn-dark btn-sm" onclick="deleteUser();" data-target="#delete-confirm" data-toggle="modal">삭제</button></td>
@@ -97,11 +97,11 @@
 								                                                                                                     
                                 </table>
 <!--                                  <form action="updateUser" method="post" id="frm"> -->
-<!--                                  				<input type="hidden" id="user_no" name="user_no" value=""> -->
-<!--       											<input type="hidden" id="user_name" name="user_name" value=""> -->
+<!--                                  				<input type="hidden" id="userNum" name="userNum" value=""> -->
+<!--       											<input type="hidden" id="userName" name="userName" value=""> -->
 <!--       											<input type="hidden" id="userid" name="userid" value=""> -->
-<!--       											<input type="hidden" id="user_sex" name="user_sex" value=""> -->
-<!--       											<input type="hidden" id="user_auth" name="user_auth" value="">      							 -->
+<!--       											<input type="hidden" id="userSex" name="userSex" value=""> -->
+<!--       											<input type="hidden" id="userAuth" name="userAuth" value="">      							 -->
 <%--       											  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>     											 --%>
 <!-- 										</form>   -->
                             </div>
@@ -170,13 +170,13 @@
                  	 				<div class="form-inline form-group" >
 								      <label for="phone_num" class="col-sm-2 control-label">번호</label>
 								      <div class="col-sm-10">
-								       <input type="text" class="form-control" id="user_no" name="user_no" value="" readonly>
+								       <input type="text" class="form-control" id="userNum" name="userNum" value="" readonly>
 								      </div>
 								     </div>
                                  	 <div class="form-inline form-group" >
 								      <label for="phone_num" class="col-sm-2 control-label">이름</label>
 								      <div class="col-sm-10">
-								       <input type="text" class="form-control" id="user_name" name="user_name" value="" readonly>
+								       <input type="text" class="form-control" id="userName" name="userName" value="" readonly>
 								      </div>
 								     </div>
 								     
@@ -190,14 +190,14 @@
 								      <div class="form-inline form-group" >
 								      <label for="phone_num" class="col-sm-2 control-label">성별</label>
 								      <div class="col-sm-10">
-								       <input type="text" class="form-control" id="user_sex" name="user_sex" value="" readonly>
+								       <input type="text" class="form-control" id="userSex" name="userSex" value="" readonly>
 								      </div>
 								     </div>
 								     
 								     <div class="form-inline form-group" >
 								      <label for="phone_num" class="col-sm-2 control-label">권한</label>
 								      <div class="col-sm-10">
-								       <input type="text" class="form-control" id="user_auth" name="user_auth" value="" readonly>
+								       <input type="text" class="form-control" id="userAuth" name="userAuth" value="" readonly>
 								      </div>
 								     </div>
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>     																		     											
@@ -229,13 +229,13 @@
                  	 				<div class="form-inline form-group" >
 								      <label for="phone_num" class="col-sm-2 control-label">번호</label>
 								      <div class="col-sm-10">
-								       <input type="text" class="form-control" id="user_no" name="user_no" value="${selectUser.user_no }" readonly>
+								       <input type="text" class="form-control" id="userNum" name="userNum" value="${selectUser.userNum }" readonly>
 								      </div>
 								     </div>
                                  	 <div class="form-inline form-group" >
 								      <label for="phone_num" class="col-sm-2 control-label">이름</label>
 								      <div class="col-sm-10">
-								       <input type="text" class="form-control" id="user_name" name="user_name" value="${selectUser.user_name }" readonly>
+								       <input type="text" class="form-control" id="userName" name="userName" value="${selectUser.userName }" readonly>
 								      </div>
 								     </div>
 								     
@@ -249,14 +249,14 @@
 								      <div class="form-inline form-group" >
 								      <label for="phone_num" class="col-sm-2 control-label">성별</label>
 								      <div class="col-sm-10">
-								       <input type="text" class="form-control" id="user_sex" name="user_sex" value="${selectUser.user_sex }" readonly>
+								       <input type="text" class="form-control" id="userSex" name="userSex" value="${selectUser.userSex }" readonly>
 								      </div>
 								     </div>
 								     
 								     <div class="form-inline form-group" >
 								      <label for="phone_num" class="col-sm-2 control-label">권한</label>
 								      <div class="col-sm-10">
-								       <input type="text" class="form-control" id="user_auth" name="user_auth" value="${selectUser.user_auth }" readonly>
+								       <input type="text" class="form-control" id="userAuth" name="userAuth" value="${selectUser.userAuth }" readonly>
 								      </div>
 								     </div>
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>     																		     											
@@ -274,18 +274,18 @@
      <script> 
    function updateUser(){
 	   
-	var user_no = document.getElementById('user_now').value;
-	var user_name = document.getElementById('user_namew').value;
+	var userNum = document.getElementById('userNumw').value;
+	var userName = document.getElementById('userNamew').value;
 	var userid = document.getElementById('useridw').value;
-	var user_sex = document.getElementById('user_sexw').value;
-	var user_auth = document.getElementById('user_authw').value;
+	var userSex = document.getElementById('userSexw').value;
+	var userAuth = document.getElementById('userAuthw').value;
 	
 	   
-		$('input[name=user_no]').attr('value',user_no);
-	    $('input[name=user_name]').attr('value',user_name);
+		$('input[name=userNum]').attr('value',userNum);
+	    $('input[name=userName]').attr('value',userName);
         $('input[name=userid]').attr('value',userid);
-        $('input[name=user_sex]').attr('value',user_sex);
-        $('input[name=user_auth]').attr('value',user_auth);
+        $('input[name=userSex]').attr('value',userSex);
+        $('input[name=userAuth]').attr('value',userAuth);
       
 
 

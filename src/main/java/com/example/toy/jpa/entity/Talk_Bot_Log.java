@@ -39,7 +39,7 @@ public class Talk_Bot_Log  {
     
     @Column(length = 20, nullable = true)
     @Nullable  
-    private int user_no; 
+    private int userNum; 
     
     @Column(length = 20, nullable = false)
     @Nullable  

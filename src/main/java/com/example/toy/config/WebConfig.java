@@ -1,13 +1,16 @@
+/*
 package com.example.toy.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+*/
 /**
  * 크로스 도메인 설정 
  * @author user
  *
- */
+ *//*
+
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
@@ -18,3 +21,4 @@ public class WebConfig implements WebMvcConfigurer {
 		  .allowedMethods("GET", "POST");  // GET , POST 설정가능
 	    }
 }
+*/

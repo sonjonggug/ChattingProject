@@ -1,4 +1,4 @@
-package com.example.toy.jpa;
+package com.example.toy.jpa.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -8,6 +8,9 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 import com.example.toy.jpa.entity.Login_User;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * 보통 ibatis나 MyBatis 등에서 Dao라고 불리는 DB Layer 접근자입니다.
@@ -19,10 +22,14 @@ import com.example.toy.jpa.entity.Login_User;
 public interface LoginRepository extends JpaRepository <Login_User, Long>{
 	 
 	 	@Nullable
-		Login_User findByUserid(String userid);
-	 	
-	 	@Modifying // select 문이 아님을 나타낸다	 	
-	 	@Query(value = "UPDATE LOGIN_USER set LOGIN_DATE = :date WHERE USERID =:userid" , nativeQuery = true)
+		Optional<Login_User> findByUserid(String userid);
+
+		List<Login_User> findAll();
+	// select userNum , userName , userid , userSex , joinDate ,loginDate , userAuth  from  LOGIN_USER where userNum = ${userNum};
+		Login_User findByUserNum(Long userNum);
+
+	 	@Modifying(clearAutomatically = true) // select 문이 아님을 나타낸다
+	 	@Query(value = "UPDATE LOGIN_USER set loginDate = :date WHERE USERID =:userid" , nativeQuery = true)
 	 	void updateDate(@Param("date")String date , @Param("userid")String userid) throws Exception;
-	
+
 }

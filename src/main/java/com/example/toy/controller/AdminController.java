@@ -1,16 +1,13 @@
 package com.example.toy.controller;
 
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.example.toy.jpa.ChattingService;
+import com.example.toy.jpa.UserService;
+import com.example.toy.jpa.entity.Login_User;
 import com.example.toy.jpa.service.JpaAdminService;
-import lombok.val;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.example.toy.service.AdminService;
+import com.example.toy.service.UserManagementService;
+import com.example.toy.vo.LoginUserDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,16 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.toy.jpa.ChattingService;
-import com.example.toy.jpa.LoginController;
-import com.example.toy.jpa.UserService;
-import com.example.toy.jpa.entity.Login_User;
-import com.example.toy.service.AdminService;
-import com.example.toy.service.UserManagementService;
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+@Slf4j
 @Controller
 public class AdminController {
 
-private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+
 	
 	@Autowired
 	UserService UserService; 
@@ -50,13 +47,13 @@ private static final Logger logger = LoggerFactory.getLogger(LoginController.cla
 		List<Login_User> showUser = new ArrayList<Login_User>();
 
 		integrated = UserManagementService.UserSum();
-        logger.info("통합 정보 " + integrated);
+        log.info("통합 정보 " + integrated);
         
         Userincrease = UserManagementService.Userincrease();
-        logger.info("사용자수 추이 " + Userincrease);
+        log.info("사용자수 추이 " + Userincrease);
         
         showUser = jpaAdminService.ShowUser();
-        logger.info("사용자 검색" + showUser);
+        log.info("사용자 검색" + showUser);
 		 model.addAttribute("sumCnt",integrated.get("user_cnt"));
 		 model.addAttribute("user",integrated.get("user"));
 		 model.addAttribute("channel_name",integrated.get("channel_name"));
@@ -69,48 +66,47 @@ private static final Logger logger = LoggerFactory.getLogger(LoginController.cla
 	
 
 	@RequestMapping(value = "/selectUser", method = RequestMethod.POST)
-	public String selectUser(@RequestParam(value ="user_no")String user_no , Model model) throws Exception {
+	public String selectUser(@RequestParam(value ="userNum")String userNum , Model model) throws Exception {
 		/*HashMap<String, String> selectUser = new HashMap<String, String>();
-		selectUser = UserManagementService.selectUser(user_no);*/
+		selectUser = UserManagementService.selectUser(userNum);*/
 
 		Login_User selectUser = new Login_User();
 
-		selectUser = jpaAdminService.selectUser(user_no);
+		selectUser = jpaAdminService.selectUser(Long.valueOf(userNum));
 
-		logger.info("사용자 업데이트 정보" + selectUser);
+		log.info("사용자 업데이트 정보" + selectUser);
 		
 		model.addAttribute("selectUser",selectUser);
 		return "user/updateUser";			
 	}
 	
 	@RequestMapping(value = "/infoUser", method = RequestMethod.POST)
-	public String infoUser(@RequestParam(value ="user_no")String user_no , @RequestParam(value ="userid")String userid , Model model) throws Exception {
+	public String infoUser(@RequestParam(value ="userNum")String userNum , @RequestParam(value ="userid")String userid , Model model) throws Exception {
 		/*HashMap<String, String> selectUser = new HashMap<String, String>();
-		selectUser = UserManagementService.selectUser(user_no);*/
+		selectUser = UserManagementService.selectUser(userNum);*/
 		ArrayList<HashMap> chattLog = new ArrayList<HashMap>();
 
 		Login_User selectUser = new Login_User();
-		selectUser = jpaAdminService.selectUser(user_no);
+		selectUser = jpaAdminService.selectUser(Long.valueOf(userNum));
 		
 		chattLog = AdminService.chattLog(userid);	
-		logger.info("사용자 상세정보" + selectUser);
-		logger.info("채팅내역" + chattLog);
+		log.info("사용자 상세정보" + selectUser);
+		log.info("채팅내역" + chattLog);
 		model.addAttribute("selectUser",selectUser);
 		model.addAttribute("chattLog",chattLog);
 		return "user/infoUser";			
 	}
 	
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-	public String updateUser(@RequestParam(value ="user_no")String user_no , @ModelAttribute Login_User login_User , Model model , HttpServletResponse response) throws Exception {
+	public String updateUser(@RequestParam(value ="userNum")String userNum , @ModelAttribute LoginUserDto loginUserDto , Model model , HttpServletResponse response) throws Exception {
 		/*HashMap<String, String> selectUser = new HashMap<String, String>();*/
-		Login_User selectUser = new Login_User();
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter w = response.getWriter();
-		boolean bool = AdminService.updateUser(login_User);
-		
+		boolean bool = UserService.updateUser(loginUserDto);
+		Login_User selectUser = new Login_User();
 		if (bool==true) {
-			selectUser = jpaAdminService.selectUser(user_no);
-			logger.info("사용자 업데이트 후 정보 " + selectUser);
+			selectUser = jpaAdminService.selectUser(Long.valueOf(userNum));
+			log.info("사용자 업데이트 후 정보 " + selectUser);
 			model.addAttribute("selectUser",selectUser);			
 			w.write("<script>alert('업데이트가 완료되었습니다.');</script>");
 			w.flush();
@@ -126,7 +122,7 @@ private static final Logger logger = LoggerFactory.getLogger(LoginController.cla
 	}
  
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
-	public String deleteUser(@RequestParam(value ="user_no")String user_no , @ModelAttribute Login_User login_User , Model model , HttpServletResponse response) throws Exception {
+	public String deleteUser(@RequestParam(value ="userNum")String userNum , @ModelAttribute Login_User login_User , Model model , HttpServletResponse response) throws Exception {
 		/*HashMap<String, String> selectUser = new HashMap<String, String>();*/
 		Login_User selectUser = new Login_User();
 		response.setContentType("text/html; charset=utf-8");
@@ -135,7 +131,7 @@ private static final Logger logger = LoggerFactory.getLogger(LoginController.cla
 		
 		if (bool==true) {
 			
-			logger.info("사용자 삭제 성공 ");
+			log.info("사용자 삭제 성공 ");
 						
 			w.write("<script>alert('삭제가 완료되었습니다.');location.href='admin';</script>");
 			w.flush();

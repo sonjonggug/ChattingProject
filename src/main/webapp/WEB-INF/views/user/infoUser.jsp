@@ -74,34 +74,34 @@
 								     <div class="form-inline form-group" >
 								      <label for="phone_num" class="col-sm-2 control-label">이름 : </label>
 								      <div class="col-sm-10">
-								       <input type="text" class="form-control" id="phone_num" name="phone_num" value="${selectUser.user_name }" readonly>
+								       <input type="text" class="form-control" id="phone_num" name="phone_num" value="${selectUser.userName }" readonly>
 								      </div>
 								     </div>
 								     
 								      <div class="form-inline form-group" >
 								      <label for="phone_num" class="col-sm-2 control-label">권한 : </label>
 								      <div class="col-sm-10">
-								       <input type="text" class="form-control" id="phone_num" name="phone_num" value="${selectUser.user_auth }" readonly>
+								       <input type="text" class="form-control" id="phone_num" name="phone_num" value="${selectUser.userAuth }" readonly>
 								      </div>
 								     </div>
 								     
 								     <div class="form-inline form-group" >
 								      <label for="phone_num" class="col-sm-2 control-label">성별 : </label>
 								      <div class="col-sm-10">
-								       <input type="text" class="form-control" id="phone_num" name="phone_num" value="${selectUser.user_sex }" readonly>
+								       <input type="text" class="form-control" id="phone_num" name="phone_num" value="${selectUser.userSex }" readonly>
 								      </div>
 								     </div>
 								     
 								     <div class="form-inline form-group" >
 								      <label for="phone_num" class="col-sm-2 control-label">가입 : </label>
 								      <div class="col-sm-10">
-								       <input type="text" class="form-control" id="phone_num" name="phone_num" value="${selectUser.join_date }" readonly>
+								       <input type="text" class="form-control" id="phone_num" name="phone_num" value="${selectUser.joinDate }" readonly>
 								      </div>
 								     </div>
 								     <div class="form-inline form-group" >
 								      <label for="phone_num" class="col-sm-2 control-label">로그인 : </label>
 								      <div class="col-sm-10">
-								       <input type="text" class="form-control" id="phone_num" name="phone_num" value="${selectUser.login_date }" readonly>
+								       <input type="text" class="form-control" id="phone_num" name="phone_num" value="${selectUser.loginDate }" readonly>
 								      </div>
 								     </div>
                                     
