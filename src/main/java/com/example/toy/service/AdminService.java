@@ -3,6 +3,7 @@ package com.example.toy.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.example.toy.vo.LoginUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,10 +30,10 @@ public class AdminService {
   
  }
   
-  public boolean deleteUser(Login_User login_User) throws Exception {
+  public boolean deleteUser(LoginUserDto loginUserDto) throws Exception {
 		
 		 
-		return AdminMapper.deleteUser(login_User);
+		return AdminMapper.deleteUser(loginUserDto);
 					  
 		  }
 }

@@ -19,15 +19,14 @@ public class JpaAdminService {
 
     }
     public Login_User selectUser(Long userNum){
-
-        return loginRepository.findByUserNum(userNum);
+        return loginRepository.findByUserNum(userNum).get();
 
     }
 
 
     public Login_User userTalkLog(Long userNum){
 
-        return loginRepository.findByUserNum(userNum);
+        return loginRepository.findByUserNum(userNum).get();
 
     }
 

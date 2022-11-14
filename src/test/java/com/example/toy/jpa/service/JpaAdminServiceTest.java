@@ -59,7 +59,7 @@ class JpaAdminServiceTest {
 
     }*/
 
-    @Test
+    /*@Test
     public void insertTest(){
         HashMap map = new HashMap();
         SimpleDateFormat sDate2 = new SimpleDateFormat("yyyy-MM-dd hh:mm");
@@ -74,7 +74,7 @@ class JpaAdminServiceTest {
         map.put("loginDate",sDate2.format(new Date()));
         userService.insertUser(map);
 
-    }
+    }*/
 
     @Test
     public void checkidTest() throws Exception {

@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 
 
 @Slf4j // 로깅에 대한 추상 레이어를 제공하는 인터페이스의 모음.
@@ -69,62 +68,97 @@ public class UserService implements UserDetailsService{
     public void updateDate(String userid) throws Exception{  	
     	 SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");
     	 today.format(new Date());
-    	 loginRepository.updateDate(today.format(new Date()),userid);
+        Login_User user = loginRepository.findByUserid(userid).get();
+        user.setLoginDate(today.format(new Date()));
+        /* loginRepository.findByUserid(userid).ifPresent(item -> {
+             item.setLoginDate(today.format(new Date()));
+             loginRepository.save(item);
+         });*/
     }
 
-    public boolean updateUser(LoginUserDto loginUserDto) throws Exception {
-        Login_User login_User = new Login_User();
-        String userid = loginUserDto.getUserid();
+    @Transactional
+    public String updateUser(LoginUserDto loginUserDto) throws Exception {
+        Long userNum = loginUserDto.getUserNum();
+        String userId = loginUserDto.getUserid();
 
-        boolean id = loginRepository.findByUserid(userid).isPresent();
+        // 기존 아이디와 같은지 ( 아이디 변경 유무 )
+        boolean IdSame = loginRepository.findByUserNum(userNum).get().getUserid().equals(userId);
 
-        if(id == false) {
-            System.out.println("아이디 없음");
-            return false;
-        } else {
-            login_User.builder()
-                    .userNum(loginUserDto.getUserNum())
-                    .userName(loginUserDto.getUserName())
-                    .userAuth(loginUserDto.getUserAuth())
-                    .userSex(loginUserDto.getUserSex())
-                    .build();
+        System.out.println(IdSame);
 
+        if (IdSame == false) { // 아이디 변경을 시도
+            boolean IdEexist = loginRepository.findByUserid(userId).isPresent(); // 아이디 중복 체크
+            if (IdEexist == true) {
+                log.info("이미 존재하는 아이디입니다.");
+                return "이미 존재하는 아이디입니다.";
+            } else { // 아이디 변경을 시도하고 아이디 중복이 아닐때
+                Login_User user = loginRepository.findByUserNum(userNum).get();
+                user.setUserid(loginUserDto.getUserid());
+                user.setUserName(loginUserDto.getUserName());
+                user.setUserSex(loginUserDto.getUserSex());
+                user.setUserAuth(loginUserDto.getUserAuth());
 
-           loginRepository.save(login_User);
-            System.out.println("변경 완료");
-            return true;
+                /*loginRepository.findByUserNum(userNum).ifPresent(item -> {
+                    item.setUserid(loginUserDto.getUserid());
+                    item.setUserName(loginUserDto.getUserName());
+                    item.setUserSex(loginUserDto.getUserSex());
+                    item.setUserAuth(loginUserDto.getUserAuth());
+                    loginRepository.save(item);
+                });*/
+                log.info("아이디 변경을 시도하고 아이디 중복이 아닐때");
+
+                return "업데이트가 완료되었습니다.";
+            }
+        } else { // 아이디 변경이 아닐때
+            Login_User user = loginRepository.findByUserNum(userNum).get();
+            user.setUserName(loginUserDto.getUserName());
+            user.setUserSex(loginUserDto.getUserSex());
+            user.setUserAuth(loginUserDto.getUserAuth());
+
+           /* loginRepository.findByUserNum(userNum).ifPresent(item -> {
+                item.setUserName(loginUserDto.getUserName());
+                item.setUserSex(loginUserDto.getUserSex());
+                item.setUserAuth(loginUserDto.getUserAuth());
+                loginRepository.save(item);
+            });*/
+            log.info("아이디 변경이 아닐때");
         }
+        return "업데이트가 완료되었습니다.";
     }
-    
-    /**
+
+        /**
      * 회원가입 , 비밀번호를 인코딩하여 DB에 저장
      * @param User
      * @return
      * @throws Exception
      */
-    public boolean insertUser(HashMap map){
+    public String insertUser(LoginUserDto userDto){
 
             Login_User user = new Login_User();
-            if( map.get("userId")!=null && map.get("userPw")!=null && map.get("userSex")!=null &&
-                map.get("userName")!=null && map.get("userAuth")!=null && map.get("joinDate")!=null && map.get("loginDate")!=null) {
 
-                String userid = (String) map.get("userId");
-                user.joinUser(map);
+            if( userDto.getUserid()!=null && userDto.getUserName()!=null &&
+                    userDto.getUserSex()!=null &&userDto.getUserPw()!=null) {
 
-                boolean findById = loginRepository.findByUserid(userid).isPresent(); // Optional 의 value 가 null 이면 false
-        //DB에 저장
-                if(findById == false){
-                    user.joinUser(map);
+                SimpleDateFormat sDate2 = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                System.out.println("--------패스워드 값" + userDto.getUserPw());
+
+                userDto.setUserAuth("USER");
+                userDto.setLoginDate(sDate2.format(new Date()));
+                userDto.setJoinDate(sDate2.format(new Date()));
+
+                boolean findById = loginRepository.findByUserid(userDto.getUserid()).isPresent(); // id 중복 체크
+
+                if(findById == false){ // 아이디 중복이 아닐 경우
+                    user.joinUser(userDto);
                     loginRepository.save(user);
-                    log.info("회원가입 성공");
-                    return true;
+                    return "회원가입에 성공하였습니다." ;
                     } else  {
                     log.info("회원가입 실패");
-                    return false;
+                    return "중복된 아이디 입니다. 다시 시도하여 주십시오." ;
                     }
              } else {
                 log.info("파라미터 null");
-                return false;
+                return "회원가입에 실패하였습니다. 다시 시도해 주십시요.";
                 }
             }
     

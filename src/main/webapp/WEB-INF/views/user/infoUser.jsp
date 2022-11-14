@@ -148,13 +148,13 @@
                                     </thead>                                 
                                    
                                     
-                                    <c:if test="${chattLog.size() == 0 }">
+                                    <%--<c:if test="${chattLog.size() == 0 }">
 										<tfoot>
 											<tr>
 										     <td colspan="3">채팅내역이 없습니다.</td>
 											</tr>
 										</tfoot>
-									</c:if>
+									</c:if>--%>
 									 
 									<tbody>
 									
