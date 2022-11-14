@@ -26,10 +26,6 @@ public interface LoginRepository extends JpaRepository <Login_User, Long>{
 
 		List<Login_User> findAll();
 	// select userNum , userName , userid , userSex , joinDate ,loginDate , userAuth  from  LOGIN_USER where userNum = ${userNum};
-		Login_User findByUserNum(Long userNum);
-
-	 	@Modifying(clearAutomatically = true) // select 문이 아님을 나타낸다
-	 	@Query(value = "UPDATE LOGIN_USER set loginDate = :date WHERE USERID =:userid" , nativeQuery = true)
-	 	void updateDate(@Param("date")String date , @Param("userid")String userid) throws Exception;
+		Optional<Login_User> findByUserNum(Long userNum);
 
 }

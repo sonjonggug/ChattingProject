@@ -1,8 +1,7 @@
 package com.example.toy.jpa.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.example.toy.vo.LoginUserDto;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.lang.Nullable;
@@ -10,12 +9,11 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import java.util.HashMap;
 
-@DynamicUpdate  // 변경된 필드만 적용
-@DynamicInsert  // 같음
 
+@Setter
 @Getter
-/*@AllArgsConstructor // 모든 필드를 매개변수로 받는 생성자 Setter 없이 사용할때*/
-@NoArgsConstructor  // 해당 클래스의 기본 생성자를 생성해 주는 어노테이션입니다.
+@AllArgsConstructor // 모든 필드를 매개변수로 받는 생성자 Setter 없이 사용할때
+@NoArgsConstructor // 해당 클래스의 기본 생성자를 생성해 주는 어노테이션입니다.  PROCTECTED 로 설정하면 아무런 값도 갖지 않는 의미 없는 객체의 생성을 막게 됩니다.
 /*@IdClass(Login_UserPK.class)   PK 2개 이상 사용할때 사용*/
 /**
  * @Entity 테이블과 링크될 클래스 , 기본값으로 클래스의 카멜케이스 이름을 언더 스커어 네이밍(_)으로 테이블 이름을 매칠한다.
@@ -64,23 +62,25 @@ public class Login_User  {
     @Nullable  
     private String joinDate;
 
-    public void joinUser(HashMap map) {
+    public void joinUser(LoginUserDto loginUser) {
 
-        this.userid = (String) map.get("userId");
-        this.userPw = (String) map.get("userPw");
-        this.userName = (String) map.get("userName");
-        this.userAuth = (String) map.get("userAuth");
-        this.userSex = (String) map.get("userSex");
-        this.loginDate = (String) map.get("loginDate");
-        this.joinDate = (String) map.get("joinDate");
+        this.userid = loginUser.getUserid();
+        this.userPw = loginUser.getUserPw();
+        this.userName = loginUser.getUserName();
+        this.userAuth = loginUser.getUserAuth();
+        this.userSex = loginUser.getUserSex();
+        this.loginDate = loginUser.getLoginDate();
+        this.joinDate = loginUser.getJoinDate();
     }
     @Builder
-	public void updateUser(Long userNum , String userName , String userAuth , String userSex){
-        /*this.userid = loginUserDto.getUserid();*/
+	public void updateUser(Long userNum ,String userid ,String userName , String userAuth , String userSex , String loginDate , String joinDate){
+        this.userid = userid;
         this.userNum =  userNum;
         this.userName = userName;
         this.userAuth = userAuth;
         this.userSex = userSex;
+        this.loginDate = loginDate;
+        this.joinDate = joinDate ;
     }
       
     /**

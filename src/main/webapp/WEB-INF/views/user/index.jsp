@@ -288,8 +288,9 @@
                                                         value="${showUser.joinDate }"/></td>
                                                 <td style="text-align: center;">
                                                     <button class="btn btn-dark btn-sm"
-                                                            onclick="infoUser('<c:out value="${showUser.userNum }"/>','
-                                                                <c:out value="${showUser.userid }"/>');">정보
+                                                            onclick="infoUser('<c:out value="${showUser.userNum }"/>','' +
+                                                                    ' <c:out value="${showUser.userid }"/>');">정보
+
                                                     </button>
                                                     <button class="btn btn-dark btn-sm" onclick="selectUser('<c:out
                                                             value="${showUser.userNum }"/>');">수정
