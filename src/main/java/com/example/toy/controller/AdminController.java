@@ -102,32 +102,46 @@ public class AdminController {
 		/*HashMap<String, String> selectUser = new HashMap<String, String>();*/
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter w = response.getWriter();
-		boolean bool = UserService.updateUser(loginUserDto);
-		Login_User selectUser = new Login_User();
-		if (bool==true) {
-			selectUser = jpaAdminService.selectUser(Long.valueOf(userNum));
-			log.info("사용자 업데이트 후 정보 " + selectUser);
-			model.addAttribute("selectUser",selectUser);			
+		String updateMsg = UserService.updateUser(loginUserDto);
+
+
+		if (updateMsg.equals("업데이트가 완료되었습니다.")) {
+
+			Login_User selectUser = jpaAdminService.selectUser(Long.valueOf(userNum));
+			log.info("사용자 업데이트 성공 " + selectUser);
+			model.addAttribute("selectUser", selectUser);
 			w.write("<script>alert('업데이트가 완료되었습니다.');</script>");
 			w.flush();
-			
+
 			return "user/updateUser";
-			
-		}else {
-			w.write("<script>alert('업데이트에 실패하였습니다.');</script>");
+
+		} else if (updateMsg.equals("이미 존재하는 아이디입니다.")) {
+
+			Login_User selectUser = jpaAdminService.selectUser(Long.valueOf(userNum));
+			model.addAttribute("selectUser", selectUser);
+			log.info("사용자 업데이트 실패 " + selectUser);
+			w.write("<script>alert('이미 존재하는 아이디입니다.');</script>");
 			w.flush();
-			
-		return "user/updateUser";			
+
+			return "user/updateUser";
+		} else {
+
+			Login_User selectUser = jpaAdminService.selectUser(Long.valueOf(userNum));
+			model.addAttribute("selectUser", selectUser);
+			log.info("사용자 업데이트 실패 " + selectUser);
+			w.write("<script>alert('업데이트에 실패 하였습니다');</script>");
+			w.flush();
+			return "user/updateUser";
+
+		}
 	}
-	}
- 
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
-	public String deleteUser(@RequestParam(value ="userNum")String userNum , @ModelAttribute Login_User login_User , Model model , HttpServletResponse response) throws Exception {
+	public String deleteUser(@RequestParam(value ="userNum")String userNum , @ModelAttribute LoginUserDto loginUserDto , Model model , HttpServletResponse response) throws Exception {
 		/*HashMap<String, String> selectUser = new HashMap<String, String>();*/
 		Login_User selectUser = new Login_User();
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter w = response.getWriter();
-		boolean bool = AdminService.deleteUser(login_User);
+		boolean bool = AdminService.deleteUser(loginUserDto);
 		
 		if (bool==true) {
 			

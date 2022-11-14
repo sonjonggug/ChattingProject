@@ -31,34 +31,31 @@
 		FROM LOGIN_USER;
      </select>
      
-      <!-- 사용자 검색 -->
-    <select id="showUser" parameterType="HashMap" resultType="HashMap">
-  		 select userNum , userName , userid , userSex , joinDate ,loginDate , userAuth  from  LOGIN_USER ;
-     </select>
+
      
-     
+
       <select id="selectUser" parameterType="String" resultType="HashMap">
   		 select userNum , userName , userid , userSex , joinDate ,loginDate , userAuth  from  LOGIN_USER where userNum = ${userNum};
      </select>
      
 
       <select id="UserTalkLog" resultType="int" parameterType="com.example.toy.jpa.entity.User_Talk_Log">
-  		INSERT INTO USER_TALK_LOG (userName, userSex, userid, send_date, talk)
-		  	SELECT 
-    		 	  a.userName
-     			, a.userSex
-     			, a.USERID 
-     			, "${send_date}" 
-     			, "${talk}" 
-  			FROM LOGIN_USER a
- 				WHERE userid ="${userid}" ; 
- 				
- 			SELECT LAST_INSERT_ID();
+		  INSERT INTO USER_TALK_LOG (user_name, user_Sex, userid, send_date, talk)
+		  SELECT
+			  user_name
+			   , user_Sex
+			   , userid
+			   , "${send_date}"
+			   , "${talk}"
+		  FROM LOGIN_USER
+		  WHERE userid ="${userid}" ;
+
+		  SELECT LAST_INSERT_ID();
 
      </select>
      
       <insert id="talkBotSave" parameterType="com.example.toy.jpa.entity.Talk_Bot_Log">
-  		INSERT INTO TALK_BOT_LOG (userid, result, prompt_tokens, generated_tokens, send_date ,userNum)
+  		INSERT INTO TALK_BOT_LOG (userid, result, prompt_tokens, generated_tokens, send_date ,user_num)
 		  	VALUES('${userid}', '${result}', ${prompt_tokens}, ${generated_tokens}, '${send_date}' , ${userNum});
 
      </insert>

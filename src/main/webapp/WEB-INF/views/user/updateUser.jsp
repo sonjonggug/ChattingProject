@@ -89,7 +89,8 @@
 <!-- 											<td width="10%" style="text-align: center;"><button class="btn btn-dark btn-sm" onclick="updateUser();">수정</button></td> -->
 											<td width="10%" style="text-align: center;"><button class="btn btn-dark btn-sm" onclick="updateUser();" data-target="#update-confirm" data-toggle="modal">수정</button>
 											<button class="btn btn-dark btn-sm" onclick="deleteUser();" data-target="#delete-confirm" data-toggle="modal">삭제</button></td>
-											
+                                                <input class="form-control" type="hidden" id="loginDatew" value="${selectUser.loginDate }" >
+                                                <input class="form-control" type="hidden" id="joinDatew" value="${selectUser.joinDate }" >
 
 											</tr>
 									     
@@ -200,6 +201,9 @@
 								       <input type="text" class="form-control" id="userAuth" name="userAuth" value="" readonly>
 								      </div>
 								     </div>
+                     <input type="hidden" class="form-control" id="loginDate" name="loginDate" value="" readonly>
+                     <input type="hidden" class="form-control" id="joinDate" name="joinDate" value="" readonly>
+
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>     																		     											
 										</form>  
       		    </div>
@@ -279,6 +283,8 @@
 	var userid = document.getElementById('useridw').value;
 	var userSex = document.getElementById('userSexw').value;
 	var userAuth = document.getElementById('userAuthw').value;
+       var loginDate = document.getElementById('loginDatew').value;
+       var joinDate = document.getElementById('joinDatew').value;
 	
 	   
 		$('input[name=userNum]').attr('value',userNum);
@@ -286,6 +292,8 @@
         $('input[name=userid]').attr('value',userid);
         $('input[name=userSex]').attr('value',userSex);
         $('input[name=userAuth]').attr('value',userAuth);
+       $('input[name=loginDate]').attr('value',loginDate);
+       $('input[name=joinDate]').attr('value',joinDate);
       
 
 

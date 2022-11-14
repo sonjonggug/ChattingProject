@@ -2,6 +2,7 @@ package com.example.toy.jpa;
 
 import com.example.toy.jpa.repository.LoginRepository;
 import com.example.toy.service.UserManagementService;
+import com.example.toy.vo.LoginUserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,77 +26,79 @@ import java.util.Map;
 @Slf4j
 @Controller
 public class LoginController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
-	
+
 	@Autowired
-	UserService UserService; 
+	UserService UserService;
 	@Autowired
-	ChattingService ChattingService; 
+	ChattingService ChattingService;
 	@Autowired
 	UserManagementService UserManagementService;
 	@Autowired
 	PasswordEncoder passwordEncoder;
-	
-	private LoginRepository login;
-  	
-	public LoginController(LoginRepository login) {
-		this.login = login;
-	}
-	
-	
+
+
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String root() {
-				
+
 		return "Login";
 	}
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() {
-				
+
 		return "Login";
 	}
+
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String Login() {
 		logger.info("로그인 시도");
 		return "Login";
 	}
+
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup() {
-		logger.info("회원가입 페이지");		
+		logger.info("회원가입 페이지");
 		return "signup";
 	}
+
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	    public String signup(HttpServletRequest request , HttpServletResponse response) throws IOException {
-		 response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			HashMap map = new HashMap();
-		SimpleDateFormat sDate2 = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-		String password=passwordEncoder.encode(request.getParameter("userPw"));
+	public String signup(@ModelAttribute LoginUserDto loginUserDto, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter w = response.getWriter();
 
-			map.put("userId",request.getParameter("userid"));
-			map.put("userPw",password);
-			map.put("userName",request.getParameter("userName"));
-			map.put("userSex",request.getParameter("userSex"));
-			map.put("userAuth","USER");
-			map.put("joinDate",sDate2.format(new Date()));
-			map.put("loginDate",sDate2.format(new Date()));
+		String password = passwordEncoder.encode(loginUserDto.getUserPw());
+		loginUserDto.setUserPw(password);
 
-			logger.info("회원가입 진입 전");
-	        if(UserService.insertUser(map)==(true)) {
-	        	logger.info("회원가입 성공");
-	            return "Login";
-	        } else {
-	        	logger.info("회원가입 실패");
-	        out.println("<script>alert('회원가입에 실패 하였습니다.'); </script>");
-			out.flush();
-			return "join";
-	    }
-	 }
+		String result = UserService.insertUser(loginUserDto);
+		logger.info(result);
+
+		if (result.equals("회원가입에 성공하였습니다.")) {
+			logger.info("회원가입 성공");
+			w.write("<script>alert('회원가입에 성공하였습니다.');</script>");
+			w.flush();
+			return "Login";
+		} else if (result.equals("중복된 아이디 입니다.")) {
+			logger.info("회원가입 실패");
+			w.write("<script>alert('중복된 아이디 입니다.');</script>");
+			w.flush();
+			return "signup";
+		} else {
+			logger.info("회원가입 실패");
+			w.write("<script>alert('회원가입에 실패하였습니다. 다시 시도해 주십시오.');</script>");
+			w.flush();
+			return "signup";
+		}
+	}
 	 @GetMapping("/user_access")
 	    public String userAccess(Model model, Authentication authentication ,  HttpSession Session) throws Exception {
+		 logger.info("인증 성공");
 	        //Authentication 객체를 통해 유저 정보를 가져올 수 있다.
 		 UserDetails LoginUser = (UserDetails) authentication.getPrincipal();  //userDetail 객체를 가져옴
 		 UserService.updateDate(LoginUser.getUsername());
+
 		   if(LoginUser.getUsername().equals("Admin")) {
 			 model.addAttribute("info", LoginUser.getUsername() +"의 "+ LoginUser.getUsername()+ "님");      //유저 아이디
 		      logger.info("Admin 접속");
@@ -110,9 +113,13 @@ public class LoginController {
 
 	    }
 	@RequestMapping(value = "/access_denied", method = RequestMethod.GET)
-	public String access_denied() {
-		logger.info("access_denied");		
-		return "access_denied";
+	public String access_denied(HttpServletResponse response) throws IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter w = response.getWriter();
+		logger.info("로그인 실패");
+		w.write("<script>alert('아이디 혹은 비밀번호가 틀렸습니다.');</script>");
+		w.flush();
+		return "Login";
 	}
 	
 	@RequestMapping(value = "/checkid", method = RequestMethod.GET)

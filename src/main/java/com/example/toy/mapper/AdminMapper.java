@@ -3,6 +3,7 @@ package com.example.toy.mapper;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.example.toy.vo.LoginUserDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.toy.jpa.entity.Login_User;
@@ -14,6 +15,6 @@ public interface AdminMapper {
 	
 	ArrayList<HashMap> chattLog(String userid);
 	
-	public boolean deleteUser(Login_User login_User);
+	public boolean deleteUser(LoginUserDto loginUserDto);
 	
 }
