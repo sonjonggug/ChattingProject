@@ -4,10 +4,12 @@ import com.example.toy.jpa.ChattingService;
 import com.example.toy.jpa.entity.Channel_Info;
 import com.example.toy.jpa.entity.Talk_Bot_Log;
 import com.example.toy.jpa.entity.User_Talk_Log;
+import com.example.toy.jpa.service.LogService;
 import com.example.toy.service.KaKaoApiService;
 import com.example.toy.service.NaverApiService;
 import com.example.toy.service.UserManagementService;
 import com.example.toy.service.WebSocketChatService;
+import com.example.toy.vo.TalkBotLogDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,10 @@ public class ChattController {
 	KaKaoApiService kaKaoApiService;
 	@Autowired
 	UserManagementService userManagementService;
-	
+
+	@Autowired
+	LogService logService;
+
 	/**
 	 * 정적 변수로 저장된 client 값을 가져옴 
 	 * Controller가 @ServerEndpoint보다 빨리 받기에 처음 값은 +1을 한다.   
@@ -143,12 +148,9 @@ public class ChattController {
 	 */
 	@RequestMapping(value = "/talkBotSave", method = RequestMethod.GET)
 	@ResponseBody
-	public void talkBotSave(@ModelAttribute Talk_Bot_Log botTalk) throws Exception {	
-		SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");   	 	
-		botTalk.setSend_date(today.format(new Date()));
-   	 	
-   	 	  userManagementService.talkBotSave(botTalk);
-		 	  
+	public void talkBotSave(@ModelAttribute TalkBotLogDto talkBot) throws Exception {
+
+   	 	  logService.talkBotSave(talkBot);
 
 	}
 	@RequestMapping(value = "/user", method = RequestMethod.GET)

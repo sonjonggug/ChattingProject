@@ -25,7 +25,7 @@ public class AdminService {
 	  }
   
   public ArrayList<HashMap> chattLog (String userid) throws Exception {
-	  	  
+
 	return  AdminMapper.chattLog(userid);
   
  }
