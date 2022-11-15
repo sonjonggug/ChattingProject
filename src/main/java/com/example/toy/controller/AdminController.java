@@ -67,8 +67,6 @@ public class AdminController {
 
 	@RequestMapping(value = "/selectUser", method = RequestMethod.POST)
 	public String selectUser(@RequestParam(value ="userNum")String userNum , Model model) throws Exception {
-		/*HashMap<String, String> selectUser = new HashMap<String, String>();
-		selectUser = UserManagementService.selectUser(userNum);*/
 
 		Login_User selectUser = new Login_User();
 
@@ -82,13 +80,12 @@ public class AdminController {
 	
 	@RequestMapping(value = "/infoUser", method = RequestMethod.POST)
 	public String infoUser(@RequestParam(value ="userNum")String userNum , @RequestParam(value ="userid")String userid , Model model) throws Exception {
-		/*HashMap<String, String> selectUser = new HashMap<String, String>();
-		selectUser = UserManagementService.selectUser(userNum);*/
+
 		ArrayList<HashMap> chattLog = new ArrayList<HashMap>();
 
 		Login_User selectUser = new Login_User();
 		selectUser = jpaAdminService.selectUser(Long.valueOf(userNum));
-		
+
 		chattLog = AdminService.chattLog(userid);	
 		log.info("사용자 상세정보" + selectUser);
 		log.info("채팅내역" + chattLog);
