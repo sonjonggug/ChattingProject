@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.example.toy.vo.TalkBotLogDto;
 import org.springframework.lang.Nullable;
 
 import lombok.AllArgsConstructor;
@@ -60,5 +61,14 @@ public class Talk_Bot_Log  {
     @Column(length = 50, nullable = false)
     @Nullable  
     private String send_date;
-   
+
+    public void logSave(TalkBotLogDto talkBotLogDto) {
+
+        this.userNum = talkBotLogDto.getUserNum();
+        this.userid = talkBotLogDto.getUserid();
+        this.result = talkBotLogDto.getResult();
+        this.prompt_tokens = talkBotLogDto.getPrompt_tokens();
+        this.generated_tokens = talkBotLogDto.getGenerated_tokens();
+        this.send_date = talkBotLogDto.getSend_date();
+    }
 }

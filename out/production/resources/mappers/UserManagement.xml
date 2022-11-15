@@ -30,14 +30,6 @@
 			 ,SUM(CASE WHEN TO_CHAR(join_date,'YYYYMMDD') BETWEEN 20221201 AND 20221231 THEN 1 else 0 end) as Dece
 		FROM LOGIN_USER;
      </select>
-     
-
-     
-
-      <select id="selectUser" parameterType="String" resultType="HashMap">
-  		 select userNum , userName , userid , userSex , joinDate ,loginDate , userAuth  from  LOGIN_USER where userNum = ${userNum};
-     </select>
-     
 
       <select id="UserTalkLog" resultType="int" parameterType="com.example.toy.jpa.entity.User_Talk_Log">
 		  INSERT INTO USER_TALK_LOG (user_name, user_Sex, userid, send_date, talk)
