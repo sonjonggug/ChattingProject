@@ -51,6 +51,10 @@ public class Talk_Bot_Log  {
     @Nullable  
     private String send_date;
 
+    @Column(length = 50, nullable = false)
+    @Nullable
+    private String userSendDate;
+
     public void logSave(TalkBotLogDto talkBotLogDto) {
 
 
@@ -60,5 +64,6 @@ public class Talk_Bot_Log  {
         this.generated_tokens = talkBotLogDto.getGenerated_tokens();
         this.send_date = talkBotLogDto.getSend_date();
         this.userMsg = talkBotLogDto.getUserMsg();
+        this.userSendDate = talkBotLogDto.getUserSendDate();
     }
 }
