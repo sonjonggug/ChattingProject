@@ -2,7 +2,6 @@ package com.example.toy.jpa.repository;
 
 import com.example.toy.jpa.entity.User_Talk_Log;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 /**
  * 보통 ibatis나 MyBatis 등에서 Dao라고 불리는 DB Layer 접근자입니다.
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Repository;
    @Repository를 추가할 필요 없다.
    Entity 클래스와 기본 Entity Repository는 함께 위치해야 한다.
  */
-@Repository
+
 public interface UserLogRepository extends JpaRepository <User_Talk_Log, Long>{
 
 

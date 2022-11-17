@@ -1,6 +1,5 @@
 package com.example.toy.jpa;
 
-import com.example.toy.jpa.repository.LoginRepository;
 import com.example.toy.service.UserManagementService;
 import com.example.toy.vo.LoginUserDto;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 @Slf4j
@@ -30,7 +27,7 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@Autowired
-	UserService UserService;
+    com.example.toy.jpa.service.UserService UserService;
 	@Autowired
 	ChattingService ChattingService;
 	@Autowired
@@ -73,20 +70,16 @@ public class LoginController {
 		loginUserDto.setUserPw(password);
 
 		String result = UserService.insertUser(loginUserDto);
-		logger.info(result);
 
 		if (result.equals("회원가입에 성공하였습니다.")) {
-			logger.info("회원가입 성공");
 			w.write("<script>alert('회원가입에 성공하였습니다.');</script>");
 			w.flush();
 			return "Login";
 		} else if (result.equals("중복된 아이디 입니다.")) {
-			logger.info("회원가입 실패");
 			w.write("<script>alert('중복된 아이디 입니다.');</script>");
 			w.flush();
 			return "signup";
 		} else {
-			logger.info("회원가입 실패");
 			w.write("<script>alert('회원가입에 실패하였습니다. 다시 시도해 주십시오.');</script>");
 			w.flush();
 			return "signup";

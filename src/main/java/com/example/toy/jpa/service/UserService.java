@@ -1,4 +1,4 @@
-package com.example.toy.jpa;
+package com.example.toy.jpa.service;
 
 import com.example.toy.jpa.entity.Login_User;
 import com.example.toy.jpa.repository.LoginRepository;
@@ -64,19 +64,16 @@ public class UserService implements UserDetailsService{
      * @param userid
      * @throws Exception
      */
-    @Transactional
+    @Transactional // 트랜잭션 안에서 entity를 조회해야 영속성 상태로 조회 그 상태에서 값을 변경하면 변경 감지가 일어난다.
     public void updateDate(String userid) throws Exception{  	
     	 SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");
     	 today.format(new Date());
-        Login_User user = loginRepository.findByUserid(userid).get();
-        user.setLoginDate(today.format(new Date()));
-        /* loginRepository.findByUserid(userid).ifPresent(item -> {
-             item.setLoginDate(today.format(new Date()));
-             loginRepository.save(item);
-         });*/
+        Login_User user = loginRepository.findByUserid(userid).get(); // 아이디 조회 후
+        user.setLoginDate(today.format(new Date())); // 영속성 상태에서 값 변경시 변경감지 따로 save X
+
     }
 
-    @Transactional
+    @Transactional // 트랜잭션 안에서 entity를 조회해야 영속성 상태로 조회 그 상태에서 값을 변경하면 변경 감지가 일어난다.
     public String updateUser(LoginUserDto loginUserDto) throws Exception {
         Long userNum = loginUserDto.getUserNum();
         String userId = loginUserDto.getUserid();
@@ -98,13 +95,6 @@ public class UserService implements UserDetailsService{
                 user.setUserSex(loginUserDto.getUserSex());
                 user.setUserAuth(loginUserDto.getUserAuth());
 
-                /*loginRepository.findByUserNum(userNum).ifPresent(item -> {
-                    item.setUserid(loginUserDto.getUserid());
-                    item.setUserName(loginUserDto.getUserName());
-                    item.setUserSex(loginUserDto.getUserSex());
-                    item.setUserAuth(loginUserDto.getUserAuth());
-                    loginRepository.save(item);
-                });*/
                 log.info("아이디 변경을 시도하고 아이디 중복이 아닐때");
 
                 return "업데이트가 완료되었습니다.";
@@ -115,12 +105,6 @@ public class UserService implements UserDetailsService{
             user.setUserSex(loginUserDto.getUserSex());
             user.setUserAuth(loginUserDto.getUserAuth());
 
-           /* loginRepository.findByUserNum(userNum).ifPresent(item -> {
-                item.setUserName(loginUserDto.getUserName());
-                item.setUserSex(loginUserDto.getUserSex());
-                item.setUserAuth(loginUserDto.getUserAuth());
-                loginRepository.save(item);
-            });*/
             log.info("아이디 변경이 아닐때");
         }
         return "업데이트가 완료되었습니다.";
@@ -138,10 +122,7 @@ public class UserService implements UserDetailsService{
 
             if( userDto.getUserid()!=null && userDto.getUserName()!=null &&
                     userDto.getUserSex()!=null &&userDto.getUserPw()!=null) {
-
                 SimpleDateFormat sDate2 = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-                System.out.println("--------패스워드 값" + userDto.getUserPw());
-
                 userDto.setUserAuth("USER");
                 userDto.setLoginDate(sDate2.format(new Date()));
                 userDto.setJoinDate(sDate2.format(new Date()));
@@ -151,6 +132,7 @@ public class UserService implements UserDetailsService{
                 if(findById == false){ // 아이디 중복이 아닐 경우
                     user.joinUser(userDto);
                     loginRepository.save(user);
+                    log.info("회원가입 성공");
                     return "회원가입에 성공하였습니다." ;
                     } else  {
                     log.info("회원가입 실패");

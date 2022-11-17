@@ -69,7 +69,7 @@
 		 		 type : 'GET',
 		 	    url :'/talkBot',
 		 	   	data :{
-		 	   	talk : text ,
+		 	   	userMsg : text ,
 		 	   	userid : userid ,
 		 	   	channel_name : channel_name , 
 		 	   	QA : msg
@@ -78,7 +78,7 @@
 
 		 	    success : function(answer) {
 					var data =JSON.parse(answer[0]); // Bot 답변
-					var userNum = answer[1]; // Bot 답변과 유저 질문을 매칭 시키기 위한 고유번호 
+					var userMsg = answer[1]; // Bot 답변과 유저 질문을 매칭 시키기 위한 고유번호
 			    	if(data.msg!=null){ // Token 떨어지면 response로 msg가 날라옴 
 				  $('input[name=alram1]').attr('value',"지금은 운영시간이 아닙니다.");
 		 	    	botsend();		 	    			
@@ -92,7 +92,7 @@
 		 	    	var result = str.slice(0, words-2); //0부터 첫번째 Q가 있는위치까지 짜름
 		 	    	$('input[name=alram1]').attr('value',result);
 		 	    	botsend();
-		 	    	talkBotSave(result,prompt_tokens,generated_tokens,userNum);		
+		 	    	talkBotSave(result,prompt_tokens,generated_tokens,userMsg);
 		 	       $("#msg").removeAttr("readonly");       // readonly 삭제
 		 	      $("#msg").removeAttr('placeholder');
 		 	      }
@@ -102,9 +102,9 @@
 		 	    }
 		 		}); 
 	}
-		function talkBotSave(result,prompt_tokens,generated_tokens,userNum){
+		function talkBotSave(result,prompt_tokens,generated_tokens,userMsg){
 			var userid = $("#mid").val(); // 유저 정보
-			 console.log(result,prompt_tokens,generated_tokens,userNum);							
+			 console.log(result,prompt_tokens,generated_tokens,userMsg);
 					$.ajax({
 				 		 type : 'GET',
 				 	    url :'/talkBotSave',
@@ -113,7 +113,7 @@
 				 	   		result : result ,
 				 	   		prompt_tokens : prompt_tokens ,
 				 	  		generated_tokens : generated_tokens ,
-				 	  		userNum : userNum 				 	   
+							userMsg : userMsg
 				    	},
 				 	    dataType : "json"
 				 		}); 		

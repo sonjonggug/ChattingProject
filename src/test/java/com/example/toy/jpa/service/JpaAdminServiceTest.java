@@ -1,18 +1,14 @@
 package com.example.toy.jpa.service;
 
-import com.example.toy.jpa.UserService;
 import com.example.toy.jpa.repository.LoginRepository;
 import com.example.toy.vo.LoginUserDto;
+import com.example.toy.vo.UserTalkLogDto;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -28,6 +24,28 @@ class JpaAdminServiceTest {
 
     @Autowired
     private JpaAdminService jpaAdminService;
+
+    @Autowired
+    private LogService logService;
+
+
+
+
+
+
+    @Test
+    public void talkBotSaveTest() throws Exception {
+        UserTalkLogDto dto = new UserTalkLogDto();
+        dto.setUserid("thswhdrnr12");
+        dto.setUserMsg("컬럼값 바꿈");
+
+        logService.userTalkSave(dto);
+    }
+
+
+
+
+
 
     /*@Test
     public void saveTest(){
