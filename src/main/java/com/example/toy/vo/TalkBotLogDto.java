@@ -28,5 +28,6 @@ public class TalkBotLogDto {
     private int prompt_tokens;
     private int generated_tokens;
     private String send_date;
+    private String userSendDate;
    
 }

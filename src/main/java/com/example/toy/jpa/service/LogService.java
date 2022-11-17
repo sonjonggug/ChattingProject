@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor // final이 붙거나 @NotNull 이 붙은 필드의 생성자를 자동 생성해주는 롬복 어노테이션
@@ -24,6 +25,13 @@ public class LogService {
 
     private final LoginRepository loginRepository;
 
+
+    public  void chattingLog(String userid){
+        TalkBotLogDto logDto = new TalkBotLogDto();
+      List <Talk_Bot_Log> logResult = botRepository.findByUserid(userid);
+      logDto.setUserid();
+    }
+
     public void userTalkSave(UserTalkLogDto userTalk){
         SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         /*Optional<Login_User> result = loginRepository.findByUserid(userTalk.getUserid());*/
@@ -32,7 +40,6 @@ public class LogService {
             userTalk.setUserid(item.getUserid());
             userTalk.setUserName(item.getUserName());
             userTalk.setUserSex(item.getUserSex());
-            userTalk.setSend_date(today.format(new Date()));
         });
 
         User_Talk_Log user_talk_log = new User_Talk_Log(); //
@@ -52,7 +59,9 @@ public class LogService {
         talkBotLogDto.setSend_date(Date);
 
         Talk_Bot_Log talk_bot_log = new Talk_Bot_Log();
+
         talk_bot_log.logSave(talkBotLogDto);
+
         String saveDate = botRepository.save(talk_bot_log).getSend_date();
 
         log.info("답변 저장 " + saveDate);

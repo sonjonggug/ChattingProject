@@ -1,9 +1,9 @@
 package com.example.toy.jpa.repository;
 
 import com.example.toy.jpa.entity.Talk_Bot_Log;
-import com.example.toy.jpa.entity.User_Talk_Log;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * 보통 ibatis나 MyBatis 등에서 Dao라고 불리는 DB Layer 접근자입니다.
@@ -13,4 +13,6 @@ import org.springframework.stereotype.Repository;
  */
 
 public interface BotRepository extends JpaRepository <Talk_Bot_Log, Long>{
+
+   List<Talk_Bot_Log> findByUserid(String userid);
 }

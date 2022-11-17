@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 @Slf4j
 //@RestController
 @Controller
@@ -128,11 +131,14 @@ public class ChattController {
 	@ResponseBody
 	public ArrayList talkBot(@RequestParam(value ="QA")String QA ,  @ModelAttribute UserTalkLogDto userTalkLogDto) throws Exception {
 		ArrayList list = new ArrayList();
+		SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		userTalkLogDto.setSend_date(today.format(new Date()));
 		 logService.userTalkSave(userTalkLogDto); // 사용자 대화 저장
 		 String en= kaKaoApiService.Start(QA); // AI 답변
 
 		 list.add(en);
 		 list.add(userTalkLogDto.getUserMsg());
+		list.add(userTalkLogDto.getSend_date());
 		  
 			return list; 
 	}

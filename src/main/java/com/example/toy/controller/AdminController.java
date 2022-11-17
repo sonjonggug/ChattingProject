@@ -1,6 +1,7 @@
 package com.example.toy.controller;
 
 import com.example.toy.jpa.ChattingService;
+import com.example.toy.jpa.service.LogService;
 import com.example.toy.jpa.service.UserService;
 import com.example.toy.jpa.entity.Login_User;
 import com.example.toy.jpa.service.JpaAdminService;
@@ -38,7 +39,9 @@ public class AdminController {
 
 	@Autowired
 	JpaAdminService jpaAdminService;
-	
+
+	@Autowired
+	LogService logService;
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String admin(Model model) throws Exception {
 		HashMap<String, String> integrated = new HashMap<String, String>();
@@ -83,10 +86,11 @@ public class AdminController {
 
 		ArrayList<HashMap> chattLog = new ArrayList<HashMap>();
 
-		Login_User selectUser = new Login_User();
-		selectUser = jpaAdminService.selectUser(Long.valueOf(userNum));
+		/*Login_User selectUser = new Login_User();*/
+		Login_User selectUser = jpaAdminService.selectUser(Long.valueOf(userNum));
 
-		chattLog = AdminService.chattLog(userid);	
+		/*chattLog = AdminService.chattLog(userid);*/
+		chattLog = logService.chattingLog(userid);
 		log.info("사용자 상세정보" + selectUser);
 		log.info("채팅내역" + chattLog);
 		model.addAttribute("selectUser",selectUser);
