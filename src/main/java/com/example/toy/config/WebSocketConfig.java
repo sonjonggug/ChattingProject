@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
-import javax.websocket.server.ServerEndpoint;
 /**
  일반적으로 스프링에서 빈들은 싱글톤으로 관리되지만,  
  @ServerEndpoint 어노테이션이 달린 클래스들은 WebSocket이 생성될 때마다 인스턴스가 생성되고 JWA에 의해 관리되기 때문에

@@ -1,7 +1,7 @@
 package com.example.toy.jpa.service;
 
-import com.example.toy.jpa.repository.LoginRepository;
 import com.example.toy.jpa.entity.Login_User;
+import com.example.toy.jpa.repository.LoginRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +29,6 @@ public class JpaAdminService {
         return loginRepository.findByUserNum(userNum).get();
 
     }
+
 
     }

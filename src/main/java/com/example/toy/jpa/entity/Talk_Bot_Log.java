@@ -1,21 +1,10 @@
 package com.example.toy.jpa.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import com.example.toy.vo.TalkBotLogDto;
+import lombok.*;
 import org.springframework.lang.Nullable;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
+import javax.persistence.*;
 @Builder
 @Getter
 @Setter
@@ -38,9 +27,9 @@ public class Talk_Bot_Log  {
     @Nullable
     private Long bot_no;
     
-    @Column(length = 20, nullable = true)
+    @Column(length = 20 , nullable = false)
     @Nullable  
-    private int userNum; 
+    private String userMsg;
     
     @Column(length = 20, nullable = false)
     @Nullable  
@@ -64,11 +53,12 @@ public class Talk_Bot_Log  {
 
     public void logSave(TalkBotLogDto talkBotLogDto) {
 
-        this.userNum = talkBotLogDto.getUserNum();
+
         this.userid = talkBotLogDto.getUserid();
         this.result = talkBotLogDto.getResult();
         this.prompt_tokens = talkBotLogDto.getPrompt_tokens();
         this.generated_tokens = talkBotLogDto.getGenerated_tokens();
         this.send_date = talkBotLogDto.getSend_date();
+        this.userMsg = talkBotLogDto.getUserMsg();
     }
 }

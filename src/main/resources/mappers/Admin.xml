@@ -12,7 +12,7 @@
              , b.send_date as bot_send_date
         FROM user_talk_log a
                  INNER JOIN talk_bot_log b
-                            ON a.user_num = b.user_num
+                            ON a.userid = b.userid
         where a.userid = "${userid}"
         order by a.send_date asc;
     </select>

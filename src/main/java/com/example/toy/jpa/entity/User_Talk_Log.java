@@ -1,5 +1,6 @@
 package com.example.toy.jpa.entity;
 
+import com.example.toy.vo.UserTalkLogDto;
 import lombok.*;
 import org.springframework.lang.Nullable;
 
@@ -46,8 +47,14 @@ public class User_Talk_Log  {
     
     @Column(length = 50, nullable = false)
     @Nullable  
-    private String talk;
-          
+    private String userMsg;
 
-   
+
+    public void logSave(UserTalkLogDto userTalkLogDto) {
+        this.userid = userTalkLogDto.getUserid();
+        this.userName = userTalkLogDto.getUserName();
+        this.userSex = userTalkLogDto.getUserSex();
+        this.send_date = userTalkLogDto.getSend_date();
+        this.userMsg = userTalkLogDto.getUserMsg();
+    }
 }
