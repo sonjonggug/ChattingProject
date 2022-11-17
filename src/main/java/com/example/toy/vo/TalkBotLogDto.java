@@ -21,13 +21,13 @@ public class TalkBotLogDto {
      * @GeneratedValue PK 생성 규칙 , GenerationType.IDENTITY 옵션을 추가해야만 auto_increment
      * @Column 테이블의 컬럼을 나타내며 굳이 선언하지 않더라고 해당 클래스의 필드는 모두 컬럼이 된다.
      */
-    private Long bot_no;
+    private Long botNum;
     private String userMsg;
     private String userid;
     private String result;
-    private int prompt_tokens;
-    private int generated_tokens;
-    private String send_date;
+    private int promptTokens;
+    private int generatedTokens;
+    private String sendDate;
     private String userSendDate;
    
 }

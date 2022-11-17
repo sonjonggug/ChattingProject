@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,10 +27,15 @@ public class LogService {
     private final LoginRepository loginRepository;
 
 
-    public  void chattingLog(String userid){
-        TalkBotLogDto logDto = new TalkBotLogDto();
-      List <Talk_Bot_Log> logResult = botRepository.findByUserid(userid);
-      logDto.setUserid();
+    public  List<Talk_Bot_Log> chattingLog(String userid){
+
+
+
+        List<Talk_Bot_Log> list = botRepository.findByGeneratedTokens(0);
+        System.out.println(botRepository.findByGeneratedTokens(0).size());
+        System.out.println(userid);
+        System.out.println(list);
+        return botRepository.findAll();
     }
 
     public void userTalkSave(UserTalkLogDto userTalk){
@@ -56,13 +62,13 @@ public class LogService {
 
         SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         String Date = today.format(new Date());
-        talkBotLogDto.setSend_date(Date);
+        talkBotLogDto.setSendDate(Date);
 
         Talk_Bot_Log talk_bot_log = new Talk_Bot_Log();
 
         talk_bot_log.logSave(talkBotLogDto);
 
-        String saveDate = botRepository.save(talk_bot_log).getSend_date();
+        String saveDate = botRepository.save(talk_bot_log).getSendDate();
 
         log.info("답변 저장 " + saveDate);
     }
