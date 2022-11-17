@@ -158,13 +158,13 @@
 									 
 									<tbody>
 									
-										<c:forEach var="chattLog" items="${chattLog}" varStatus="status">
+										<c:forEach var="chattingLog" items="${chattingLog}" varStatus="status">
 											<tr>											    												
-												<td style="text-align: center;"><c:out value="${chattLog.userid }"/></td>
-												<td style="text-align: center;"><c:out value="${chattLog.user_talk }"/></td>
-												<td style="text-align: center;"><c:out value="${chattLog.user_send_date }"/></td>
-												<td style="text-align: center;"><c:out value="${chattLog.bot_answer }"/></td>
-												<td style="text-align: center;"><c:out value="${chattLog.bot_send_date }"/></td>																																	
+												<td style="text-align: center;"><c:out value="${chattingLog.userid }"/></td>
+												<td style="text-align: center;"><c:out value="${chattingLog.userMsg }"/></td>
+												<td style="text-align: center;"><c:out value="${chattingLog.userSendDate }"/></td>
+												<td style="text-align: center;"><c:out value="${chattingLog.result }"/></td>
+												<td style="text-align: center;"><c:out value="${chattingLog.sendDate }"/></td>
 											</tr>
 										</c:forEach>
 										
