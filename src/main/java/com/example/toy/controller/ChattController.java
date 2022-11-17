@@ -2,14 +2,14 @@ package com.example.toy.controller;
 
 import com.example.toy.jpa.ChattingService;
 import com.example.toy.jpa.entity.Channel_Info;
-import com.example.toy.jpa.entity.Talk_Bot_Log;
-import com.example.toy.jpa.entity.User_Talk_Log;
 import com.example.toy.jpa.service.LogService;
 import com.example.toy.service.KaKaoApiService;
 import com.example.toy.service.NaverApiService;
 import com.example.toy.service.UserManagementService;
 import com.example.toy.service.WebSocketChatService;
 import com.example.toy.vo.TalkBotLogDto;
+import com.example.toy.vo.UserTalkLogDto;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
+@Slf4j
 //@RestController
 @Controller
 public class ChattController {
@@ -128,16 +126,13 @@ public class ChattController {
 	 */
 	@RequestMapping(value = "/talkBot", method = RequestMethod.GET)
 	@ResponseBody
-	public ArrayList talkBot(@RequestParam(value ="QA")String QA ,  @ModelAttribute User_Talk_Log userTalk) throws Exception {	
+	public ArrayList talkBot(@RequestParam(value ="QA")String QA ,  @ModelAttribute UserTalkLogDto userTalkLogDto) throws Exception {
 		ArrayList list = new ArrayList();
-		SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");   	 	
-   	 	userTalk.setSend_date(today.format(new Date())); 	 	
-   	 	 int userNum = userManagementService.UserTalkLog(userTalk); // 사용자 질문과 AI 답변 매칭을 위한 고유 값 받아오기
-		 String en= kaKaoApiService.Start(QA); // 사용자 질문에 맞는 답변
-		 
-		 logger.info(en);	  
+		 logService.userTalkSave(userTalkLogDto); // 사용자 대화 저장
+		 String en= kaKaoApiService.Start(QA); // AI 답변
+
 		 list.add(en);
-		 list.add(userNum);
+		 list.add(userTalkLogDto.getUserMsg());
 		  
 			return list; 
 	}

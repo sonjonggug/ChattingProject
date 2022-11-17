@@ -31,7 +31,7 @@
 		FROM LOGIN_USER;
      </select>
 
-      <select id="UserTalkLog" resultType="int" parameterType="com.example.toy.jpa.entity.User_Talk_Log">
+      <insert id="UserTalkLog" parameterType="com.example.toy.jpa.entity.User_Talk_Log">
 		  INSERT INTO USER_TALK_LOG (user_name, user_Sex, userid, send_date, talk)
 		  SELECT
 			  user_name
@@ -42,13 +42,13 @@
 		  FROM LOGIN_USER
 		  WHERE userid ="${userid}" ;
 
-		  SELECT LAST_INSERT_ID();
+		  /*SELECT LAST_INSERT_ID();*/
 
-     </select>
+     </insert>
      
       <insert id="talkBotSave" parameterType="com.example.toy.jpa.entity.Talk_Bot_Log">
-  		INSERT INTO TALK_BOT_LOG (userid, result, prompt_tokens, generated_tokens, send_date ,user_num)
-		  	VALUES('${userid}', '${result}', ${prompt_tokens}, ${generated_tokens}, '${send_date}' , ${userNum});
+  		INSERT INTO TALK_BOT_LOG (userid, result, prompt_tokens, generated_tokens, send_date , user_msg )
+		  	VALUES('${userid}', '${result}', ${prompt_tokens}, ${generated_tokens},'${send_date}' ,'${userMsg}' );  /*, ${userNum}*/
 
      </insert>
 </mapper>

@@ -1,7 +1,7 @@
 package com.example.toy.controller;
 
 import com.example.toy.jpa.ChattingService;
-import com.example.toy.jpa.UserService;
+import com.example.toy.jpa.service.UserService;
 import com.example.toy.jpa.entity.Login_User;
 import com.example.toy.jpa.service.JpaAdminService;
 import com.example.toy.service.AdminService;
