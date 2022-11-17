@@ -5,7 +5,9 @@ import lombok.*;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-@Builder
+import java.util.List;
+
+
 @Getter
 @Setter
 @AllArgsConstructor //생성자 자동완성
@@ -25,7 +27,7 @@ public class Talk_Bot_Log  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Nullable
-    private Long bot_no;
+    private Long botNum;
     
     @Column(length = 20 , nullable = false)
     @Nullable  
@@ -33,7 +35,7 @@ public class Talk_Bot_Log  {
     
     @Column(length = 20, nullable = false)
     @Nullable  
-    private String userid; 
+    private String userid;
     
     @Column(length = 500, nullable = false)
     @Nullable  
@@ -41,28 +43,29 @@ public class Talk_Bot_Log  {
       
     @Column(length = 5, nullable = false)
     @Nullable  
-    private int prompt_tokens; 
+    private int promptTokens;
     
     @Column(length = 5, nullable = false)
     @Nullable  
-    private int generated_tokens; 
+    private int generatedTokens;
     
     @Column(length = 50, nullable = false)
     @Nullable  
-    private String send_date;
+    private String sendDate;
 
     @Column(length = 50, nullable = false)
     @Nullable
     private String userSendDate;
+
 
     public void logSave(TalkBotLogDto talkBotLogDto) {
 
 
         this.userid = talkBotLogDto.getUserid();
         this.result = talkBotLogDto.getResult();
-        this.prompt_tokens = talkBotLogDto.getPrompt_tokens();
-        this.generated_tokens = talkBotLogDto.getGenerated_tokens();
-        this.send_date = talkBotLogDto.getSend_date();
+        this.promptTokens = talkBotLogDto.getPromptTokens();
+        this.generatedTokens = talkBotLogDto.getGeneratedTokens();
+        this.sendDate = talkBotLogDto.getSendDate();
         this.userMsg = talkBotLogDto.getUserMsg();
         this.userSendDate = talkBotLogDto.getUserSendDate();
     }

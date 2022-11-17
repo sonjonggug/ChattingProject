@@ -1,6 +1,7 @@
 package com.example.toy.controller;
 
 import com.example.toy.jpa.ChattingService;
+import com.example.toy.jpa.entity.Talk_Bot_Log;
 import com.example.toy.jpa.service.LogService;
 import com.example.toy.jpa.service.UserService;
 import com.example.toy.jpa.entity.Login_User;
@@ -84,17 +85,19 @@ public class AdminController {
 	@RequestMapping(value = "/infoUser", method = RequestMethod.POST)
 	public String infoUser(@RequestParam(value ="userNum")String userNum , @RequestParam(value ="userid")String userid , Model model) throws Exception {
 
-		ArrayList<HashMap> chattLog = new ArrayList<HashMap>();
+		ArrayList<Talk_Bot_Log> chattingLog = new ArrayList<Talk_Bot_Log>();
+
+
 
 		/*Login_User selectUser = new Login_User();*/
 		Login_User selectUser = jpaAdminService.selectUser(Long.valueOf(userNum));
 
 		/*chattLog = AdminService.chattLog(userid);*/
-		chattLog = logService.chattingLog(userid);
+		 chattingLog = (ArrayList<Talk_Bot_Log>) logService.chattingLog(userid);
 		log.info("사용자 상세정보" + selectUser);
-		log.info("채팅내역" + chattLog);
+		log.info("채팅내역" + chattingLog);
 		model.addAttribute("selectUser",selectUser);
-		model.addAttribute("chattLog",chattLog);
+		model.addAttribute("chattingLog",chattingLog);
 		return "user/infoUser";			
 	}
 	
