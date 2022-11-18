@@ -1,13 +1,8 @@
 package com.example.toy.jpa.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.lang.Nullable;
-import org.springframework.stereotype.Repository;
-
 import com.example.toy.jpa.entity.Login_User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface LoginRepository extends JpaRepository <Login_User, Long>{
 	 
-	 	@Nullable
+
 		Optional<Login_User> findByUserid(String userid);
 
 		List<Login_User> findAll();

@@ -143,10 +143,10 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                            가장 활발한 채팅방
+                                            오늘 AI 답변 수
                                         </div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800"><c:out
-                                                value="${channel_name}"/></div>
+                                                value="${talkResult}"/>개</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -362,7 +362,7 @@
     </div>
     <script>
         function selectUser(id) {
-            $('input[name=userNum]').attr('value', id);
+            $('input[name=userNum]').attr('value',id);
             document.frm.action = "selectUser";
             document.getElementById('frm').submit();
 
@@ -370,8 +370,8 @@
 
         function infoUser(userNum, userid) {
 
-            $('input[name=userNum]').attr('value', userNum);
-            $('input[name=userid]').attr('value', userid);
+            $('input[name=userNum]').attr('value',userNum);
+            $('input[name=userid]').attr('value',userid);
 
             document.frm.action = "infoUser";
             document.getElementById('frm').submit();

@@ -1,11 +1,13 @@
 package com.example.toy.jpa.entity;
 
 import com.example.toy.vo.TalkBotLogDto;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.util.List;
 
 
 @Getter
@@ -59,7 +61,6 @@ public class Talk_Bot_Log  {
 
 
     public void logSave(TalkBotLogDto talkBotLogDto) {
-
 
         this.userid = talkBotLogDto.getUserid();
         this.result = talkBotLogDto.getResult();
