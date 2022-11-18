@@ -1,21 +1,13 @@
 package com.example.toy.jpa.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.springframework.lang.Nullable;
-
+import com.example.toy.vo.ChannelDto;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
-@Builder
+import org.springframework.lang.Nullable;
+
+import javax.persistence.*;
 @Getter
 @Setter
 @AllArgsConstructor //생성자 자동완성
@@ -32,20 +24,24 @@ public class Channel_Info  {
      * @GeneratedValue PK 생성 규칙 , GenerationType.IDENTITY 옵션을 추가해야만 auto_increment
      * @Column 테이블의 컬럼을 나타내며 굳이 선언하지 않더라고 해당 클래스의 필드는 모두 컬럼이 된다.
      */
-	 @Id
-	 @GeneratedValue(strategy = GenerationType.IDENTITY)
-	 @Nullable
-	 private Long channel_no;
-    
+
+    @Id
 	@Column(length = 15 , unique = true)   
     @Nullable
-    private String channel_name;
-    
+    private String channelName;
+
+
     @Column(length = 15 , nullable = false)
     @Nullable
-    private int user_cnt;
-    
-   
-    
-   
+    private int userCnt;
+
+
+
+
+
+    public void updateCnt (ChannelDto channelDto) {
+        this.channelName = channelDto.getChannelName();
+        this.userCnt = channelDto.getUserCnt();
+
+    }
 }

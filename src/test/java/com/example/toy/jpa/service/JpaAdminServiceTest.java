@@ -19,8 +19,7 @@ class JpaAdminServiceTest {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private UserService userService;
+
 
     @Autowired
     private JpaAdminService jpaAdminService;
@@ -96,7 +95,7 @@ class JpaAdminServiceTest {
 
     @Test
     public void checkidTest() throws Exception {
-        userService.checkid("thswhdrnr25");
+        jpaAdminService.checkid("thswhdrnr25");
     }
     @Test
     public void selectUserTest(){
@@ -111,7 +110,7 @@ class JpaAdminServiceTest {
         loginUserDto.setUserAuth("USER");
         loginUserDto.setUserSex("W");
 
-        userService.updateUser(loginUserDto);
+        jpaAdminService.updateUser(loginUserDto);
 
     }
 

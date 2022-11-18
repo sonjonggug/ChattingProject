@@ -3,7 +3,6 @@ package com.example.toy.controller;
 import com.example.toy.jpa.ChattingService;
 import com.example.toy.jpa.entity.Talk_Bot_Log;
 import com.example.toy.jpa.service.LogService;
-import com.example.toy.jpa.service.UserService;
 import com.example.toy.jpa.entity.Login_User;
 import com.example.toy.jpa.service.JpaAdminService;
 import com.example.toy.service.AdminService;
@@ -29,25 +28,22 @@ public class AdminController {
 
 
 	
-	@Autowired
-	UserService UserService; 
+
 	@Autowired
 	ChattingService ChattingService; 
 	@Autowired
 	UserManagementService UserManagementService;
 	@Autowired
 	AdminService AdminService;
-
 	@Autowired
 	JpaAdminService jpaAdminService;
-
 	@Autowired
 	LogService logService;
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String admin(Model model) throws Exception {
 		HashMap<String, String> integrated = new HashMap<String, String>();
 		HashMap<String, String> Userincrease = new HashMap<String, String>();
-//		ArrayList<HashMap> showUser = new ArrayList<HashMap>();
+
 		List<Login_User> showUser = new ArrayList<Login_User>();
 
 		integrated = UserManagementService.UserSum();
@@ -57,10 +53,10 @@ public class AdminController {
         log.info("사용자수 추이 " + Userincrease);
         
         showUser = jpaAdminService.ShowUser();
-        log.info("사용자 검색" + showUser);
+        log.info("사용자 목록" + showUser);
 		 model.addAttribute("sumCnt",integrated.get("user_cnt"));
 		 model.addAttribute("user",integrated.get("user"));
-		 model.addAttribute("channel_name",integrated.get("channel_name"));
+		 model.addAttribute("talkResult",integrated.get("talkResult"));
 		 model.addAttribute("sex_man",integrated.get("sex_man"));
 		 model.addAttribute("sex_woman",integrated.get("sex_woman"));
 		 model.addAttribute("Userincrease",Userincrease);
@@ -72,29 +68,22 @@ public class AdminController {
 	@RequestMapping(value = "/selectUser", method = RequestMethod.POST)
 	public String selectUser(@RequestParam(value ="userNum")String userNum , Model model) throws Exception {
 
-		Login_User selectUser = new Login_User();
+		Login_User selectUser = jpaAdminService.selectUser(Long.valueOf(userNum));
 
-		selectUser = jpaAdminService.selectUser(Long.valueOf(userNum));
-
-		log.info("사용자 업데이트 정보" + selectUser);
+		log.info("사용자 상세 정보" + selectUser);
 		
 		model.addAttribute("selectUser",selectUser);
 		return "user/updateUser";			
 	}
 	
 	@RequestMapping(value = "/infoUser", method = RequestMethod.POST)
-	public String infoUser(@RequestParam(value ="userNum")String userNum , @RequestParam(value ="userid")String userid , Model model) throws Exception {
+	public String infoUser(@ModelAttribute LoginUserDto userDto ,  Model model) throws Exception {
 
-		ArrayList<Talk_Bot_Log> chattingLog = new ArrayList<Talk_Bot_Log>();
+		Login_User selectUser = jpaAdminService.selectUser(userDto.getUserNum());
+
+		List<Talk_Bot_Log> chattingLog = logService.chattingLog(userDto.getUserid().trim());
 
 
-
-		/*Login_User selectUser = new Login_User();*/
-		Login_User selectUser = jpaAdminService.selectUser(Long.valueOf(userNum));
-
-		/*chattLog = AdminService.chattLog(userid);*/
-		 chattingLog = (ArrayList<Talk_Bot_Log>) logService.chattingLog(userid);
-		log.info("사용자 상세정보" + selectUser);
 		log.info("채팅내역" + chattingLog);
 		model.addAttribute("selectUser",selectUser);
 		model.addAttribute("chattingLog",chattingLog);
@@ -103,15 +92,16 @@ public class AdminController {
 	
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
 	public String updateUser(@RequestParam(value ="userNum")String userNum , @ModelAttribute LoginUserDto loginUserDto , Model model , HttpServletResponse response) throws Exception {
-		/*HashMap<String, String> selectUser = new HashMap<String, String>();*/
+
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter w = response.getWriter();
-		String updateMsg = UserService.updateUser(loginUserDto);
+
+		String updateMsg = jpaAdminService.updateUser(loginUserDto);
 
 
 		if (updateMsg.equals("업데이트가 완료되었습니다.")) {
 
-			Login_User selectUser = jpaAdminService.selectUser(Long.valueOf(userNum));
+			Login_User selectUser = jpaAdminService.selectUser(loginUserDto.getUserNum());
 			log.info("사용자 업데이트 성공 " + selectUser);
 			model.addAttribute("selectUser", selectUser);
 			w.write("<script>alert('업데이트가 완료되었습니다.');</script>");
@@ -141,26 +131,22 @@ public class AdminController {
 	}
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
 	public String deleteUser(@RequestParam(value ="userNum")String userNum , @ModelAttribute LoginUserDto loginUserDto , Model model , HttpServletResponse response) throws Exception {
-		/*HashMap<String, String> selectUser = new HashMap<String, String>();*/
-		Login_User selectUser = new Login_User();
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter w = response.getWriter();
-		boolean bool = AdminService.deleteUser(loginUserDto);
+
+		boolean deleteUserYN = jpaAdminService.deleteUser(loginUserDto.getUserNum());
 		
-		if (bool==true) {
+		if (deleteUserYN==true) {
 			
 			log.info("사용자 삭제 성공 ");
 						
 			w.write("<script>alert('삭제가 완료되었습니다.');location.href='admin';</script>");
-			w.flush();
-
-			return "redirect:admin";
 
 		}else {
 			w.write("<script>alert('삭제에 실패하였습니다.');location.href='admin';</script>");
-			w.flush();
 
-		return  "redirect:admin";
-	}
+		}
+		w.flush();
+		return "redirect:admin";
 	}
 }
