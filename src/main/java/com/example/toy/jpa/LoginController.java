@@ -1,5 +1,6 @@
 package com.example.toy.jpa;
 
+import com.example.toy.jpa.service.JpaAdminService;
 import com.example.toy.service.UserManagementService;
 import com.example.toy.vo.LoginUserDto;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@Autowired
-    com.example.toy.jpa.service.UserService UserService;
+	JpaAdminService jpaAdminService;
 	@Autowired
 	ChattingService ChattingService;
 	@Autowired
@@ -69,7 +70,7 @@ public class LoginController {
 		String password = passwordEncoder.encode(loginUserDto.getUserPw());
 		loginUserDto.setUserPw(password);
 
-		String result = UserService.insertUser(loginUserDto);
+		String result = jpaAdminService.insertUser(loginUserDto);
 
 		if (result.equals("회원가입에 성공하였습니다.")) {
 			w.write("<script>alert('회원가입에 성공하였습니다.');</script>");
@@ -90,7 +91,7 @@ public class LoginController {
 		 logger.info("인증 성공");
 	        //Authentication 객체를 통해 유저 정보를 가져올 수 있다.
 		 UserDetails LoginUser = (UserDetails) authentication.getPrincipal();  //userDetail 객체를 가져옴
-		 UserService.updateDate(LoginUser.getUsername());
+		 jpaAdminService.updateDate(LoginUser.getUsername());
 
 		   if(LoginUser.getUsername().equals("Admin")) {
 			 model.addAttribute("info", LoginUser.getUsername() +"의 "+ LoginUser.getUsername()+ "님");      //유저 아이디
@@ -121,7 +122,7 @@ public class LoginController {
 			int count ;
 	        Map<Object, Object> map = new HashMap<Object, Object>();
 	 
-	        count = UserService.checkid(userid);	        
+	        count = jpaAdminService.checkid(userid);
 	        map.put("count", count);
 	        logger.info("아이디 중복 체크");	
 	        return map;

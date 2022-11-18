@@ -54,9 +54,17 @@ public class ChattController {
 		
 		WebSocketChatService WebSocketChatService = new WebSocketChatService();
 		 int clientCnt = WebSocketChatService.clients.size()+1;
-		 String channel = "channel_A";
-		 	 
+
+		String channel = "";
+		 if(clientCnt < 10 ){
+			 channel = "channel_A";
+		 } else {
+			 channel = "channel_B";
+		 }
+
+
 		 ChattingService.updateCnt(clientCnt,channel);
+
 		 logger.info("채팅창 진입 시 접속자 수 업데이트");			
 		String ip = request.getHeader("X-Forwarded-For");
 		if(ip == null || ip.length()==0||"unknown".equalsIgnoreCase(ip)) {
@@ -106,24 +114,28 @@ public class ChattController {
 	 logger.info("Naver API 중국어 번역");
 		return en;
 	}
-	
+
+	/**
+	 * 접속자 수 체크 ( 30초 간격 )
+	 * @param channelName
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/SearchCnt", method = RequestMethod.GET)
 	@ResponseBody
-	public int SearchCnt(@RequestParam(value ="channel")String channel) throws Exception {
-			Channel_Info channelInfo= new Channel_Info();
-			
-			channelInfo = ChattingService.searchCnt(channel);
-		 	System.out.println(channelInfo.getChannel_name());
-		 	System.out.println(channelInfo.getUser_cnt());
-		 	logger.info("접속자 수 체크");
+	public int SearchCnt(@RequestParam(value ="channel")String channelName) throws Exception {
+
+			Channel_Info channelInfo = ChattingService.searchCnt(channelName);
+
+		 	logger.info("접속자 수 체크" +channelInfo.getUserCnt());
 		 		 
-	        return channelInfo.getUser_cnt();
+	        return channelInfo.getUserCnt();
 	}
-	
+
 	/**
-	 * 사용자 채팅 입력 값 DB 저장 & AI 답변 전달  
+	 * 사용자 채팅 입력 값 DB 저장 & AI 답변 전달
 	 * @param QA
-	 * @param userTalk
+	 * @param userTalkLogDto
 	 * @return
 	 * @throws Exception
 	 */
@@ -142,9 +154,10 @@ public class ChattController {
 		  
 			return list; 
 	}
+
 	/**
-	 * AI 답변 저장 & 질문 답변 매칭을 위한 사용자 채팅 고유값 저장 
-	 * @param botTalk
+	 * AI 답변 저장 & 질문 답변 매칭을 위한 사용자 채팅 고유값 저장
+	 * @param talkBot
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/talkBotSave", method = RequestMethod.GET)

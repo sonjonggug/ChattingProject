@@ -3,7 +3,6 @@ package com.example.toy.jpa.repository;
 import com.example.toy.jpa.entity.Talk_Bot_Log;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,6 +14,7 @@ import java.util.List;
 
 public interface BotRepository extends JpaRepository <Talk_Bot_Log, Long>{
 
-   List<Talk_Bot_Log> findByGeneratedTokens(int token);
+
+   List<Talk_Bot_Log> findByUserid(String id);
 
 }

@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,15 +26,13 @@ public class LogService {
     private final LoginRepository loginRepository;
 
 
-    public  List<Talk_Bot_Log> chattingLog(String userid){
 
 
 
-        List<Talk_Bot_Log> list = botRepository.findByGeneratedTokens(0);
-        System.out.println(botRepository.findByGeneratedTokens(0).size());
-        System.out.println(userid);
-        System.out.println(list);
-        return botRepository.findAll();
+
+    public  List<Talk_Bot_Log> chattingLog(String userId){
+
+        return botRepository.findByUserid(userId);
     }
 
     public void userTalkSave(UserTalkLogDto userTalk){

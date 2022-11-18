@@ -6,7 +6,7 @@
     <!-- 로그인 -->
     <select id="UserSum" parameterType="HashMap" resultType="HashMap">
      SELECT SUM(user_cnt) user_cnt <!-- 실시간 접속자 수 -->
-		, (select channel_name from CHANNEL_INFO order by user_cnt desc limit 1) channel_name  <!-- 가장 사람이 많은 채팅방 -->
+		, (SELECT COUNT(*) FROM TALK_BOT_LOG WHERE TO_CHAR(SEND_DATE  , 'YYYYMMDD') BETWEEN  TO_CHAR(sysdate(),'YYYYMMDD') AND TO_CHAR(sysdate(),'YYYYMMDD')) talkResult
 		, (SELECT COUNT(*) FROM LOGIN_USER ) user <!-- 전체 가입자 수 -->
 		, (SELECT COUNT(*) FROM LOGIN_USER WHERE user_sex = 'M') sex_man
 		, (SELECT COUNT(*) FROM LOGIN_USER WHERE user_sex = 'W') sex_woman
@@ -31,7 +31,7 @@
 		FROM LOGIN_USER;
      </select>
 
-      <insert id="UserTalkLog" parameterType="com.example.toy.jpa.entity.User_Talk_Log">
+    <!--  <insert id="UserTalkLog" parameterType="com.example.toy.jpa.entity.User_Talk_Log">
 		  INSERT INTO USER_TALK_LOG (user_name, user_Sex, userid, send_date, talk)
 		  SELECT
 			  user_name
@@ -50,5 +50,5 @@
   		INSERT INTO TALK_BOT_LOG (userid, result, prompt_tokens, generated_tokens, send_date , user_msg )
 		  	VALUES('${userid}', '${result}', ${prompt_tokens}, ${generated_tokens},'${send_date}' ,'${userMsg}' );  /*, ${userNum}*/
 
-     </insert>
+     </insert>-->
 </mapper>
