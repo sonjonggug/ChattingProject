@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashMap;
 
 
@@ -21,16 +22,15 @@ import java.util.HashMap;
  */
 
 @Entity
-public class Login_User  {
+public class Login_User implements Serializable {
 
     @Id // 해당 테이블의 PK 필드를 나타낸다.
     @GeneratedValue(strategy = GenerationType.IDENTITY) // PK 생성 규칙 , GenerationType.IDENTITY 옵션을 추가해야만 auto_increment
     @Nullable
     private Long userNum;
-    
 
-    @Column(length = 15 , nullable = false , unique = true) // 테이블의 컬럼을 나타내며 굳이 선언하지 않더라고 해당 클래스의 필드는 모두 컬럼이 된다.
-    @Nullable
+
+    @Column(length = 15 , nullable = false , name = "userid") // 테이블의 컬럼을 나타내며 굳이 선언하지 않더라고 해당 클래스의 필드는 모두 컬럼이 된다.
     private String userid;
     
   
