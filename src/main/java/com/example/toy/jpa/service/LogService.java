@@ -37,6 +37,7 @@ public class LogService {
 
     public void userTalkSave(UserTalkLogDto userTalk){
         SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+
         /*Optional<Login_User> result = loginRepository.findByUserid(userTalk.getUserid());*/
         // 메시지 저장하기 위해 먼저 유저 정보 받아오기  id 가 있으면 값 저장
         loginRepository.findByUserid(userTalk.getUserid()).ifPresent(item ->{
