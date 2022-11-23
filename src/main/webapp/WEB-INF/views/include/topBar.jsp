@@ -28,24 +28,30 @@
  <!-- Topbar -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
+                <div style="padding-left: 50px">
+                    <i class="fa-solid fa-reply fa-2x" aria-hidden="true"></i>
 
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                </div>
+                    <div style="padding-left: 250px">
+                        <a class="text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-200 text-sm font-medium">
+사이트 소개                        </a>
+                    </div>
+                <div style="padding-left: 50px">
+                    <a class="text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-200 text-sm font-medium">
+                        <span class="hover:no-underline"> Q&A </span>
+                    </a>
+                </div>
+                <div style="padding-left: 50px">
+                    <a class="text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-200 text-sm font-medium" href="board">
+                    <span class="hover:no-underline"> 커뮤니티 </span>
+                    </a>
+                </div>
+                <div style="padding-left: 50px">
+                    <a class="text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-blue-200 text-sm font-medium">
+                        <span class="hover:no-underline"> 공지사항 </span>
+                    </a>
+                </div>
+
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -197,7 +203,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.id} 님</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">환영합니다. ${sessionScope.id} 님</span>
                                
                             </a>
                             <!-- Dropdown - User Information -->
@@ -237,7 +243,8 @@
 
     <!-- Custom scripts for all pages-->
     <script src="resources/bootstrap/js/sb-admin-2.min.js"></script>
-
+        <!-- FontAwsome CSS-->
+ <script src="https://kit.fontawesome.com/af4006af04.js" crossorigin="anonymous"></script>
    
 </body>
 </html>
