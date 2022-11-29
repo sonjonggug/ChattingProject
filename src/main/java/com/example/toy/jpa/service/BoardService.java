@@ -7,11 +7,8 @@ import com.example.toy.jpa.repository.LoginRepository;
 import com.example.toy.vo.board.BoardDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,8 +35,8 @@ public class BoardService{
         boardDto.setUpdateDate(Date);
         boardDto.setDeleteDate(Date);
 
-        Login_User user = new Login_User(); // board FK가 Login_User userid 라 객체 생성
-        user = loginRepository.findByUserid(boardDto.getWriter()).get(); // 값 받아서 board에 저장
+
+        Login_User user = loginRepository.findByUserid(boardDto.getWriter()).get(); // 값 받아서 board에 저장
 
         Board board = new Board();
         board.boardProc(boardDto , user); // Writer가 Login_user FK라 저장
@@ -48,7 +45,16 @@ public class BoardService{
 
         return true;
     }
-    public List<Board> boardView(){
-        return boardRepository.findAll();
+    @Transactional(readOnly = true)
+    public Page<Board> boardView(PageRequest pageable){
+        return boardRepository.findAll(pageable);
     }
+    @Transactional(readOnly = true)
+    public Board boardMember(Long boardId){
+
+        return boardRepository.findById(boardId).get();
+    }
+
+
+
     }

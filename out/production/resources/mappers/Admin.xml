@@ -4,23 +4,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.toy.mapper.AdminMapper">
 
-    <select id="chattLog" parameterType="String" resultType="HashMap">
-        select a.talk      as user_talk
+   <!-- <select id="chattLog" parameterType="String" resultType="HashMap">
+        select a.user_msg      as user_talk
              , a.send_date as user_send_date
              , a.userid
              , b.result    as bot_answer
              , b.send_date as bot_send_date
         FROM user_talk_log a
                  INNER JOIN talk_bot_log b
-                            ON a.user_num = b.user_num
-        where a.userid = "${userid}"
+                            ON a.user_msg  = b.user_msg
+        where a.userid = "${userid}" and b.userid ="${userid}"
         order by a.send_date asc;
-    </select>
-
+    </select>-->
+<!--
     <delete id="deleteUser" parameterType="com.example.toy.jpa.entity.Login_User">
         delete
         from login_user
         where user_num = ${userNum};
 
-    </delete>
+    </delete>-->
 </mapper>
