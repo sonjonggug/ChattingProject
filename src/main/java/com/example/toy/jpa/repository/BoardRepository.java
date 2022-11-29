@@ -2,8 +2,10 @@ package com.example.toy.jpa.repository;
 
 import com.example.toy.jpa.entity.Talk_Bot_Log;
 import com.example.toy.jpa.entity.board.Board;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 /**

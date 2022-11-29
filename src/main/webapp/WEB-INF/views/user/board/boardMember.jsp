@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,11 +21,17 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="resources/bootstrap/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <link href="resources/bootstrap/css/sb-admin-2.css" rel="stylesheet">
     <!-- Custom styles for this page -->
     <link href="resources/bootstrap/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<style>
+    #writeHeader {
+        border-bottom: 2px solid;
+        margin-bottom: 20px;
+    }
 
+</style>
 </head>
 
 <body id="page-top">
@@ -42,7 +47,7 @@
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
-            <div id="content">
+            <div id="contents">
 
                 <!-- Topbar -->
                 <jsp:include page="/WEB-INF/views/include/topBar.jsp" />
@@ -56,59 +61,29 @@
 
                         <!-- Grow In Utility -->
                         <!-- Fade In Utility -->
-                        <div class="col-lg-12">
-                            <div class="card shadow mb-10">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">자유 게시판
-                                        <a href="boardWrite" style="float:right">글쓰기 &nbsp;&nbsp;&nbsp;</a></h6>
+
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div class="card-header py-2  justify-content-between">
+                                    <h5>제목 : ${boardMember.title}</h5>
+                                    작성자 : ${boardMember.writer.userid}
 
                                 </div>
+                                <!-- Card Body -->
                                 <div class="card-body">
-
-                                <table class="table" style="border: 1px">
-                                    <thead>
-                                    <tr>
-                                      <%--  <th width="200px" >글 번호</th>
-                                        <th width="400px">제목</th>
-                                        <th width="150px">작성자</th>
-                                        <th width="150px">작성 일자</th>
-                                        <th width="150px">조회 수</th>
-                                        <th width="100px">좋아요</th>--%>
-                                        <th style="text-align: center;">글 번호</th>
-                                        <th style="text-align: center;">제목</th>
-                                        <th style="text-align: center;">작성자</th>
-                                        <th style="text-align: center;">작성 일자</th>
-                                        <th style="text-align: center;">조회 수</th>
-                                        <th style="text-align: center;">좋아요</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach var="boardList" items="${boardList}" varStatus="status">
-                                        <tr>
-                                            <td style="text-align: center;"><c:out value="${boardList.boardId }"/></td>
-                                            <td style="text-align: center;"><a href="boardMember?boardId=<c:out value="${boardList.boardId}"/>"><c:out value="${boardList.title }"/></a></td>
-                                            <td style="text-align: center;"><c:out value="${boardList.writer.userid }"/></td>
-                                            <td style="text-align: center;"><c:out value="${boardList.regDate }"/></td>
-                                            <td style="text-align: center;"><c:out value="${boardList.updateDate }"/></td>
-                                            <td style="text-align: center;"><c:out value="${boardList.deleteDate }"/></td>
-                                        </tr>
-                                    </c:forEach>
-
-                                </tbody>
-
-
-
-
-
-
-                                </table>
-                                    
-
+                                    <div class="chart-area" style="border-bottom:solid 1px" >
+                                        ${boardMember.content}
+                                    </div>
+                                    <div style="padding-top: 20px">
+                                       <h6>댓글</h6>
+                                        <textarea class="board-reply"   placeholder="댓글을 남겨보세요."></textarea>
+                                        <div style="margin-top: 5px; float:right;">
+                                        <button class="btn btn-success btn-sm">등록</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
-
                     </div>
 
                 </div>
