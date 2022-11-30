@@ -1,4 +1,4 @@
-package com.example.toy.jpa.repository;
+package com.example.toy.jpa.repository.board;
 
 import com.example.toy.jpa.entity.Talk_Bot_Log;
 import com.example.toy.jpa.entity.board.Board;

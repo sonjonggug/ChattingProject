@@ -2,9 +2,12 @@ package com.example.toy.jpa.service;
 
 import com.example.toy.jpa.entity.Login_User;
 import com.example.toy.jpa.entity.board.Board;
-import com.example.toy.jpa.repository.BoardRepository;
+import com.example.toy.jpa.entity.board.Reply;
+import com.example.toy.jpa.repository.board.BoardRepository;
 import com.example.toy.jpa.repository.LoginRepository;
+import com.example.toy.jpa.repository.board.ReplyRepository;
 import com.example.toy.vo.board.BoardDto;
+import com.example.toy.vo.board.ReplyDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -12,8 +15,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +28,9 @@ public class BoardService{
 
     private final BoardRepository boardRepository;
     private final LoginRepository loginRepository;
-    private final EntityManager em;
+
+    private final ReplyRepository replyRepository;
+
 
     @Transactional
     public boolean boardWriteProc(BoardDto boardDto){
@@ -34,7 +39,6 @@ public class BoardService{
         boardDto.setRegDate(Date);
         boardDto.setUpdateDate(Date);
         boardDto.setDeleteDate(Date);
-
 
         Login_User user = loginRepository.findByUserid(boardDto.getWriter()).get(); // 값 받아서 board에 저장
 
@@ -45,6 +49,7 @@ public class BoardService{
 
         return true;
     }
+
     @Transactional(readOnly = true)
     public Page<Board> boardView(PageRequest pageable){
         return boardRepository.findAll(pageable);
@@ -54,7 +59,28 @@ public class BoardService{
 
         return boardRepository.findById(boardId).get();
     }
+    @Transactional(readOnly = true)
+    public List<Reply> boardReply(Long boardId){
+        List<Reply> Result = new ArrayList<>();
 
+        Result = replyRepository.findAllByBoard_BoardId(boardId);
+
+        return Result;
+    }
+
+    @Transactional
+    public Boolean boardReplySave(ReplyDto replyDto , Long boardId){
+        SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        String Date = today.format(new Date());
+        replyDto.setRegDate(Date);
+
+        Board board = boardRepository.findById(boardId).get();
+
+        Reply reply = new Reply();
+        reply.replySave(replyDto,board);
+        replyRepository.save(reply).getReplyId();
+        return true;
+    }
 
 
     }
