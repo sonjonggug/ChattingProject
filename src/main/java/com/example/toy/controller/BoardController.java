@@ -1,9 +1,11 @@
 package com.example.toy.controller;
 
 import com.example.toy.jpa.entity.board.Board;
+import com.example.toy.jpa.entity.board.Reply;
 import com.example.toy.jpa.service.BoardService;
 import com.example.toy.service.NaverApiService;
 import com.example.toy.vo.board.BoardDto;
+import com.example.toy.vo.board.ReplyDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -54,6 +56,28 @@ public class BoardController {
 	public String boardMember(@ModelAttribute BoardDto boardDto , Model model ){
 		System.out.println("값 넘김 " + boardDto.getBoardId());
 		 Board boardMember = boardService.boardMember(boardDto.getBoardId());
+		System.out.println("문제?");
+		List<Reply> replyResult = boardService.boardReply(boardDto.getBoardId());
+		System.out.println("답변"+replyResult);
+		model.addAttribute("boardMember" ,boardMember);
+		return "user/board/boardMember";
+	}
+
+	@PostMapping("/boardReply")
+	public String boardReply(@ModelAttribute ReplyDto replyDto ,@RequestParam Long boardId , Model model ){
+		System.out.println(boardId);
+		System.out.println(replyDto.getContent());
+
+
+		boolean boardReplySave = boardService.boardReplySave(replyDto,boardId);
+
+		if(boardReplySave == true){
+			System.out.println("성공");
+		}else{
+			System.out.println("실패");
+		}
+
+		Board boardMember = boardService.boardMember(boardId);
 		model.addAttribute("boardMember" ,boardMember);
 		return "user/board/boardMember";
 	}

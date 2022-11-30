@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,10 +16,11 @@ import javax.persistence.*;
 @Getter
 @Entity
 
-public class Board {
+public class Board implements Serializable {
 
     @Id // 해당 테이블의 PK 필드를 나타낸다.
     @GeneratedValue(strategy = GenerationType.IDENTITY) //
+    @Column(length = 50 , nullable = false , name = "board_id")
     Long boardId;
 
     @ManyToOne

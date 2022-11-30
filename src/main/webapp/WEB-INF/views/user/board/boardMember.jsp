@@ -77,9 +77,14 @@
                                     </div>
                                     <div style="padding-top: 20px">
                                        <h6>댓글</h6>
-                                        <textarea class="board-reply"   placeholder="댓글을 남겨보세요."></textarea>
+                                        <form action="boardReply" method="post">
+                                            <input type="hidden" id="writer" name="writer" value="${sessionScope.id}"/>
+                                            <input type="hidden" id="boardId" name="boardId" value="${boardMember.boardId}"/>
+                                        <textarea class="board-reply" id="content" name="content" placeholder="댓글을 남겨보세요."></textarea>
                                         <div style="margin-top: 5px; float:right;">
-                                        <button class="btn btn-success btn-sm">등록</button>
+                                        <button type="submit" class="btn btn-success btn-sm">등록</button>
+                                        </div>
+                                        </form>
                                         </div>
                                     </div>
                                 </div>

@@ -1,18 +1,21 @@
 package com.example.toy.jpa.entity.board;
 
+import com.example.toy.vo.board.BoardDto;
+import com.example.toy.vo.board.ReplyDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Entity
-public class Reply {
+public class Reply implements Serializable {
 
     @Id // 해당 테이블의 PK 필드를 나타낸다.
     @GeneratedValue(strategy = GenerationType.IDENTITY) //
@@ -32,4 +35,10 @@ public class Reply {
     String regDate;
 
 
+    public void replySave(ReplyDto replyDto , Board board) {
+        this.board = board;
+        this.writer = replyDto.getWriter();
+        this.content = replyDto.getContent();
+        this.regDate = replyDto.getRegDate();
+    }
 }
