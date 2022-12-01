@@ -54,20 +54,16 @@ public class BoardController {
 	}
 	@GetMapping("/boardMember")
 	public String boardMember(@ModelAttribute BoardDto boardDto , Model model ){
-		System.out.println("값 넘김 " + boardDto.getBoardId());
 		 Board boardMember = boardService.boardMember(boardDto.getBoardId());
-		System.out.println("문제?");
 		List<Reply> replyResult = boardService.boardReply(boardDto.getBoardId());
 		System.out.println("답변"+replyResult);
 		model.addAttribute("boardMember" ,boardMember);
+		model.addAttribute("replyResult" ,replyResult);
 		return "user/board/boardMember";
 	}
 
 	@PostMapping("/boardReply")
 	public String boardReply(@ModelAttribute ReplyDto replyDto ,@RequestParam Long boardId , Model model ){
-		System.out.println(boardId);
-		System.out.println(replyDto.getContent());
-
 
 		boolean boardReplySave = boardService.boardReplySave(replyDto,boardId);
 
@@ -78,7 +74,26 @@ public class BoardController {
 		}
 
 		Board boardMember = boardService.boardMember(boardId);
+		List<Reply> replyResult = boardService.boardReply(boardId);
+		System.out.println("답변"+replyResult);
 		model.addAttribute("boardMember" ,boardMember);
+		model.addAttribute("replyResult" ,replyResult);
 		return "user/board/boardMember";
+	}
+
+	@PostMapping("/boardMemberReply")
+	public String boardMemberReply(@ModelAttribute ReplyDto replyDto ,@RequestParam(required = false) Long boardId , Model model ){
+		System.out.println(replyDto.getReplyMapping());
+		System.out.println(replyDto.getContent());
+		System.out.println(replyDto.getWriter());
+		System.out.println(boardId);
+
+		Board boardMember = boardService.boardMember(boardId);
+		List<Reply> replyResult = boardService.boardReply(boardId);
+		System.out.println("답변"+replyResult);
+		model.addAttribute("boardMember" ,boardMember);
+		model.addAttribute("replyResult" ,replyResult);
+
+		return "redirect:boardMember";
 	}
 }
