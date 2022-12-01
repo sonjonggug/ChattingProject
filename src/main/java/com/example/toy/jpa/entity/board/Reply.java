@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,6 +34,10 @@ public class Reply implements Serializable {
 
     @Column(length = 50 , nullable = false)
     String regDate;
+
+    @Column(length = 50 , nullable = false)
+    @ColumnDefault("0") //@ColumnDefault사용
+    int replyMapping;
 
 
     public void replySave(ReplyDto replyDto , Board board) {

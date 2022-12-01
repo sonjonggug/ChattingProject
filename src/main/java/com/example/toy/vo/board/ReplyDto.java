@@ -19,6 +19,7 @@ public class ReplyDto {
     String writer;
     String content;
     String regDate;
+    int replyMapping;
 
 
 }

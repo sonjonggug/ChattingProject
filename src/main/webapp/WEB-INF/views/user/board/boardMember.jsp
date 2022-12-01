@@ -77,6 +77,22 @@
                                     </div>
                                     <div style="padding-top: 20px">
                                        <h6>댓글</h6>
+
+                                <c:forEach var="replyResult" items="${replyResult}" varStatus="status">
+                                    <div id="reply" style="border-bottom: solid 1px; margin-bottom: 20px;">
+                                        <P style="color: black"><i class="fa-sharp fa-solid fa-user fa-lg" style="padding-right: 15px"></i><c:out value="${replyResult.writer }"/></P>
+                                        <P style="color: black"><c:out value="${replyResult.content }"/></P>
+                                        <P id="pid" style="font-size: 12px;" onclick="reply(reply(this));">답글 쓰기</P>
+                                        <div id="boardMember-reply-text" style="display: none">
+
+                                        <input type="hidden"  value="<c:out value="${replyResult.replyId}"/>"/>
+                                        <textarea class="boardMember-reply"  placeholder="답글을 남겨보세요.">zz</textarea>
+                                        <div style="margin-top: 5px; float:right;">
+                                            <button type="button" class="btn btn-success btn-sm" onclick="replyMapping(this);">등록</button>
+                                        </div>
+                                        </div>
+                                     </div>
+                                </c:forEach>
                                         <form action="boardReply" method="post">
                                             <input type="hidden" id="writer" name="writer" value="${sessionScope.id}"/>
                                             <input type="hidden" id="boardId" name="boardId" value="${boardMember.boardId}"/>
@@ -85,6 +101,15 @@
                                         <button type="submit" class="btn btn-success btn-sm">등록</button>
                                         </div>
                                         </form>
+
+
+                                        <form action="boardMemberReply" method="post" id="boardMemberReply">
+                                            <input type="hidden" id="writer" name="writer" value="${sessionScope.id}"/>
+                                            <input type="hidden" id="boardId" name="boardId" value="${boardMember.boardId}"/>
+                                            <input type="hidden" id="content" name="content" />
+                                            <input type="hidden" id="replyMapping" name="replyMapping" />
+                                        </form>
+
                                         </div>
                                     </div>
                                 </div>
@@ -131,7 +156,30 @@
         </div>
     </div>
 
+     <script>
+         function reply(event){
+             /*event.nextElementSibling.style.display="block";*/
+             if (event.nextElementSibling.style.display=="block"){
+                 event.nextElementSibling.style.display="none";
+             } else if (event.nextElementSibling.style.display=="none"){
+                 event.nextElementSibling.style.display="block";
+             }
+         }
      </script>
+    
+    <script>
+        function replyMapping(event){
+
+            let content = event.parentElement.previousElementSibling.value;
+            let replyMapping = event.parentElement.previousElementSibling.previousElementSibling.value;
+            alert(replyMapping);
+            alert(content);
+            document.getElementById('replyMapping').val(replyMapping);
+            document.getElementById('replyMapping').previousElementSibling.val(content);
+            document.getElementById('boardMemberReply').submit();
+
+        }
+    </script>
  <!-- Bootstrap core JavaScript-->
     <script src="resources/bootstrap/vendor/jquery/jquery.min.js"></script>
     <script src="resources/bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
