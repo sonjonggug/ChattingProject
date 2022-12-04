@@ -83,12 +83,16 @@
                                         <P style="color: black"><i class="fa-sharp fa-solid fa-user fa-lg" style="padding-right: 15px"></i><c:out value="${replyResult.writer }"/></P>
                                         <P style="color: black"><c:out value="${replyResult.content }"/></P>
                                         <P id="pid" style="font-size: 12px;" onclick="reply(reply(this));">답글 쓰기</P>
+                                        <c:if test="${replyResult.replyMapping != 0}">
+                                            <c:if test="${replyResult.replyMapping == replyResult.replyId}">
+                                                이게맞다
+                                            </c:if>
+                                        </c:if>
                                         <div id="boardMember-reply-text" style="display: none">
-
                                         <input type="hidden"  value="<c:out value="${replyResult.replyId}"/>"/>
                                         <textarea class="boardMember-reply"  placeholder="답글을 남겨보세요.">zz</textarea>
-                                        <div style="margin-top: 5px; float:right;">
-                                            <button type="button" class="btn btn-success btn-sm" onclick="replyMapping(this);">등록</button>
+                                        <div style="margin-top: 5px; float:right; margin-bottom: 5px;">
+                                            <button type="button" class="btn btn-success btn-sm" onclick="callSave(this);">등록</button>
                                         </div>
                                         </div>
                                      </div>
@@ -103,7 +107,7 @@
                                         </form>
 
 
-                                        <form action="boardMemberReply" method="post" id="boardMemberReply">
+                                        <form action="boardReply" method="post" id="saved">
                                             <input type="hidden" id="writer" name="writer" value="${sessionScope.id}"/>
                                             <input type="hidden" id="boardId" name="boardId" value="${boardMember.boardId}"/>
                                             <input type="hidden" id="content" name="content" />
@@ -165,21 +169,19 @@
                  event.nextElementSibling.style.display="block";
              }
          }
+         function callSave(event){
+             let content = event.parentElement.previousElementSibling.value;
+             let reply = event.parentElement.previousElementSibling.previousElementSibling.value;
+             alert(reply);
+                 document.getElementById('replyMapping').value=reply;
+                 document.getElementById('replyMapping').previousElementSibling.value=content;
+             document.getElementById('saved').submit();
+
+         }
+
      </script>
-    
-    <script>
-        function replyMapping(event){
 
-            let content = event.parentElement.previousElementSibling.value;
-            let replyMapping = event.parentElement.previousElementSibling.previousElementSibling.value;
-            alert(replyMapping);
-            alert(content);
-            document.getElementById('replyMapping').val(replyMapping);
-            document.getElementById('replyMapping').previousElementSibling.val(content);
-            document.getElementById('boardMemberReply').submit();
 
-        }
-    </script>
  <!-- Bootstrap core JavaScript-->
     <script src="resources/bootstrap/vendor/jquery/jquery.min.js"></script>
     <script src="resources/bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
