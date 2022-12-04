@@ -64,7 +64,7 @@ public class BoardController {
 
 	@PostMapping("/boardReply")
 	public String boardReply(@ModelAttribute ReplyDto replyDto ,@RequestParam Long boardId , Model model ){
-
+		System.out.println(replyDto.getReplyMapping());
 		boolean boardReplySave = boardService.boardReplySave(replyDto,boardId);
 
 		if(boardReplySave == true){
@@ -81,12 +81,14 @@ public class BoardController {
 		return "user/board/boardMember";
 	}
 
-	@PostMapping("/boardMemberReply")
+	/*@PostMapping("/boardMemberReply")
 	public String boardMemberReply(@ModelAttribute ReplyDto replyDto ,@RequestParam(required = false) Long boardId , Model model ){
 		System.out.println(replyDto.getReplyMapping());
 		System.out.println(replyDto.getContent());
 		System.out.println(replyDto.getWriter());
 		System.out.println(boardId);
+
+		boolean boardReplySave = boardService.boardReplySave(replyDto,boardId);
 
 		Board boardMember = boardService.boardMember(boardId);
 		List<Reply> replyResult = boardService.boardReply(boardId);
@@ -94,6 +96,6 @@ public class BoardController {
 		model.addAttribute("boardMember" ,boardMember);
 		model.addAttribute("replyResult" ,replyResult);
 
-		return "redirect:boardMember";
-	}
+		return "user/board/boardMember";
+	}*/
 }

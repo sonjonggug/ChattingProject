@@ -59,6 +59,7 @@ public class BoardService{
 
         return boardRepository.findById(boardId).get();
     }
+
     @Transactional(readOnly = true)
     public List<Reply> boardReply(Long boardId){
         List<Reply> Result = new ArrayList<>();
@@ -81,6 +82,4 @@ public class BoardService{
         replyRepository.save(reply).getReplyId();
         return true;
     }
-
-
     }

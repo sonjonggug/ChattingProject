@@ -45,5 +45,6 @@ public class Reply implements Serializable {
         this.writer = replyDto.getWriter();
         this.content = replyDto.getContent();
         this.regDate = replyDto.getRegDate();
+        this.replyMapping = replyDto.getReplyMapping();
     }
 }
