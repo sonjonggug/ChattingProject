@@ -69,6 +69,12 @@ public class BoardService{
         return Result;
     }
 
+    @Transactional(readOnly = true)
+    public int boardCount(){
+
+        return Math.toIntExact(boardRepository.countAllBy());
+    }
+
     @Transactional
     public Boolean boardReplySave(ReplyDto replyDto , Long boardId){
         SimpleDateFormat today = new SimpleDateFormat("yyyy-MM-dd hh:mm");
