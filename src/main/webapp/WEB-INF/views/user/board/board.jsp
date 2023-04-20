@@ -95,23 +95,16 @@
                                     </c:forEach>
 
                                 </tbody>
+
+
+
+
+
+
                                 </table>
+                                    
+
                                 </div>
-                                <!-- 2. 이전버튼 활성화 여부 -->
-                                <c:if test="${paging.prev }">
-                                    <li><a href="list.board?pageNum=${paging.startPage - 1 }&amount=${paging.pageSize}">이전</a></li>
-                                </c:if>
-
-                                <!-- 1. 페이지번호 처리 -->
-                               <%-- <c:forEach var="num" begin="${paging.startPage }" end="${paging.endPage }">
-                                    <li  class="${paging.pageNum eq num ? 'active' : '' }">
-                                        <a href="list.board?pageNum=${num }&amount=${paging.pageSize}">${num }</a></li>
-                                </c:forEach>--%>
-
-                                <!-- 3. 다음버튼 활성화 여부 -->
-                                <c:if test="${paging.next }">
-                                    <li><a href="list.board?pageNum=${paging.endPage + 1 }&amount=${paging.pageSize}">다음</a></li>
-                                </c:if>
                             </div>
 
                         </div>
